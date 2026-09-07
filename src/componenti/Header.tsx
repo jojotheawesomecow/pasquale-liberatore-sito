@@ -41,7 +41,6 @@ export function Header({ lang, nome, voci, etichette }: Props) {
   const altra = altraLingua(lang);
   const altUrl = rotta ? url(altra, rotta.sezione, rotta.slug) : url(altra, "home");
 
-  useEffect(() => setAperto(false), [pathname]);
   // stato "scorso" (sfondo e bordo della testata) gestito direttamente sul DOM, senza re-render
   useEffect(() => {
     const onScroll = () => testata.current?.toggleAttribute("data-scorso", window.scrollY > 12);
@@ -130,6 +129,7 @@ export function Header({ lang, nome, voci, etichette }: Props) {
               key={v.href}
               href={v.href}
               aria-current={attivo(v.href) ? "page" : undefined}
+              onClick={() => setAperto(false)}
               style={{ transitionDelay: aperto ? `${80 + i * 50}ms` : "0ms" }}
               className={`font-serif text-4xl leading-tight tracking-tight transition-all duration-500 sm:text-5xl ${
                 aperto ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
@@ -138,7 +138,7 @@ export function Header({ lang, nome, voci, etichette }: Props) {
               {v.label}
             </Link>
           ))}
-          <Link href={altUrl} hrefLang={altra} lang={altra} className="mt-8 font-sans text-sm uppercase tracking-[0.14em] text-pietra-2">
+          <Link href={altUrl} hrefLang={altra} lang={altra} onClick={() => setAperto(false)} className="mt-8 font-sans text-sm uppercase tracking-[0.14em] text-pietra-2">
             {etichette.cambiaLingua} →
           </Link>
         </nav>
