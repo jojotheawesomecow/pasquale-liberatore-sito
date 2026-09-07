@@ -14,6 +14,20 @@ type Props = {
   etichette: { menu: string; chiudi: string; cambiaLingua: string; cambiaLinguaLabel: string; salta: string; ruolo: string };
 };
 
+function Lingua({ href, altra, label, className = "" }: { href: string; altra: Lang; label: string; className?: string }) {
+  return (
+    <Link
+      href={href}
+      hrefLang={altra}
+      lang={altra}
+      aria-label={label}
+      className={`inline-flex h-8 items-center rounded-full border border-pietra px-3 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-inchiostro-2 transition-colors hover:border-inchiostro hover:text-inchiostro ${className}`}
+    >
+      {altra}
+    </Link>
+  );
+}
+
 export function Header({ lang, nome, voci, etichette }: Props) {
   const pathname = usePathname() ?? "/";
   const [aperto, setAperto] = useState(false);
@@ -30,9 +44,12 @@ export function Header({ lang, nome, voci, etichette }: Props) {
   useEffect(() => setAperto(false), [pathname]);
   useEffect(() => {
     const onScroll = () => setScorso(window.scrollY > 12);
-    onScroll();
+    const raf = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
   useEffect(() => {
     document.body.style.overflow = aperto ? "hidden" : "";
@@ -47,18 +64,6 @@ export function Header({ lang, nome, voci, etichette }: Props) {
     const p = norm(pathname);
     return h === "/" || h === "/en" ? p === h : p === h || p.startsWith(`${h}/`);
   };
-
-  const Lingua = ({ className = "" }: { className?: string }) => (
-    <Link
-      href={altUrl}
-      hrefLang={altra}
-      lang={altra}
-      aria-label={etichette.cambiaLinguaLabel}
-      className={`inline-flex h-8 items-center rounded-full border border-pietra px-3 font-sans text-[0.72rem] uppercase tracking-[0.14em] text-inchiostro-2 transition-colors hover:border-inchiostro hover:text-inchiostro ${className}`}
-    >
-      {altra}
-    </Link>
-  );
 
   return (
     <>
@@ -89,11 +94,11 @@ export function Header({ lang, nome, voci, etichette }: Props) {
                 {v.label}
               </Link>
             ))}
-            <Lingua className="ml-2" />
+            <Lingua href={altUrl} altra={altra} label={etichette.cambiaLinguaLabel} className="ml-2" />
           </nav>
 
           <div className="flex items-center gap-3 lg:hidden">
-            <Lingua />
+            <Lingua href={altUrl} altra={altra} label={etichette.cambiaLinguaLabel} />
             <button
               type="button"
               onClick={() => setAperto(true)}

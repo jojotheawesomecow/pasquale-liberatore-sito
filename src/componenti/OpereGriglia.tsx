@@ -24,6 +24,21 @@ type Props = {
   etichette: { tutte: string; categoria: string; periodo: string; azzera: string; risultatiUno: string; risultatiMolti: string; senzaTitolo: string };
 };
 
+function Chip({ attivo, onClick, children }: { attivo: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={attivo}
+      className={`rounded-full border px-3.5 py-1.5 font-sans text-[0.8rem] tracking-[0.01em] transition-colors ${
+        attivo ? "border-inchiostro bg-inchiostro text-carta" : "border-pietra text-inchiostro-2 hover:border-inchiostro hover:text-inchiostro"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
 /** Griglia delle opere con filtri per categoria e decennio (tutto lato client, nessuna richiesta). */
 export function OpereGriglia({ opere, categorie, etichette }: Props) {
   const [categoria, setCategoria] = useState<string>("");
@@ -37,19 +52,6 @@ export function OpereGriglia({ opere, categorie, etichette }: Props) {
 
   const filtrate = opere.filter((o) => (!categoria || o.categoria === categoria) && (!decade || o.decade === decade));
   const attivi = categoria || decade;
-
-  const Chip = ({ attivo, onClick, children }: { attivo: boolean; onClick: () => void; children: React.ReactNode }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={attivo}
-      className={`rounded-full border px-3.5 py-1.5 font-sans text-[0.8rem] tracking-[0.01em] transition-colors ${
-        attivo ? "border-inchiostro bg-inchiostro text-carta" : "border-pietra text-inchiostro-2 hover:border-inchiostro hover:text-inchiostro"
-      }`}
-    >
-      {children}
-    </button>
-  );
 
   return (
     <div className="contenitore">

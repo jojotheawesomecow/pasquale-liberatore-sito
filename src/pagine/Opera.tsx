@@ -7,6 +7,21 @@ import { foto } from "@/lib/immagini";
 import { url, type Lang } from "@/lib/rotte";
 import { paragrafi } from "./utili";
 
+type OperaVicina = Awaited<ReturnType<typeof getOpere>>[number] | undefined;
+
+function Vicina({ opera, etichetta, lang, allineaDestra = false }: { opera: OperaVicina; etichetta: string; lang: Lang; allineaDestra?: boolean }) {
+  if (!opera) return <span />;
+  return (
+    <Link href={url(lang, "opere", opera.slug)} className={`group flex max-w-xs flex-col gap-1 ${allineaDestra ? "items-end text-right" : ""}`}>
+      <span className="etichetta">{etichetta}</span>
+      <span className="font-serif text-xl leading-tight transition-colors group-hover:text-muschio">
+        {campo(opera, "titolo", lang)}
+        {opera.anno ? <span className="text-pietra-2">, {opera.anno}</span> : null}
+      </span>
+    </Link>
+  );
+}
+
 export async function Opera({ lang, slug }: { lang: Lang; slug: string }) {
   const opere = await getOpere();
   const i = opere.findIndex((o) => o.slug === slug);
@@ -35,16 +50,6 @@ export async function Opera({ lang, slug }: { lang: Lang; slug: string }) {
     [d.scheda.collezione, o.collezione ?? ""],
   ];
   const descrizione = paragrafi(campo(o, "descrizione", lang));
-
-  const Vicina = ({ opera, etichetta, allineaDestra = false }: { opera: typeof o | undefined; etichetta: string; allineaDestra?: boolean }) =>
-    opera ? (
-      <Link href={url(lang, "opere", opera.slug)} className={`group flex max-w-xs flex-col gap-1 ${allineaDestra ? "items-end text-right" : ""}`}>
-        <span className="etichetta">{etichetta}</span>
-        <span className="font-serif text-xl leading-tight transition-colors group-hover:text-muschio">{campo(opera, "titolo", lang)}{opera.anno ? <span className="text-pietra-2">, {opera.anno}</span> : null}</span>
-      </Link>
-    ) : (
-      <span />
-    );
 
   return (
     <article className="contenitore pt-8 sm:pt-12">
@@ -84,8 +89,8 @@ export async function Opera({ lang, slug }: { lang: Lang; slug: string }) {
       </div>
 
       <nav className="riga mt-20 flex items-start justify-between gap-8 pt-8" aria-label={d.nav.opere}>
-        <Vicina opera={prec} etichetta={d.operaPrecedente} />
-        <Vicina opera={succ} etichetta={d.operaSuccessiva} allineaDestra />
+        <Vicina opera={prec} etichetta={d.operaPrecedente} lang={lang} />
+        <Vicina opera={succ} etichetta={d.operaSuccessiva} lang={lang} allineaDestra />
       </nav>
     </article>
   );
