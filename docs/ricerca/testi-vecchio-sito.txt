@@ -1,0 +1,266 @@
+
+######## PAGE home  title='Home Page - Pasquale Liberatore' t_it='Home Page - Pasquale Liberatore' desc='Pasquale Liberatore' h=920 ncomp=8
+[testo id=10 x=359 y=174 w=308 h=276]
+Sono uno scultore, un pittore, un artista. Studio il mondo e la natura nella mia casa e nel mio Giardino in Villa Sant'Angelo, Abruzzo.
+Per visualizzare alcune mie opere: /opere
+Per ulteriori info: /about
+Per contattarmi: /contact-me
+-
+[testo id=12 x=704 y=405 w=263 h=43]
+My sculptures in Lake Trasimeno, Tuoro
+-
+[testo id=13 x=704 y=405 w=308 h=46]
+My sculptures in Lake Trasimeno, Tuoro
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Home Page - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (19):
+   ('11', 'immagine', '22246_61fb18fcec123798321f55bf5d8fe6103dcd6e32.jpeg', '', '271', '203')
+   ('14', 'immagine', '22246_49202bd78595cf3608afb15adeb10762d8ccdea2.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_c45241e569324b51bbe415ffa98e8c34e83ac987.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_bbd6901a0ee83daf03e7b1121f1ecdaa584945c2.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_70c07fedce6d5ac1c606dfd02d3c107afe90d30f.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_8ca72c700d218a1615cec94dbbf4988dfc6e4ee0.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_e41487430268d43373bc0744cf7d716c6695a149.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_4c7c5375f6d6bbc46fe4ec70ee81d8dd20c3fa41.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_aab66d2cd2bcec1f0341f1505393cff6068666de.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_dedfb294a4adf2ca14688aca18aa88f11b5d2112.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_3ee5e5ae9c1e0e31d94faaba164d3bb425fe95d0.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_3fef69f062d8e2805a4f13b55536cb45a2e397a1.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_79c2d0c6ccbc455d49a532851fa8eeda4ed082d7.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_d1e9e5dcb9d8e2a86c33d147f379378d1b68f2fb.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_7cd3fcd70ffbdc8139c59898c613c41c937cc691.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_debcb6893559e1d1fa5aa76675fe25f10e469fcb.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_93b5fe0ebeee078e87c898901eda3506eec11597.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_7a1e9f605db5249698c1ca71bfbc69901a6437f4.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_e1f3eeffad667d05265d1a55e8b8c1202c1d4fe1.jpeg', '{"en":""}', None, None)
+
+######## PAGE home_it  title='Home Page - Pasquale Liberatore' t_it='Home Page - Pasquale Liberatore' desc='Pasquale Liberatore' h=920 ncomp=8
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Home Page - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (19):
+   ('11', 'immagine', '22246_61fb18fcec123798321f55bf5d8fe6103dcd6e32.jpeg', '', '271', '203')
+   ('14', 'immagine', '22246_49202bd78595cf3608afb15adeb10762d8ccdea2.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_c45241e569324b51bbe415ffa98e8c34e83ac987.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_bbd6901a0ee83daf03e7b1121f1ecdaa584945c2.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_70c07fedce6d5ac1c606dfd02d3c107afe90d30f.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_8ca72c700d218a1615cec94dbbf4988dfc6e4ee0.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_e41487430268d43373bc0744cf7d716c6695a149.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_4c7c5375f6d6bbc46fe4ec70ee81d8dd20c3fa41.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_aab66d2cd2bcec1f0341f1505393cff6068666de.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_dedfb294a4adf2ca14688aca18aa88f11b5d2112.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_3ee5e5ae9c1e0e31d94faaba164d3bb425fe95d0.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_3fef69f062d8e2805a4f13b55536cb45a2e397a1.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_79c2d0c6ccbc455d49a532851fa8eeda4ed082d7.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_d1e9e5dcb9d8e2a86c33d147f379378d1b68f2fb.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_7cd3fcd70ffbdc8139c59898c613c41c937cc691.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_debcb6893559e1d1fa5aa76675fe25f10e469fcb.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_93b5fe0ebeee078e87c898901eda3506eec11597.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_7a1e9f605db5249698c1ca71bfbc69901a6437f4.jpeg', '{"en":""}', None, None)
+   ('14', 'immagine', '22246_e1f3eeffad667d05265d1a55e8b8c1202c1d4fe1.jpeg', '{"en":""}', None, None)
+
+######## PAGE about  title='Chi sono - Pasquale Liberatore' t_it='Chi sono - Pasquale Liberatore' desc='Pasquale Liberatore' h=9887 ncomp=6
+[testo id=16 x=359 y=124 w=630 h=66]
+BIO
+-
+[testo id=17 x=359 y=190 w=308 h=948]
+Pasquale Liberatore nasce a San Demetrio Ne’Vestini nel 1950. Frequenta l’Istituto D’Arte di L’Aquila e prosegue il suo percorso formativo laureandosi all’Accademia di Belle Arti di L’Aquila.
+
+A soli 27 anni, nel 1977 gli viene affidato l’incarico di Docente del corso di “Tecnologia ed uso del marmo e della pietra” nella scuola di scultura presso l’Accademia di Belle Arti di L’Aquila.
+ 
+
+ L'intimo immaginario di Pasquale Liberatore prende le forme dai luoghi montani e boschivi della sua terra
+abruzzese.
+Fin dalle sue prime opere degli anni Settanta, in cui riproduce in marmo e in pietra semi ingigantiti, si mostra particolarmente interessato alla natura, elabora una profonda partecipazione materica, ponendo la sua attenzione anche alle immagini archetipe.
+-
+[testo id=19 x=359 y=1158 w=630 h=8729]
+Nel 1982 partecipa alla mostra collettiva “Doppio versante” - Terza rassegna d’arte figurativa ad Acquaviva Picena(AP). L’anno successivo partecipa alla mostra “Intimità dell’indagine“ nella Galleria Civica d’Arte Moderna del palazzo dei Diamanti di Ferrara; alla rassegna “L’Immagine diversa” del Premio Michetti a Francavilla Al Mare (PE) e alla mostra “Psicanalisi ed arte, psicanalisi ed estetica - 1983” al Centro Servizi Culturali di Pescara.
+Nella metà degli anni ottanta oltre a dedicarsi a varie forme scultoree dal tuttotondo all’altorilievo a parete, analizza l’inserimento nella pietra di elementi derivati da materiale tecnologico (vernice, piombo, ferro, gomma, vetroresina, spray e altro) pur sempre in immagini di riferimento remoto.
+Nel 1986 sono da segnalare le partecipazioni a “Ricognizione sud ” nell’ambito della XI Quadriennale d’Arte di Roma e a “Forme nel verde” – Dodici scultori tra natura e geometria” a San Quirico D’Orcia (SI).
+Nel 1987 è presente alla Rassegna “Alternative Attuali – Abruzzo 87” al Forte Spagnolo di L’Aquila e nell’anno successivo ad “Alternative Attuali ‘88 Pittura e musica” al Convitto Nazionale.
+
+                    
+Alla fine degli anni Ottanta rivolge la propria ricerca al legno e ad altri materiali in senso strutturale – segnico, attraverso tagli e combustioni. 
+Nel 1989 partecipa alla mostra itinerante “La provincia e l’Impero” a Palazzo Marchesale di Trentola Ducenta a Napoli, al Chiostro San Giovanni a Orvieto (TR) e al Palazzo Colonna di Paliano (FR). 
+Nell’anno successivo è presente a “Intercity Uno” alla galleria della Fondazione Bevilacqua “La Masa” a Venezia e ad “Arte Roma ’90” nel Salone d’Arte Moderna e Contemporanea; partecipa alla mostra collettiva itinerante “Il lusso della pausa” nell’ex Padiglione Avicolo a Firenze, nella Sala Santa Rita a Roma, e nel Chiostro di S.Maria di Collemaggio a L’Aquila.
+Dal 1982 agli anni successivi, partecipa a varie rassegne e mostre scultoree tra le quali:
+
+“Pietra e colore” - Galleria Questarte, Pescara (PE) - 1982“Per esempio il sogno, per esempio il mito” - Centro Servizi Culturali, Avezzano (AQ)“La scultura disegnata. Il disegno degli scultori in Italia oggi”, Roma EUR“Banco di prova” - Sala Comunale, Santa Croce di Magliano (CB)“Linee di scambio” - Palazzo Farnese, Ortona (CH) - 1984“Parole di terra, parole nell’aria” - Centro Multimediale, L’Aquila (AQ)“L’onda del Sud?” Expo Arte - Castello Svevo, Bari (BA) - 1985“Una nuovissima generazione nell’arte italiana” - Fortezza Medicea, Siena (SI) - 1985“XI Edizione Nazionale Quadriennale d’Arte di Roma” - Palazzo dei Congressi, Roma - 1986“Presenze” - Galleria Cesare Manzo, Pescara (PE)“In laboratorio” - Ex Manifattura Tabacchi, Città Sant’Angelo (PE)“ARTeTRA” - Quarto di Santa Giusta, L’Aquila (AQ)“Panoramica” - Sala Comunale, Montesilvano (PE)“Alternative Attuali, Abruzzo 87” - Forte Spagnolo, L’Aquila (AQ) – 1987“Parallel Itineriaries” - Universty Art Gallery, McMaster, Hamilton, Canada“L’uovo di Brancusi” - Galleria d’Arte Fioretto, Padova (PD)“Altri lavori in corso” - Galleria Il Campo, Roma“Textilia” - Basilica Palladiana, Vicenza (VI)“Quinta Biennale d’Arte Sacra”, San Gabriele (TE)“Rischio felice della dialettica” - Museo Pianeta azzurro, Fregene (ROMA)“Dieci giornate in pietra nel Parco della Maiella”, Lettomanoppello (CH)“Filtraggi” - Bisenti, Teramo (TE)“Arte Abruzzo 90”, Pratola Peligna (AQ), 1990“Operazione Dissuasione fumo” - Provveditorato Agli Studi, Salerno (SA)“Epicaforma” Realtà delle ricerche artistiche in Abruzzo - Azienda di promozione turistica, Regione Abruzzo“LIGNUM VITAE” Arte sacra contemporanea - Comune di Civitella Paganico, Grosseto (GR)“99 Seminario di scultura”, Bugnara (AQ)“L’eternità taciuta”, Spoltore (PE) XXXVIII Premio Michetti, Francavilla al mare (PE) - 1987 [dove vince il 1° premio]“Per un museo in progress” - Simposio di scultura contemporanea, Scoppito (AQ) - 2000      Realizza opere monumentali in spazi pubblici nei progetti artistici:
+Internazionale di scultura su granito, Buddusò, Sassari (SS) -1985“Campo del sole”, Tuoro sul Trasimeno, Perugia (PG) - 1986“La pietra svelata”- arte architettura e design, Poggio Picenze (AQ) - 1991“Dieci giornate in pietra”, Lettomanoppello (CH) - 1997“Mito-Miti” - 32° Premio Vasto, Vasto (CH) - 1999“Scultura Viva”, San Benedetto del Tronto (AP) - 1999Simposio internazionale di scultura su pietra, Fanano, Modena (MO) - 1999      In questi anni si apre alle esperienze più svariate, sia in termini di ricerca materica sia in funzione di una più esasperata espressività. Parte dal presupposto che la pietra, se correttamente analizzata e compresa, costituisca un documento geologico, storico e antropologico, la chiave per svelare gli atteggiamenti dell’uomo e degli esseri viventi nel contesto ambientale.
+Intende l’arte come atto creativo da applicare all’operatività del vedere, dell’indagare e del conoscere. Essa fornisce la capacità di forgiare l’esistenza dell’uomo, diviene intuitiva contemplativa e spirituale: uno strumento insostituibile per svelare il rapporto che lega l’uomo ai paesaggi del mondo e alle materie.
+Organizza delle performance scultoree, con interventi finalizzati a riscoprire il connubio millenario tra l’uomo
+e la pietra:
+“L’Anima della Pietra”, Lettomanoppello (CH) - 1997“Girotondo intorno al Monte”, Sant’Eusanio Forconese (AQ) - 1997“Relazioni con la pietra”, Pianola (AQ) - 1998“La città e la Memoria” una scultura fontana per Bugnara, Bugnara (AQ) - 1999“Fuori Dentro il corpo della Pietra” - Palazzo Margherita, L’Aquila (AQ) - 2000“Corpo Ambiente” - Laboratorio dell’Accademia di Belle Arti di L’Aquila (AQ)“Microcosmo di San Michele”, Villa Sant’Angelo (AQ) - 2004“Sora Acqua Sora Pietra” rivalutazione ambientale condotto su principi scultorei tendente a rievidenziare l’importanza di una sorgente a Lettomanoppello, Lettomanoppello (CH)“Percorso meditativo”, Casalbordino (CH) - 2007;      Negli anni Duemila realizza opere monumentali incentrandosi sulla teoria degli innesti tra uomo e natura
+trasformando la pietra in bulbo, seme, meteora; corpi che impattano nella loro organicità altre materie, per
+continuare insieme un viaggio senza tempo e senza spazio.
+Incrementa la sua produzione pittorica prendendo in considerazione la “bella pittura” che tende ad incorporare “lo sporco e il brutto”, i residui e le scorie del vissuto quotidiano. Essi infatti, “svolazzano” nel quadro e vengono trascinati e sovrapposti dal pennello tra scivolamenti di colore.
+Alcuni dei suoi quadri vengono esposti in occasione della Foreign Education Parteners 50th Celebration Anniversary Marmara – University Fine Arts Instanbul – Gallery of Kadikoy Municipality di Instanbul per il progetto “ArteAccademia” - Dicembre 2007 – Gennaio 2008.
+ Dal 2010 in poi, realizza opere di grandi dimensioni:
+“Germoglio” - Monumento ai caduti del sisma 2009, Villa Sant’Angelo(AQ) - 2010“Seme” - Dieci giornate in pietra, Lettomanoppello (CH) - 2013“Condensatore di rugiada” - Museo delle acque - Installazione ambientale, Isola del Gran Sasso (TE) - 2015Pasquale Liberatore è un artista solitario e tenace che non si lascia facilmente condizionare dalle correnti
+artistiche, svolge da molti anni una ricerca scultorea basata soprattutto nel porsi a capire la natura, in partico-
+lar modo l’osservazione di forme chiuse ed embrionali, che generano e che inglobano vita (semi, tuberi, germogli). Trasforma questi elementi naturali per cercarne di capire il fine ed il senso evoluzionistico.
+Durante l’operato del riporto scultoreo e nell’attivazione sensoria cerca la coscienza esistenziale attraverso riferimenti analogici, cercando collegamenti con l’uomo e risposte ai problemi contemporanei.
+ Si sono interessati al suo lavoro:
+Carl Andre, Ana Mendieta, Andrea Cascella, Fabio Mauri, Gino Marotta, Pino Zac.
+Hanno scritto di lui su libri, cataloghi, riviste d’arte:
+Giorgio Misticoni, Eugenio Riccitelli, Francesco Yengo, Marcello Venturoli, Giuseppe Rosato, Enrico Crispolti, Carlo Fabrizio Carli, Raffaella Evandro, Giacinto Di Pietrantonio, Massimo Locci, Luciana Finelli, Tito Spini, Mariano Apa, Virginia Baradel, Lorenza Trucchi, Leo Strozzieri, Antonio Gasbarrini, Manuela Crescentini, Elisabetta Boccia, Carlo Melloni, Antonello Rubini.
+BIO (EN)
+The sculptor Pasquale Liberatore, born in 1950, used to lead the course of “Technology and use of marble and stone” at the School of Fine Arts of L’Aquila. He works at Villa Sant’Angelo, L’Aquila. Since his beginnings in the seventies, when his marble and stone works had the forms of gigantic seeds, he showed himself particularly concerned with nature developing a deeply felt taking part into the matter and focussing on the archetypical icons. 
+Pasquale Liberatore is a lonely and determined artist that does not get influenced by the artistic trends. He has been busy for several decades in a sculptor research based mostly in how you can understand the nature, in particular regarding the observation of closed embryonal shapes that generate and include life (seeds, tubers, sprouts). He transforms these natural elements to try to understand, during the translation into the sculptor substance, their purpose and evolutionist meaning by the sensorial awakening in the research of the existential consciousness through analogue references by looking for bonds with the man and answers to his contemporary problems.
+
+ 						At that time his works were displayed in many individual and group expositions like “Doppio versante” (“Double Slope”), the third review for figurative arts at Acquaviva Picena; “Forme nel verde - Twelve Sculptors between Nature and Geometry” (“Shapes in the green”) at San Quirico D’Orcia, and “Intimità dell’indagine” (“Intimacy of the investigation”) at the Civic Gallery of Modern Art at Palazzo Diamanti of Ferrara among the others.
+In the middle of the eighties he considered the introduction into stone of elements deriving from technological matter (varnish, lead, iron, gum, fibreglass, sprayed paint, etc), but always relating to images coming from the past.
+The taking part to the following events is here to be
+mentioned:
+“Alternative Attuali - Abruzzo 87” (“Actual Alternatives -
+Abruzzo 87”), at the Forte Spagnolo, L’Aquila;
+“Ricognizione Sud” (“Sud Recognition”): 11th four-annual
+Art Review of Rome; “L’Immagine diversa” (“The different image”) within the Premio Michetti of Francavilla.
+At the end of the eighties he was concerned about the wood and other materials regarding their structure and their meaning as a sign by cutting and burning them.
+In 1989 he attended the traveling exhibition “La Provincia e l’Impero” (“The Province and the Empire”) at the Marchesale Palace of trentola, Ducenta Napoli, at the S. John Monastery of Orvieto and at the Colonna Palace of Paliano.
+His works were also showed at “Intercity Uno” by the Fondazione Bevilacqua La masa Gallery of Venice as well as at the traveling group exhibition “Il lusso della pausa” held in Florence, in Rome, at the S. Maria di Collemaggio Cloister of L’Aquila and also at the modern and contemporary Art Show of “Arte Roma ’90” in Rome.
+Since 1980 he takes part to several other exhibitions like “Il disegno degli scultori in Italia oggi” (“The drawing of sculptures in Italy today”) at EUR, Rome; “Linee di scambio” (“Exchanges Lines’”) at the Farnese Palace, Ortona; “L’onda del Sud? Expo Arte” (“The wave of the South? Expor Art”) at the Castello Svevo of Bari; “Una nuovissima generazione nell’arte italiana” (“A brand new generation in the italian art”) at the Fortezza Medicea of Siena; “XI Edizione Nazionale Quadriennale d’Arte di Roma” at the Palazzo dei Congressi, Rome; “Alternative attuali, Abruzzo 87”, at the Forte Spagnolo, L’Aquila; “Parallel Itineraries” at the University Art Gallery McMaster Hamilton, Canada; “L’uovo di Brancusi” (“The egg of Brancusi”) at the Fioretto Art Gallery of Padova; “Altri lavori in corso” (“Other work in progress”) at the Il Campo Gallery of Rome; “Textilia” at the Basilica Palladiana of Vicenza; “Campo del Sole” (“Sun Field”) at Tuoro sul Trasimeno, Perugia; “Lignum Vitae” Contemporary Religious Art Exhibition at Civitella Paganico; “Mito-Miti” 32nd Vasto Award.
+He also realized monumental works designed for public and private spaces as well as some videos: “Spartiacque entropico” (“Entropic watershed”), “Uomo Albero” (“Tree-Man”), “Il sole sotto la neve” (“The sun under the snow”) and “Attrattore di energia” (“Energy attractor”). It is since the nineties that he opens himself to the most different experiences aiming to a more exasperated expressivity.
+He set up sculpturing stages whose goal is to rediscover the thousand years old connection between man and stone: “L’Anima della Pietra” (“The Should of the Stone”) at Lettomanoppello”; “Relazioni con la pietra” (“Relations with the stone”) at the primary school of Pianola (AQ); “Fuori e Dentro il corpo della Pietra” (Inside-out the body of the Stone”) at the Margherita Palace of L’Aquila; “Microcosmo di San Michele” (“Microcosm of Sant Micheal”) at Villa Sant’Angelo (AQ); “Girotondo intorno al Monte” (“Ring Around the Mountain”) at the primary school of S. Eusanio (AQ); “Sora Aqua Sora Pietra” (“Sis’ water Sis’ Stone): a revaluation project developed in Lettomanoppello whose aim was to focus on the importance of a spring fountain by the point of
+view of sculture concepts; “La città e la Memoria” (“The city and the memory”): a sculpture-fountain for Bugnara; “Percorso meditativo” (“Pondering path”) at Casalbordino, Chieti.
+Some of his recent works are: “10 giornate in pietra” (“10 days in the stone), Lettomanoppello 2013; “Germoglio” (“Sprout), Villa Sant’Angelo, monument for the fallen in the 2009 earthquake of L’Aquila; “Condensatore di Rugiada” (“Dew Condenser”), water museum, environmental equipment, Isola del Gran Sasso.
+The following people have showed interest about him: Ana Mendieta, Andrea Cascella, Fabio Mauri, Gino Marotta, Pino Zac.
+He has been studied by and has written about him on books, catalogues, arts magazine: Giorgio Misticoni, Eugenio Riccitelli, Francesco Yengo, Marcello Venturoli, Giuseppe Rosato, Enrico Crispolti, Carlo Fabrizio Carli, Raffaella Evandro, Giacinto Di Pietrantonio, Massimo Locci, Luciana Finelli, Tito Spini, Mariano Apa, Virginia Baradel, Lorenza Trucchi, Leo Strozzieri, Antonio Gasbarrini, Manuela Crescentini, Elisabetta Boccia, Carlo Melloni, Antonello Rubini.
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Chi sono - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (1):
+   ('18', 'immagine', '22246_4080eab1c8fffa1b3d6f7f35ae54649a81ab94c3.jpeg', '', '271', '482')
+
+######## PAGE about_it  title='Chi sono - Pasquale Liberatore' t_it='Chi sono - Pasquale Liberatore' desc='Pasquale Liberatore' h=9887 ncomp=6
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Chi sono - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (1):
+   ('18', 'immagine', '22246_4080eab1c8fffa1b3d6f7f35ae54649a81ab94c3.jpeg', '', '271', '482')
+
+######## PAGE i-semi-sono-il-territorio  title='Pasquale Liberatore Official Website' t_it='Pasquale Liberatore Official Website' desc="Sito dell'artista Pasquale Liberatore.\nVilla Sant'Angelo, Abruzzo" h=2313 ncomp=7
+[testo id=26 x=359 y=631 w=630 h=56]
+I SEMI SONO IL TERRITORIO
+-
+[testo id=27 x=359 y=677 w=630 h=1588]
+Nel tentativo di “capire il mondo” buona parte della mia vita è stata un  pensare ed un porsi ad osservare semi, alberi e pietre, forme organiche  e materiale del territorio.
+La materia inerte  non esiste, la forza evolutiva opera nell’intero universo. Siamo tutti  indissolubilmente legati alla natura, dove ogni forma fluisce nell’altra  in un continuo movimento.
+Un uomo, nato in uno degli infiniti  punti della “pelle” del pianeta, non può non prescindere proprio da quel  punto; se poi vi è anche cresciuto, diviene quasi impossibile.
+Il  luogo nativo, con le sue forme e le sue materie, può diventare la  palestra e la ricerca estetica e biologica atte a riassociare le stesse  agli esseri di un tutto globale, se non addirittura cosmico. 
+La  professione dell’artista svolge un compito creativo necessario  socialmente: spinge all’osservazione, alla conoscenza, e ricollega le  competenze ad una apertura pluridisciplinare. Ruotando i colori dentro  un barattolo di vernice si può intravedere il movimento di una galassia.
+In una macchia si può cercare l’universo.
+ In una pozzanghera il mare.
+ I fiori e gli insetti del giardino si schiudono al sole e si comportano come quelli delle grandi foreste.
+ Una formica vale in termini evoluzionistici quanto un elefante.
+Ogni  pietra della nostra montagna può essere adatta per immaginare e  progettare una scultura come fosse materia ossea del pianeta terra.
+ Osservando la formazione e la funzione di una piccola montagna e di un sasso si comprendono le grandi catene montuose. 
+Salvaguardare  anche un solo essere vivente nel proprio habitat può contribuire a  proteggere la fauna dell’intero pianeta poiché tutto è collegato. Anche  approfondendo la conoscenza sulla piccola flora si può immaginare e  tentare di capire la grande foresta. Il “cittadino globale”, abitante in  un punto di un pianeta così immenso e variegato, in quest’epoca può  aiutare a sostenere l’intero sistema naturalistico pur agendo a pochi  metri da casa.
+Mai come adesso l’arte ha bisogno di essere  pensata e guardata nella sua funzione socio-ecologica: non più rispetto  ad un bello fine a sé, ma che sappia e possa ricomprendere il giusto, il  vero, il buono, nell’idea immaginativa ed intuitiva, nella ricerca a  capire, a rendere l’uomo più empatico e sensibile con il resto del  mondo.
+La mia arte è appunto un tentativo di voler dimostrare  come, nelle forme dei semi, ci siano le assonanze organiche che  ricongiungono l’uomo alla natura, in associazioni e collegamenti  estetici e immaginativi.
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Pasquale Liberatore Official Website id=None params=[]]
+-
+IMAGES (1):
+   ('24', 'immagine', '22246_34b9e07b2558f8f617578e868d1c063757ece521.jpeg', '', '271', '197')
+
+######## PAGE i-semi-sono-il-territorio_it  title='Pasquale Liberatore Official Website' t_it='Pasquale Liberatore Official Website' desc="Sito dell'artista Pasquale Liberatore.\nVilla Sant'Angelo, Abruzzo" h=2313 ncomp=7
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Pasquale Liberatore Official Website id=None params=[]]
+-
+IMAGES (1):
+   ('24', 'immagine', '22246_34b9e07b2558f8f617578e868d1c063757ece521.jpeg', '', '271', '197')
+
+######## PAGE opere  title='Pasquale Liberatore Official Website' t_it='Pasquale Liberatore Official Website' desc="Sito dell'artista Pasquale Liberatore.\nVilla Sant'Angelo, Abruzzo" h=1088 ncomp=5
+[photogalleryColumns id=29 params=['stilegalleria', 'dimh', 'col', 'col-m', 'dis', 'dis-m', 'dimh-m', 'eff', 'b', 'round_type', 'b-m', 'round_type-m', 'border_radius', 'fr', 'frD', 'frP', 'frC', 'soc', 'tit', 'sh_type', 'sh_color', 'sh_alpha', 'cc', 'original', 'frD-m', 'bg_size', 'mosaic_data', 'shape']]
+-
+[testo id=30 x=359 y=124 w=630 h=56]
+Opere
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Pasquale Liberatore Official Website id=None params=[]]
+-
+IMAGES (18):
+   ('29', 'photogalleryColumns', '22246_e1f3eeffad667d05265d1a55e8b8c1202c1d4fe1.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_7a1e9f605db5249698c1ca71bfbc69901a6437f4.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_93b5fe0ebeee078e87c898901eda3506eec11597.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_debcb6893559e1d1fa5aa76675fe25f10e469fcb.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_7cd3fcd70ffbdc8139c59898c613c41c937cc691.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_d1e9e5dcb9d8e2a86c33d147f379378d1b68f2fb.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_79c2d0c6ccbc455d49a532851fa8eeda4ed082d7.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_3fef69f062d8e2805a4f13b55536cb45a2e397a1.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_3ee5e5ae9c1e0e31d94faaba164d3bb425fe95d0.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_dedfb294a4adf2ca14688aca18aa88f11b5d2112.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_aab66d2cd2bcec1f0341f1505393cff6068666de.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_4c7c5375f6d6bbc46fe4ec70ee81d8dd20c3fa41.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_e41487430268d43373bc0744cf7d716c6695a149.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_8ca72c700d218a1615cec94dbbf4988dfc6e4ee0.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_70c07fedce6d5ac1c606dfd02d3c107afe90d30f.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_bbd6901a0ee83daf03e7b1121f1ecdaa584945c2.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_c45241e569324b51bbe415ffa98e8c34e83ac987.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_49202bd78595cf3608afb15adeb10762d8ccdea2.jpeg', '{"en":""}', None, None)
+
+######## PAGE opere_it  title='Pasquale Liberatore Official Website' t_it='Pasquale Liberatore Official Website' desc="Sito dell'artista Pasquale Liberatore.\nVilla Sant'Angelo, Abruzzo" h=1088 ncomp=5
+[photogalleryColumns id=29 params=['stilegalleria', 'dimh', 'col', 'col-m', 'dis', 'dis-m', 'dimh-m', 'eff', 'b', 'round_type', 'b-m', 'round_type-m', 'border_radius', 'fr', 'frD', 'frP', 'frC', 'soc', 'tit', 'sh_type', 'sh_color', 'sh_alpha', 'cc', 'original', 'frD-m', 'bg_size', 'mosaic_data', 'shape']]
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Pasquale Liberatore Official Website id=None params=[]]
+-
+IMAGES (18):
+   ('29', 'photogalleryColumns', '22246_e1f3eeffad667d05265d1a55e8b8c1202c1d4fe1.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_7a1e9f605db5249698c1ca71bfbc69901a6437f4.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_93b5fe0ebeee078e87c898901eda3506eec11597.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_debcb6893559e1d1fa5aa76675fe25f10e469fcb.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_7cd3fcd70ffbdc8139c59898c613c41c937cc691.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_d1e9e5dcb9d8e2a86c33d147f379378d1b68f2fb.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_79c2d0c6ccbc455d49a532851fa8eeda4ed082d7.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_3fef69f062d8e2805a4f13b55536cb45a2e397a1.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_3ee5e5ae9c1e0e31d94faaba164d3bb425fe95d0.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_dedfb294a4adf2ca14688aca18aa88f11b5d2112.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_aab66d2cd2bcec1f0341f1505393cff6068666de.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_4c7c5375f6d6bbc46fe4ec70ee81d8dd20c3fa41.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_e41487430268d43373bc0744cf7d716c6695a149.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_8ca72c700d218a1615cec94dbbf4988dfc6e4ee0.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_70c07fedce6d5ac1c606dfd02d3c107afe90d30f.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_bbd6901a0ee83daf03e7b1121f1ecdaa584945c2.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_c45241e569324b51bbe415ffa98e8c34e83ac987.jpeg', '{"en":""}', None, None)
+   ('29', 'photogalleryColumns', '22246_49202bd78595cf3608afb15adeb10762d8ccdea2.jpeg', '{"en":""}', None, None)
+
+######## PAGE contact-me  title='Contatti - Pasquale Liberatore' t_it='Contatti - Pasquale Liberatore' desc='Pasquale Liberatore' h=802 ncomp=5
+[testo id=20 x=359 y=124 w=630 h=66]
+Contatti
+-
+[testo id=21 x=359 y=240 w=308 h=330]
+Pubblico la maggior parte dei miei pensieri sul mio account instagram:
+https://www.instagram.com/frontieradicampagna/
+Ma se vuoi, puoi spedirmi una email da qui, così possiamo farci una chiacchierata.
+PL
+-
+[custom_form id=22 params=['i', 'csMenu', 'csMenuO', 'back', 'backO', 'f', 'size', 'color', 'f-input', 'size_input', 'colore_interno', 'f-button', 'size_button', 'ctMenu', 'borderC', 'borderW', 'borderR', 'button_borderC', 'button_borderW', 'button_borderR', 'etichetta', 'style', 'border_bottom']]
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Contatti - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (0):
+
+######## PAGE contact-me_it  title='Contatti - Pasquale Liberatore' t_it='Contatti - Pasquale Liberatore' desc='Pasquale Liberatore' h=802 ncomp=5
+[custom_form id=22 params=['i', 'csMenu', 'csMenuO', 'back', 'backO', 'f', 'size', 'color', 'f-input', 'size_input', 'colore_interno', 'f-button', 'size_button', 'ctMenu', 'borderC', 'borderW', 'borderR', 'button_borderC', 'button_borderW', 'button_borderR', 'etichetta', 'style', 'border_bottom']]
+-
+[verticalemenu id=2 params=['version', 'z', 's', 'bo', 'nomeStile', 'o', 'bco', 'balpha', 'color', 'c', 'f', 'size', 'bpd', 'bmg', 'ico', 'colorM', 'op', 'cm', 'om', 'mobile', 'custom', 'co']]
+-
+[Contatti - Pasquale Liberatore id=None params=[]]
+-
+IMAGES (0):
