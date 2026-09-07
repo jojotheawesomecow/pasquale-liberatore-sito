@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { altraLingua, risolvi, url, type Lang } from "@/lib/rotte";
 
 export type VoceMenu = { href: string; label: string };
@@ -31,7 +31,7 @@ function Lingua({ href, altra, label, className = "" }: { href: string; altra: L
 export function Header({ lang, nome, voci, etichette }: Props) {
   const pathname = usePathname() ?? "/";
   const [aperto, setAperto] = useState(false);
-  const [scorso, setScorso] = useState(false);
+  const testata = useRef<HTMLElement>(null);
 
   // URL della stessa pagina nell'altra lingua
   const parti = pathname.split("/").filter(Boolean);
@@ -42,14 +42,12 @@ export function Header({ lang, nome, voci, etichette }: Props) {
   const altUrl = rotta ? url(altra, rotta.sezione, rotta.slug) : url(altra, "home");
 
   useEffect(() => setAperto(false), [pathname]);
+  // stato "scorso" (sfondo e bordo della testata) gestito direttamente sul DOM, senza re-render
   useEffect(() => {
-    const onScroll = () => setScorso(window.scrollY > 12);
-    const raf = requestAnimationFrame(onScroll);
+    const onScroll = () => testata.current?.toggleAttribute("data-scorso", window.scrollY > 12);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
   useEffect(() => {
     document.body.style.overflow = aperto ? "hidden" : "";
@@ -71,9 +69,8 @@ export function Header({ lang, nome, voci, etichette }: Props) {
         {etichette.salta}
       </a>
       <header
-        className={`sticky top-0 z-40 border-b transition-[border-color,background-color] duration-300 ${
-          scorso ? "border-pietra/70 bg-carta/90 backdrop-blur-md" : "border-transparent bg-carta"
-        }`}
+        ref={testata}
+        className="sticky top-0 z-40 border-b border-transparent bg-carta transition-[border-color,background-color] duration-300 data-scorso:border-pietra/70 data-scorso:bg-carta/90 data-scorso:backdrop-blur-md"
       >
         <div className="contenitore flex h-16 items-center justify-between gap-6 sm:h-20">
           <Link href={url(lang, "home")} className="group flex flex-col leading-none" aria-label={nome}>
