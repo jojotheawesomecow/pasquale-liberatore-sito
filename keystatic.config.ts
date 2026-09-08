@@ -14,8 +14,8 @@ const IMG_PAGINE = { directory: "content/media/pagine", publicPath: "/media/pagi
 
 export const CATEGORIE_OPERE = [
   { label: "Scultura", value: "scultura" },
-  { label: "Opera pubblica e monumentale", value: "opera-pubblica" },
-  { label: "Pittura e grafica", value: "pittura" },
+  { label: "Monumenti pubblici", value: "opera-pubblica" },
+  { label: "Pittura", value: "pittura" },
   { label: "Disegno", value: "disegno" },
   { label: "Installazione", value: "installazione" },
   { label: "Performance e simposi", value: "performance" },
@@ -23,7 +23,7 @@ export const CATEGORIE_OPERE = [
 
 export const TIPI_CRONOLOGIA = [
   { label: "Mostra", value: "mostra" },
-  { label: "Opera pubblica / monumentale", value: "opera-pubblica" },
+  { label: "Monumento pubblico", value: "opera-pubblica" },
   { label: "Simposio / manifestazione", value: "simposio" },
   { label: "Performance", value: "performance" },
   { label: "Premio / riconoscimento", value: "premio" },

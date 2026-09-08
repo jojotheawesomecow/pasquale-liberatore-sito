@@ -3,7 +3,7 @@ import type { Lang } from "./rotte";
 /** Testi statici lunghi che non ha senso far modificare dal pannello. */
 export const TESTI = {
   it: {
-    opereIntro: "Sculture, opere pubbliche e monumentali, pittura e grafica dagli anni Settanta a oggi.",
+    opereIntro: "Sculture, monumenti pubblici e pittura dagli anni Settanta a oggi.",
     riflessioniNota: "Altri pensieri e appunti vengono pubblicati regolarmente su Instagram.",
     senzaData: "Senza data",
     artista: "L'artista",
@@ -60,7 +60,7 @@ export const TESTI = {
     },
   },
   en: {
-    opereIntro: "Sculptures, public and monumental works, painting and prints from the 1970s to today.",
+    opereIntro: "Sculptures, public monuments and painting from the 1970s to today.",
     riflessioniNota: "More thoughts and notes are published regularly on Instagram.",
     senzaData: "Undated",
     artista: "The artist",

@@ -1,5 +1,45 @@
 # Note per Marco
 
+## Trovato il curriculum di Pasquale
+
+Nella cartella `wetransfer-97d1d4` dei tuoi Download c'era `pasquale liberatore CV.pdf`. Ne ho estratto il testo in `docs/fonti/curriculum-pasquale-liberatore.txt`. Contiene cose che ci mancavano.
+
+**Dati di contatto.** Indirizzo in via delle Scuole 25 a Villa Sant'Angelo, un numero di telefono e l'indirizzo email `semenostro@gmail.com`. **Non li ho pubblicati**: sono dati personali di Pasquale e la scelta di metterli online spetta a voi. Se mi dici quali usare li aggiungo in un minuto, e con quell'email possiamo anche attivare il modulo dei contatti. Il curriculum indica come Instagram `frontieradicampagna`, non l'altro.
+
+**Due dichiarazioni dell'artista** che sul sito non ci sono e che meritano un posto:
+
+> «Le mie opere sono un tentativo di portare l'osservatore al dialogo con la natura, ad uno stretto contatto con essa, anzi, a compenetrarvi ispezionandola, sentendosi parte delle sue forme e delle sue risoluzioni biologico-funzionali.»
+
+> «L'artista ha un ruolo nella formazione sociale, nell'interpretare, trasmettere e prevenire, utilizzando come leva la sensibilità, l'intuito e la creatività.»
+
+Dimmi dove le vuoi e le metto: la prima starebbe bene in apertura di Chi sono, la seconda in fondo alla biografia.
+
+**Un paragrafo che mancava** l'ho già aggiunto alla biografia: quello sulle ultime opere, l'antropologia visuale e le montagne come corpi sacri.
+
+**Una conferma e un dubbio.** La Quadriennale di Roma del 1986 è nel curriculum scritto da Pasquale, quindi è una sua affermazione; resta il fatto che nell'archivio ufficiale della Quadriennale il suo nome non compare. Vale la pena chiederglielo.
+
+**C'è dell'altro in quella cartella.** Ci sono le diciotto foto originali delle sculture con i nomi parlanti, tipo `opera scelta trasimeno`, `seme di lettomanoppello - laboratorio`. Sono le stesse che ho ricavato dal vecchio sito, ma senza le scritte sopra e in qualità migliore. Se vuoi le sostituisco.
+
+## Lo strumento per schedare: la pagina Gestione
+
+Con 226 opere il pannello a schede singole non basta. Ho costruito un **banco di lavoro** che fa tre cose in una sola pagina, una riga per opera:
+
+- **Ruota le foto** storte, a sinistra o a destra. La rotazione tocca l'immagine vera e rigenera da sola tutte le versioni pubblicate.
+- **Scrivi i dati**: titolo, anno, tecnica, misure, luogo, categoria. Si salva da solo mentre scrivi, senza premere nulla.
+- **Decidi la visibilità**: «Mostra in Opere» porta l'opera nella selezione curata, «Nascondi dal sito» la toglie da tutto e la lascia solo nei file.
+
+In alto ci sono i filtri **Tutte, Senza titolo, Solo pittura, In Opere** e una ricerca, più tre contatori: quante opere ci sono, quante hanno già un titolo, quante sono in Opere. Così vedi a colpo d'occhio a che punto è la schedatura.
+
+Si apre così:
+
+```bash
+npm run dev
+```
+
+e poi <http://localhost:3000/gestione>. Esiste solo sul tuo computer, non finisce online: nessun accesso, nessuna password. Tieni il sito aperto in un'altra scheda e lo vedi cambiare mentre lavori.
+
+**Quando usare cosa.** La pagina Gestione serve per lavorare in serie su molte opere. Il pannello Keystatic resta per il lavoro fine su una singola opera: descrizione lunga, foto aggiuntive, testo inglese. Il foglio `schede-opere.csv` serve se preferisci lavorare in Excel o stampare il provino e annotarlo a mano con Pasquale. I tre modi scrivono negli stessi file e si possono alternare.
+
 ## Opere e Archivio: come si guardano 224 opere
 
 Hai ragione: la griglia a schede andava bene per 16 sculture, non per 208 dipinti. Ho fatto una ricerca su una novantina fra archivi d'artista, cataloghi ragionati e collezioni museali, e ho rifatto la sezione seguendo quello che fanno loro. Il rapporto completo è in `docs/ricerca/collezioni-grandi.md`.

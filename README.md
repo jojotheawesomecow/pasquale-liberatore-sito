@@ -78,6 +78,13 @@ dentro `content/media/opere/`. Nei file con sfondo trasparente toglie il bordo v
    `--bozza` le importa senza pubblicarle, `--prova` mostra solo cosa farebbe.
 4. `npm run immagini` per generare le versioni pubblicate (lo fa da solo anche `npm run dev`).
 
+### Schedare molte opere: la pagina Gestione
+
+Con `npm run dev` attivo, apri <http://localhost:3000/gestione>. È un banco di lavoro locale (non finisce online)
+con una riga per opera: ruota le foto storte, scrivi titolo, anno, tecnica, misure e luogo, e decidi se l'opera
+va nella pagina Opere o resta solo nell'Archivio. Tutto si salva da solo. Filtri: Tutte, Senza titolo,
+Solo pittura, In Opere.
+
 ### Aggiungere i dati in un secondo momento
 
     npm run schede               # crea schede-opere.csv e provino-opere.html
