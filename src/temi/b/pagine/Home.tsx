@@ -56,7 +56,7 @@ export async function Home({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <Nastro voci={x.nastro.materiali} etichetta={x.nastro.materie} className="border-y border-linea py-4 sm:py-5" durata={72} />
+      <Nastro voci={x.nastro.materiali} etichetta={x.nastro.materie} variante="mono" className="border-y border-linea py-4 sm:py-5" durata={72} />
 
       {/* Dichiarazione */}
       <section className="contenitore py-24 sm:py-36">
