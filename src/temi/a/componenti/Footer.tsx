@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { VoceMenu } from "./Header";
-import { Seme } from "./Seme";
+import type { VoceMenu } from "@/temi/a/componenti/Header";
+import { Seme } from "@/temi/a/componenti/Seme";
 import { url, type Lang } from "@/lib/rotte";
 import { t } from "@/lib/i18n";
 import type { Impostazioni } from "@/lib/contenuti";

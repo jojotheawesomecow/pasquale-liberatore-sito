@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Foto } from "@/componenti/Foto";
-import { GalleriaOpera, type Immagine } from "@/componenti/GalleriaOpera";
+import { GalleriaOpera, type Immagine } from "@/temi/a/componenti/GalleriaOpera";
 import { getRiflessione } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { renderMarkdoc } from "@/lib/markdoc";
 import { url, type Lang } from "@/lib/rotte";
-import { formattaData } from "./utili";
+import { formattaData } from "@/pagine/utili";
 
 export async function Riflessione({ lang, slug }: { lang: Lang; slug: string }) {
   const r = await getRiflessione(slug);

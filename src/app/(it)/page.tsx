@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Home } from "@/pagine/Home";
+import { tema } from "@tema";
 import { metadataPagina } from "@/pagine/dispatch";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -7,5 +7,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function PaginaHomeIt() {
-  return <Home lang="it" />;
+  return <tema.Home lang="it" />;
 }

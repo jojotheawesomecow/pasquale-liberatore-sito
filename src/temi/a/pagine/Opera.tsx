@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { GalleriaOpera, type Immagine } from "@/componenti/GalleriaOpera";
+import { GalleriaOpera, type Immagine } from "@/temi/a/componenti/GalleriaOpera";
 import { getOpere } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { url, type Lang } from "@/lib/rotte";
-import { paragrafi } from "./utili";
+import { paragrafi } from "@/pagine/utili";
 
 type OperaVicina = Awaited<ReturnType<typeof getOpere>>[number] | undefined;
 

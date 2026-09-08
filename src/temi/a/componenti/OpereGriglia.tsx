@@ -2,21 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Foto as FotoDati } from "@/lib/tipi";
-import { Foto } from "./Foto";
+import type { SchedaOpera } from "@/lib/tipi";
+import { Foto } from "@/componenti/Foto";
 
-export type SchedaOpera = {
-  slug: string;
-  href: string;
-  titolo: string;
-  anno: string;
-  categoria: string;
-  categoriaLabel: string;
-  dettaglio: string; // materiale o tecnica
-  luogo: string;
-  decade: string | null;
-  foto: FotoDati | null;
-};
 
 type Props = {
   opere: SchedaOpera[];

@@ -1,4 +1,4 @@
-import { Titolo } from "@/componenti/Titolo";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import type { Lang } from "@/lib/rotte";
 import { testi } from "@/lib/testi";
 

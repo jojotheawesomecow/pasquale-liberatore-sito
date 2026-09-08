@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Documento } from "@/componenti/Documento";
+import { tema } from "@tema";
 import { metadataBase } from "@/pagine/dispatch";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -8,5 +8,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function LayoutEn({ children }: { children: ReactNode }) {
-  return <Documento lang="en">{children}</Documento>;
+  return <tema.Documento lang="en">{children}</tema.Documento>;
 }

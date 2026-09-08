@@ -1,6 +1,6 @@
 import { Foto } from "@/componenti/Foto";
-import { GalleriaOpera, type Immagine } from "@/componenti/GalleriaOpera";
-import { Titolo } from "@/componenti/Titolo";
+import { GalleriaOpera, type Immagine } from "@/temi/a/componenti/GalleriaOpera";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import { getGiardino } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";

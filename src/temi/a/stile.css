@@ -1,4 +1,8 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../../app";
+@source "../../componenti";
+@source "../../pagine";
+@source "./";
 
 @theme {
   --color-carta: #f4f1ea;

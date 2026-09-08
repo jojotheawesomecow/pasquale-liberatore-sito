@@ -1,9 +1,9 @@
 import { ModuloContatti } from "@/componenti/ModuloContatti";
-import { Titolo } from "@/componenti/Titolo";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import { getContatti, getImpostazioni } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
 import type { Lang } from "@/lib/rotte";
-import { paragrafi } from "./utili";
+import { paragrafi } from "@/pagine/utili";
 
 export async function Contatti({ lang }: { lang: Lang }) {
   const [c, imp] = await Promise.all([getContatti(), getImpostazioni()]);

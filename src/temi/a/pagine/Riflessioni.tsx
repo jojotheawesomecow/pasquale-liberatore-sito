@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Foto } from "@/componenti/Foto";
-import { Titolo } from "@/componenti/Titolo";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import { getImpostazioni, getRiflessioni } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { url, type Lang } from "@/lib/rotte";
 import { testi } from "@/lib/testi";
-import { formattaData } from "./utili";
+import { formattaData } from "@/pagine/utili";
 
 export async function Riflessioni({ lang }: { lang: Lang }) {
   const [riflessioni, impostazioni] = await Promise.all([getRiflessioni(), getImpostazioni()]);

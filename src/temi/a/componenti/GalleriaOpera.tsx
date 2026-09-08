@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Foto as FotoDati } from "@/lib/tipi";
-import { Foto } from "./Foto";
+import { Foto } from "@/componenti/Foto";
 
 export type Immagine = { foto: FotoDati; alt: string; didascalia?: string };
 

@@ -7,16 +7,7 @@ import { foto } from "@/lib/immagini";
 import { SEZIONI, risolvi, url, type Lang, type Sezione } from "@/lib/rotte";
 import { testi } from "@/lib/testi";
 import { testoSemplice } from "@/lib/markdoc";
-import { ChiSono } from "./ChiSono";
-import { Contatti } from "./Contatti";
-import { Giardino } from "./Giardino";
-import { Home } from "./Home";
-import { Opera } from "./Opera";
-import { Opere } from "./Opere";
-import { Privacy } from "./Privacy";
-import { Riflessione } from "./Riflessione";
-import { Riflessioni } from "./Riflessioni";
-import { Video } from "./Video";
+import { tema } from "@tema";
 
 /** Origine del sito senza il percorso base (per costruire URL assoluti di immagini già prefissate). */
 const ORIGINE = BASE && SITE_URL.endsWith(BASE) ? SITE_URL.slice(0, -BASE.length) : SITE_URL;
@@ -37,21 +28,21 @@ export async function renderPagina(lang: Lang, path: string[]) {
   if (!rotta) notFound();
   switch (rotta.sezione) {
     case "home":
-      return <Home lang={lang} />;
+      return <tema.Home lang={lang} />;
     case "opere":
-      return rotta.slug ? <Opera lang={lang} slug={rotta.slug} /> : <Opere lang={lang} />;
+      return rotta.slug ? <tema.Opera lang={lang} slug={rotta.slug} /> : <tema.Opere lang={lang} />;
     case "chiSono":
-      return <ChiSono lang={lang} />;
+      return <tema.ChiSono lang={lang} />;
     case "riflessioni":
-      return rotta.slug ? <Riflessione lang={lang} slug={rotta.slug} /> : <Riflessioni lang={lang} />;
+      return rotta.slug ? <tema.Riflessione lang={lang} slug={rotta.slug} /> : <tema.Riflessioni lang={lang} />;
     case "giardino":
-      return <Giardino lang={lang} />;
+      return <tema.Giardino lang={lang} />;
     case "video":
-      return <Video lang={lang} />;
+      return <tema.Video lang={lang} />;
     case "contatti":
-      return <Contatti lang={lang} />;
+      return <tema.Contatti lang={lang} />;
     case "privacy":
-      return <Privacy lang={lang} />;
+      return <tema.Privacy lang={lang} />;
   }
 }
 

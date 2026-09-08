@@ -1,14 +1,14 @@
-import { Cronologia } from "@/componenti/Cronologia";
+import { Cronologia } from "@/temi/a/componenti/Cronologia";
 import { Foto } from "@/componenti/Foto";
-import { Titolo } from "@/componenti/Titolo";
-import { TIPI_CRONOLOGIA } from "../../keystatic.config";
+import { Titolo } from "@/temi/a/componenti/Titolo";
+import { TIPI_CRONOLOGIA } from "../../../../keystatic.config";
 import { getBio } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { renderMarkdoc } from "@/lib/markdoc";
 import type { Lang } from "@/lib/rotte";
 import { testi } from "@/lib/testi";
-import { righe } from "./utili";
+import { righe } from "@/pagine/utili";
 
 export async function ChiSono({ lang }: { lang: Lang }) {
   const bio = await getBio();

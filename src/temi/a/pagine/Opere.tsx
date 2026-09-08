@@ -1,10 +1,10 @@
-import { OpereGriglia } from "@/componenti/OpereGriglia";
-import { Titolo } from "@/componenti/Titolo";
+import { OpereGriglia } from "@/temi/a/componenti/OpereGriglia";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import { getOpere } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
 import type { Lang } from "@/lib/rotte";
 import { testi } from "@/lib/testi";
-import { categoriePresenti, schedaOpera } from "./utili";
+import { categoriePresenti, schedaOpera } from "@/pagine/utili";
 
 export async function Opere({ lang }: { lang: Lang }) {
   const opere = await getOpere();

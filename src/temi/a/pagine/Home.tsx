@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Foto } from "@/componenti/Foto";
-import { Seme } from "@/componenti/Seme";
+import { Seme } from "@/temi/a/componenti/Seme";
 import { VideoEmbed } from "@/componenti/VideoEmbed";
 import { getGiardino, getHome, getImpostazioni, getOpere, getRiflessioni, getVideo, youtubeId } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { url, type Lang } from "@/lib/rotte";
-import { schedaOpera } from "./utili";
+import { schedaOpera } from "@/pagine/utili";
 
 export async function Home({ lang }: { lang: Lang }) {
   const [home, opere, riflessioni, giardino, video, impostazioni] = await Promise.all([

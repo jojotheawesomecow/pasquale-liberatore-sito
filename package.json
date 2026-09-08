@@ -4,7 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
+    "dev:b": "TEMA=b node scripts/dev.mjs -p 3001",
+    "dev:c": "TEMA=c node scripts/dev.mjs -p 3002",
     "build": "node scripts/immagini.mjs && next build",
+    "build:b": "TEMA=b npm run build",
+    "build:c": "TEMA=c npm run build",
+    "build:tutti": "node scripts/immagini.mjs && node scripts/build-tutti.mjs",
     "anteprima": "npx --yes serve out -l 3000",
     "immagini": "node scripts/immagini.mjs",
     "importa": "node scripts/importa-opere.mjs",

@@ -1,9 +1,9 @@
-import { Titolo } from "@/componenti/Titolo";
+import { Titolo } from "@/temi/a/componenti/Titolo";
 import { VideoEmbed } from "@/componenti/VideoEmbed";
 import { getVideo, youtubeId } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import type { Lang } from "@/lib/rotte";
-import { paragrafi } from "./utili";
+import { paragrafi } from "@/pagine/utili";
 
 export async function Video({ lang }: { lang: Lang }) {
   const video = (await getVideo()).filter((v) => youtubeId(v.url));

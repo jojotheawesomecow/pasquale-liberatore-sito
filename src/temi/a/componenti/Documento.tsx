@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
-import { serif, sans } from "@/lib/fonts";
+import { serif, sans } from "@/temi/a/fonts";
 import { getImpostazioni, getVideo } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
 import { url, type Lang, type Sezione } from "@/lib/rotte";
-import { Header, type VoceMenu } from "./Header";
-import { Footer } from "./Footer";
-import { RivelaOsservatore } from "./Rivela";
-import "@/app/globals.css";
+import { Header, type VoceMenu } from "@/temi/a/componenti/Header";
+import { Footer } from "@/temi/a/componenti/Footer";
+import { RivelaOsservatore } from "@/componenti/Rivela";
+import "@/temi/a/stile.css";
 
 /** Struttura comune a tutte le pagine: <html>, testata, contenuto, piè di pagina. */
 export async function Documento({ lang, children }: { lang: Lang; children: ReactNode }) {

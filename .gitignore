@@ -47,3 +47,7 @@ next-env.d.ts
 # cartella di importazione massiva: le foto vanno spostate in content/media dallo script
 /import/*
 !/import/LEGGIMI.md
+
+# build dei temi alternativi e anteprima comparativa
+/.next-*/
+/out-tutti/

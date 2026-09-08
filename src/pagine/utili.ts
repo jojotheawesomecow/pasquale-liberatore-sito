@@ -1,5 +1,5 @@
 import { CATEGORIE_OPERE } from "../../keystatic.config";
-import type { SchedaOpera } from "@/componenti/OpereGriglia";
+import type { SchedaOpera } from "@/lib/tipi";
 import { decadeDi, type Opera } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
