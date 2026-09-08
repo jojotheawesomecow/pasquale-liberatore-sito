@@ -1,5 +1,8 @@
 # Pubblica il sito statico su GitHub Pages a ogni push sul ramo main.
-# Anteprima: https://jojotheawesomecow.github.io/pasquale-liberatore-sito/
+# Anteprima comparativa delle tre vesti grafiche:
+#   A  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/
+#   B  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/b/
+#   C  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/c/
 name: Pubblica su GitHub Pages
 
 on:
@@ -26,14 +29,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - run: npm run build:tutti
         env:
           NEXT_PUBLIC_BASE_PATH: /pasquale-liberatore-sito
           NEXT_PUBLIC_SITE_URL: https://jojotheawesomecow.github.io/pasquale-liberatore-sito
           NEXT_PUBLIC_NOINDEX: "1"
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: out
+          path: out-tutti
 
   deploy:
     needs: build

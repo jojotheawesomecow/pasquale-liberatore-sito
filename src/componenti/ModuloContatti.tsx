@@ -39,9 +39,9 @@ export function ModuloContatti({ endpoint, chiave, etichette }: Props) {
     }
   }
 
-  const campo = "w-full border-b border-pietra bg-transparent py-3 font-serif text-lg text-inchiostro placeholder:text-pietra-2 focus:border-inchiostro focus:outline-none";
+  const campo = "w-full border-b border-linea bg-transparent py-3 font-serif text-lg text-testo placeholder:text-testo-3 focus:border-testo focus:outline-none";
 
-  if (stato === "ok") return <p className="font-serif text-xl text-muschio">{etichette.grazie}</p>;
+  if (stato === "ok") return <p className="font-serif text-xl text-accento">{etichette.grazie}</p>;
 
   return (
     <form onSubmit={invia} className="grid gap-6" noValidate={false}>
@@ -62,13 +62,13 @@ export function ModuloContatti({ endpoint, chiave, etichette }: Props) {
         <button
           type="submit"
           disabled={stato === "invio"}
-          className="inline-flex h-12 items-center justify-center rounded-full bg-inchiostro px-7 font-sans text-sm tracking-[0.02em] text-carta transition-colors hover:bg-muschio disabled:opacity-60"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-testo px-7 font-sans text-sm tracking-[0.02em] text-sfondo transition-colors hover:bg-accento hover:text-accento-contrasto disabled:opacity-60"
         >
           {stato === "invio" ? etichette.invio : etichette.invia}
         </button>
-        <p className="font-sans text-xs text-pietra-2 sm:max-w-xs">{etichette.privacy}</p>
+        <p className="font-sans text-xs text-testo-3 sm:max-w-xs">{etichette.privacy}</p>
       </div>
-      {stato === "errore" ? <p className="font-sans text-sm text-terra">{etichette.errore}</p> : null}
+      {stato === "errore" ? <p className="font-sans text-sm text-accento">{etichette.errore}</p> : null}
     </form>
   );
 }

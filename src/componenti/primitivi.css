@@ -1,0 +1,73 @@
+/* Primitive di movimento condivise dai temi B e C. Richiedono i token --color-* e --ease-out-soft del tema. */
+
+/* ingresso pagina */
+.pagina-entra { animation: pagina-entra 0.8s var(--ease-out-soft) both; }
+@keyframes pagina-entra { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+/* apparizione generica (elementi con data-rivela, tranne i testi parola per parola) */
+.js [data-rivela]:not([data-rivela-testo]):not(.rivela-immagine) {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 1s ease, transform 1s var(--ease-out-soft);
+}
+.js [data-rivela]:not([data-rivela-testo]):not(.rivela-immagine).visibile { opacity: 1; transform: none; }
+.js [data-rivela][data-ritardo="1"] { transition-delay: 0.1s; }
+.js [data-rivela][data-ritardo="2"] { transition-delay: 0.2s; }
+.js [data-rivela][data-ritardo="3"] { transition-delay: 0.3s; }
+
+/* immagine che si scopre dal basso, con leggero zoom */
+.js .rivela-immagine { clip-path: inset(100% 0 0 0); transition: clip-path 1.2s var(--ease-out-soft); }
+.js .rivela-immagine img { transform: scale(1.12); transition: transform 1.6s var(--ease-out-soft); }
+.js .rivela-immagine.visibile { clip-path: inset(0 0 0 0); }
+.js .rivela-immagine.visibile img { transform: none; }
+.js .rivela-immagine.dall-alto { clip-path: inset(0 0 100% 0); }
+.js .rivela-immagine.dall-alto.visibile { clip-path: inset(0); }
+
+/* testo parola per parola */
+.testo-rivela .pezzo { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.testo-rivela .pezzo-interno { display: inline-block; transform: translateY(110%); opacity: 0; transition: transform 0.9s var(--ease-out-soft), opacity 0.5s ease; }
+.testo-rivela.visibile .pezzo-interno { transform: none; opacity: 1; }
+html:not(.js) .testo-rivela .pezzo-interno { transform: none; opacity: 1; }
+
+/* nastro scorrevole */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee-pista { display: flex; width: max-content; animation: marquee var(--marquee-durata, 40s) linear infinite; animation-direction: var(--marquee-direzione, normal); }
+.marquee:hover .marquee-pista { animation-play-state: paused; }
+.marquee-gruppo { display: flex; flex-shrink: 0; align-items: center; gap: var(--marquee-gap, 3rem); padding-right: var(--marquee-gap, 3rem); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* indice opere: elenco con anteprima che segue il cursore */
+.indice-opere ul { list-style: none; margin: 0; padding: 0; }
+.indice-testata, .indice-riga { display: grid; grid-template-columns: 1.7fr 0.5fr 1.5fr 0.8fr; gap: 1.5rem; align-items: baseline; }
+.indice-testata { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-testo-3); padding: 0.8rem 0; border-bottom: 1px solid var(--color-linea); }
+.indice-riga { padding: 1.15rem 0; border-bottom: 1px solid var(--color-linea); text-decoration: none; color: inherit; transition: color 0.3s, padding-left 0.45s var(--ease-out-soft); }
+.indice-opere li.attiva .indice-riga { padding-left: 1.2rem; color: var(--color-accento); }
+.indice-titolo { font-size: clamp(1.35rem, 2.3vw, 2.3rem); line-height: 1; letter-spacing: -0.025em; font-weight: 500; }
+.indice-anno, .indice-categoria { font-family: var(--font-mono); font-size: 0.78rem; color: var(--color-testo-2); letter-spacing: 0.02em; }
+.indice-dettaglio { font-size: 0.95rem; color: var(--color-testo-2); }
+.indice-anteprima { position: fixed; left: 0; top: 0; width: 300px; aspect-ratio: 4 / 5; pointer-events: none; z-index: 30; opacity: 0; transition: opacity 0.35s; will-change: transform; overflow: hidden; }
+.indice-anteprima.visibile { opacity: 1; }
+.indice-anteprima-foto { position: absolute; inset: 0; opacity: 0; transform: scale(0.94); transition: opacity 0.35s, transform 0.7s var(--ease-out-soft); }
+.indice-anteprima-foto.attiva { opacity: 1; transform: none; }
+.indice-anteprima-touch { display: none; }
+@media (pointer: coarse), (width < 48rem) {
+  .indice-anteprima { display: none; }
+  .indice-testata { display: none; }
+  .indice-riga { grid-template-columns: 1fr auto; gap: 1rem; }
+  .indice-dettaglio, .indice-categoria { display: none; }
+  .indice-opere li.attiva .indice-riga { padding-left: 0; }
+}
+
+/* cursore personalizzato */
+.cursore { position: fixed; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accento); pointer-events: none; z-index: 1000; opacity: 0; transition: opacity 0.3s, width 0.35s var(--ease-out-soft), height 0.35s var(--ease-out-soft), background 0.3s, border-color 0.3s; }
+.cursore.visibile { opacity: 1; }
+.cursore.grande { width: 46px; height: 46px; background: transparent; border: 1px solid var(--color-accento); }
+.cursore.zoom { width: 68px; height: 68px; background: var(--color-accento); mix-blend-mode: difference; }
+.cursore-attivo, .cursore-attivo a, .cursore-attivo button, .cursore-attivo [role="button"] { cursor: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pagina-entra { animation: none; }
+  .js [data-rivela]:not([data-rivela-testo]):not(.rivela-immagine), .js .rivela-immagine, .js .rivela-immagine img, .testo-rivela .pezzo-interno { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .marquee-pista { animation: none; }
+  .cursore { display: none; }
+}

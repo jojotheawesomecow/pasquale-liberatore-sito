@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
-import { serif, sans } from "@/temi/a/fonts";
+import { Cursore } from "@/componenti/Cursore";
+import { RivelaOsservatore } from "@/componenti/Rivela";
+import { ScorrimentoFluido } from "@/componenti/ScorrimentoFluido";
+import { SelettoreTemi } from "@/componenti/SelettoreTemi";
+import { Transizione } from "@/componenti/Transizione";
 import { getImpostazioni, getVideo } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
 import { url, type Lang, type Sezione } from "@/lib/rotte";
-import { Header, type VoceMenu } from "@/temi/a/componenti/Header";
-import { Footer } from "@/temi/a/componenti/Footer";
-import { RivelaOsservatore } from "@/componenti/Rivela";
-import { SelettoreTemi } from "@/componenti/SelettoreTemi";
-import "@/temi/a/stile.css";
+import { mono, sans, serif } from "../fonts";
+import "../stile.css";
+import "@/componenti/primitivi.css";
+import { Footer } from "./Footer";
+import { Header, type VoceMenu } from "./Header";
 
-/** Struttura comune a tutte le pagine: <html>, testata, contenuto, piè di pagina. */
 export async function Documento({ lang, children }: { lang: Lang; children: ReactNode }) {
   const [impostazioni, video] = await Promise.all([getImpostazioni(), getVideo()]);
   const d = t(lang);
@@ -20,17 +23,20 @@ export async function Documento({ lang, children }: { lang: Lang; children: Reac
   const voci: VoceMenu[] = sezioni.map((s) => ({ href: url(lang, s), label: d.nav[s] }));
 
   return (
-    <html lang={lang} className={`${serif.variable} ${sans.variable}`}>
+    <html lang={lang} className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
       <body className="flex min-h-screen flex-col">
+        <div className="progresso" aria-hidden="true" />
         <RivelaOsservatore />
+        <ScorrimentoFluido />
+        <Cursore />
         <Header
           lang={lang}
           nome={impostazioni.nome}
           voci={voci}
           etichette={{ menu: d.menu, chiudi: d.chiudi, cambiaLingua: d.cambiaLingua, cambiaLinguaLabel: d.cambiaLinguaLabel, salta: d.saltaAlContenuto, ruolo: d.ruolo }}
         />
-        <main id="contenuto" className="flex-1">
-          {children}
+        <main id="contenuto" className="flex-1 pt-16">
+          <Transizione>{children}</Transizione>
         </main>
         <Footer lang={lang} voci={voci} impostazioni={impostazioni} />
         <SelettoreTemi />

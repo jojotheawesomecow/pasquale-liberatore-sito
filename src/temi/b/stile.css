@@ -1,0 +1,166 @@
+@import "tailwindcss" source(none);
+@source "../../app";
+@source "../../componenti";
+@source "../../pagine";
+@source "./";
+
+/* Tema B — "Ardesia": scuro, grotesk, immagini a tutta larghezza, movimento deciso. */
+@theme {
+  --color-sfondo: #0c0d0f;
+  --color-sfondo-2: #15171a;
+  --color-sfondo-3: #1e2125;
+  --color-testo: #f1eee7;
+  --color-testo-2: #a7a8a5;
+  --color-testo-3: #6c6f73;
+  --color-linea: rgba(241, 238, 231, 0.14);
+  --color-accento: #ff6b35;
+  --color-accento-contrasto: #0c0d0f;
+  --color-media: #15171a;
+  --color-su-media: #f1eee7;
+
+  --font-sans: var(--font-instrument-sans), system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-sfondo text-testo font-sans antialiased; font-feature-settings: "kern", "liga", "ss01"; text-rendering: optimizeLegibility; }
+  h1, h2, h3 { font-weight: 500; letter-spacing: -0.03em; text-wrap: balance; }
+  ::selection { background: var(--color-accento); color: var(--color-accento-contrasto); }
+  :focus-visible { outline: 2px solid var(--color-accento); outline-offset: 3px; }
+  img { display: block; }
+  button { cursor: pointer; }
+}
+
+@utility contenitore {
+  width: 100%;
+  padding-inline: 1rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-testo-3);
+}
+
+/* titolo enorme */
+@utility titolo-xxl {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-size: clamp(3.2rem, 12.5vw, 15rem);
+  text-transform: uppercase;
+}
+@utility titolo-xl {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-size: clamp(2.6rem, 7vw, 7.5rem);
+}
+@utility titolo-l {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.9rem, 3.6vw, 3.6rem);
+}
+/* corsivo dell'artista */
+@utility voce {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+@utility riga { border-top: 1px solid var(--color-linea); }
+
+@utility bottone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 3rem;
+  padding-inline: 1.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-linea);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-testo);
+  text-decoration: none;
+  transition: background-color 0.35s, color 0.35s, border-color 0.35s;
+  &:hover { background: var(--color-testo); color: var(--color-sfondo); border-color: var(--color-testo); }
+}
+@utility bottone-pieno {
+  background: var(--color-accento);
+  color: var(--color-accento-contrasto);
+  border-color: var(--color-accento);
+  &:hover { background: var(--color-testo); border-color: var(--color-testo); color: var(--color-sfondo); }
+}
+
+/* testi lunghi */
+.prosa { font-family: var(--font-sans); font-size: 1.05rem; line-height: 1.6; color: var(--color-testo-2); max-width: 66ch; }
+@media (width >= 48rem) { .prosa { font-size: 1.15rem; } }
+.prosa p + p { margin-top: 1.2em; }
+.prosa h2 { font-family: var(--font-sans); font-size: 1.6rem; letter-spacing: -0.03em; margin: 2.6em 0 0.8em; color: var(--color-testo); font-weight: 500; }
+.prosa a { color: var(--color-testo); text-decoration: underline; text-decoration-color: var(--color-accento); text-underline-offset: 4px; }
+.prosa a:hover { color: var(--color-accento); }
+.prosa blockquote { margin: 1.6em 0; padding-left: 1.2em; border-left: 1px solid var(--color-accento); font-family: var(--font-serif); font-style: italic; font-size: 1.4em; line-height: 1.25; color: var(--color-testo); }
+.prosa ul, .prosa ol { margin: 1em 0 1em 1.4em; }
+.prosa-riflessione { font-family: var(--font-serif); font-size: clamp(1.4rem, 1.9vw, 1.85rem); line-height: 1.35; color: var(--color-testo); letter-spacing: -0.005em; }
+.prosa-riflessione p + p { margin-top: 1.1em; }
+.prosa-riflessione em { font-style: italic; }
+.prosa-voce { font-family: var(--font-serif); font-style: italic; font-size: clamp(1.6rem, 2.6vw, 2.5rem); line-height: 1.2; color: var(--color-testo); max-width: 30ch; letter-spacing: -0.01em; }
+.prosa-voce p + p { margin-top: 1em; }
+
+/* griglia opere a tutta larghezza, 1px di distanza */
+.griglia-b { display: grid; gap: 1px; background: var(--color-linea); grid-template-columns: repeat(2, 1fr); }
+@media (width >= 48rem) { .griglia-b { grid-template-columns: repeat(3, 1fr); } }
+@media (width >= 80rem) { .griglia-b { grid-template-columns: repeat(4, 1fr); } }
+.griglia-b > * { background: var(--color-sfondo); }
+.scheda-b { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; color: inherit; text-decoration: none; }
+.scheda-b img { transition: transform 1.2s var(--ease-out-expo), opacity 0.6s; }
+.scheda-b:hover img { transform: scale(1.04); }
+.scheda-b .scheda-info { position: absolute; inset: auto 0 0 0; padding: 1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; background: linear-gradient(to top, rgba(12, 13, 15, 0.85), rgba(12, 13, 15, 0)); transform: translateY(8px); opacity: 0; transition: opacity 0.4s, transform 0.5s var(--ease-out-soft); }
+.scheda-b:hover .scheda-info, .scheda-b:focus-visible .scheda-info { opacity: 1; transform: none; }
+@media (pointer: coarse) { .scheda-b .scheda-info { opacity: 1; transform: none; } }
+.scheda-b .scheda-numero { position: absolute; top: 1rem; left: 1rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; color: var(--color-testo-2); mix-blend-mode: difference; }
+
+/* nastro orizzontale delle immagini di un'opera */
+.nastro { display: flex; gap: 1px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.nastro::-webkit-scrollbar { display: none; }
+.nastro > * { scroll-snap-align: start; flex: 0 0 auto; height: min(78svh, 900px); }
+.nastro img { height: 100%; width: auto; max-width: none; }
+
+/* testata fissa */
+.testata-b { position: fixed; inset: 0 0 auto 0; z-index: 40; transition: background-color 0.4s, backdrop-filter 0.4s, border-color 0.4s; border-bottom: 1px solid transparent; }
+.testata-b[data-scorso] { background: color-mix(in oklab, var(--color-sfondo) 78%, transparent); backdrop-filter: blur(14px); border-color: var(--color-linea); }
+
+/* scrollbar */
+* { scrollbar-width: thin; scrollbar-color: var(--color-testo-3) transparent; }
+
+/* finestra ingrandimento */
+dialog.lightbox { max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; border: 0; padding: 0; background: rgba(12, 13, 15, 0.97); color: var(--color-testo); }
+dialog.lightbox::backdrop { background: rgba(0, 0, 0, 0.7); }
+dialog.lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+.foto-cornice { background-size: cover; background-position: center; overflow: hidden; }
+.foto-cornice img { width: 100%; height: 100%; object-fit: cover; }
+.foto-naturale img { width: 100%; height: auto; }
+
+/* linea che avanza con lo scorrimento della pagina (solo browser con scroll-driven animations) */
+.progresso { position: fixed; top: 0; left: 0; height: 2px; width: 100%; background: var(--color-accento); transform-origin: left; transform: scaleX(0); z-index: 50; pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  .progresso { animation: progresso linear both; animation-timeline: scroll(root); }
+  @keyframes progresso { to { transform: scaleX(1); } }
+}

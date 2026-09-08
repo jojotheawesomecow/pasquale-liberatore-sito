@@ -1,4 +1,32 @@
-# Note per Marco — cosa c'è, cosa manca, cosa verificare
+# Note per Marco
+
+## Le tre vesti grafiche a confronto (notte del 8-9 settembre)
+
+Stessi contenuti, stesso pannello, tre vesti. Passa da una all'altra con la pillola A · B · C in basso a destra.
+
+| | A · Carta e pietra | B · Ardesia | C · Calce |
+|---|---|---|---|
+| URL | [/](https://jojotheawesomecow.github.io/pasquale-liberatore-sito/) | [/b/](https://jojotheawesomecow.github.io/pasquale-liberatore-sito/b/) | [/c/](https://jojotheawesomecow.github.io/pasquale-liberatore-sito/c/) |
+| Idea | catalogo d'arte su carta: calma, spazio bianco, mosaico di immagini | sito d'artista 2026: scuro, nome enorme, immagini a tutta larghezza, movimento deciso | l'incontro: la lettura e i caratteri di A dentro la struttura e il ritmo di B |
+| Colori | bianco osso, pietra, muschio | ardesia quasi nera, osso, arancio «resina» (dal Seme in resina del 1982) | bianco calce, grafite, terracotta |
+| Caratteri | Newsreader (serif) + Geist | Instrument Sans (grotesk) + Instrument Serif corsivo + Geist Mono per i dati | Newsreader per titoli e testi + Geist + Geist Mono |
+| Home | testo e immagine affiancati, opere a mosaico | immagine a tutto schermo con il nome, nastro dei materiali, frase del manifesto parola per parola, opere sfalsate | immagine a tutta larghezza, nome e manifesto affiancati, griglia con didascalie |
+| Opere | mosaico con filtri | griglia a bordo vivo (1 px di distanza) con numeri e info al passaggio, **oppure indice a elenco con anteprima che segue il cursore**; filtri per categoria e decennio | griglia con didascalie sotto, barra dei filtri che resta fissa scorrendo, stesso indice a elenco |
+| Scheda opera | colonna dati fissa + immagini impilate | titolo enorme, **nastro orizzontale trascinabile** delle foto, dati in mono, opera precedente/successiva con anteprima | titolo serif enorme, immagini impilate con numerazione, dati in mono |
+| Movimento | dissolvenze leggere | scorrimento fluido (Lenis), cursore personalizzato, immagini che si scoprono con un taglio, testi parola per parola, transizione tra pagine, barra di avanzamento, orologio di Villa Sant'Angelo, nastro dei materiali | transizione tra pagine, immagini che si scoprono, testi parola per parola; niente cursore né scorrimento modificato |
+| Rischi | può sembrare «tradizionale» | il nero esalta il marmo ma penalizza le foto con molto cielo e prato; più pesante da mantenere coerente con 100 quadri di colori diversi | il più equilibrato; meno «effetto wow» di B |
+
+**Cosa ha detto la ricerca (91 siti analizzati, rapporto in `docs/ricerca/design-2026.md`).** La grammatica dei siti d'arte 2026: un solo grotesk (più eventualmente un serif contemporaneo), metadati in monospazio (58 siti su 91), etichette maiuscole piccole, nome enorme, righe sottili, colore che viene dalle opere su fondo quasi nero o bianco sporco con un solo accento, «l'indice delle opere è il prodotto» (anteprime al passaggio, alternanza lista/griglia). Movimento: Lenis + rivelazioni con clip-path + transizioni native tra pagine; cursore personalizzato in 39 siti su 91; animazioni CSS legate allo scorrimento in nessuno (le ho usate per la barra di avanzamento in B). Superato: caroselli, parallasse pesante, hamburger su desktop, preloader. I siti degli scultori della pietra sono indietro: solo Jago è scuro e animato.
+
+**Alternative pronte all'uso, se vuoi provarle** (bastano pochi minuti ciascuna):
+- B con accento «oro pietra» `#C9A57A` o «lichene acido» `#D4FF3F` al posto dell'arancio; oppure B «due toni» che alterna sezioni ardesia e sezioni Majella.
+- C con titoli in Bricolage Grotesque (grotesk caratterizzato) al posto di Newsreader e accento grigio-azzurro ardesia `#3E4A52`: è la variante suggerita dalla ricerca.
+- Font di sistema: tutte le famiglie sono Google Fonts, autoinstallate con il sito, nessuna richiesta esterna.
+
+**Come si sceglie.** Dimmi la lettera (o una combinazione: «B ma chiaro», «C con la home di B»…). Rendere definitivo un tema è un cambio di una riga in `next.config.ts`.
+
+---
+ — cosa c'è, cosa manca, cosa verificare
 
 Aggiornato alla notte tra il 7 e l'8 settembre 2026.
 

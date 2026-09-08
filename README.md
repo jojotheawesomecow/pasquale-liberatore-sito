@@ -6,6 +6,19 @@ può essere pubblicata su qualsiasi hosting (GitHub Pages, Aruba, Netlify, Verce
 
 Italiano alla radice (`/opere/`), inglese sotto `/en/` (`/en/works/`), con selettore in alto a destra.
 
+## Tre vesti grafiche (temi)
+
+Contenuti, pannello, rotte e lingue sono unici; la veste grafica è intercambiabile (cartella `src/temi/`):
+
+| Tema | Carattere | Avvio in locale | Anteprima |
+|---|---|---|---|
+| **A · Carta e pietra** | editoriale, chiaro, serif Newsreader, griglia a mosaico | `npm run dev` → :3000 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/> |
+| **B · Ardesia** | scuro, grotesk Instrument Sans + serif corsivo, immagini a tutta larghezza, scorrimento fluido, cursore, indice con anteprima | `npm run dev:b` → :3001 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/b/> |
+| **C · Calce** | chiaro, serif Newsreader per titoli e testi, struttura a tutta larghezza di B, movimento misurato | `npm run dev:c` → :3002 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/c/> |
+
+In basso a destra, nell'anteprima, una pillola **A · B · C** permette di passare da una versione all'altra sulla stessa pagina.
+Per scegliere il tema definitivo basta cambiare il valore predefinito di `tema` in `next.config.ts` (oggi `"a"`) e, nel workflow, tornare a `npm run build` al posto di `npm run build:tutti`.
+
 ---
 
 ## 1. Requisiti (una volta sola)
@@ -109,7 +122,9 @@ Variabili d'ambiente usate dalla build:
 
 | Comando | Cosa fa |
 |---|---|
-| `npm run dev` | sito + pannello in locale, con ottimizzazione immagini in ascolto |
+| `npm run dev` | sito (tema A) + pannello in locale, con ottimizzazione immagini in ascolto |
+| `npm run dev:b` / `npm run dev:c` | lo stesso con il tema B (porta 3001) o C (porta 3002); si possono tenere aperti insieme |
+| `npm run build:tutti` | i tre temi in `out-tutti/` (A alla radice, B in `/b/`, C in `/c/`), usato dall'anteprima su GitHub Pages |
 | `npm run build` | sito statico in `out/` |
 | `npm run anteprima` | serve la cartella `out/` su <http://localhost:3000> per controllare la build |
 | `npm run immagini` | rigenera le immagini ottimizzate (`public/media/`) e il manifesto (`src/generated/immagini.json`) |
@@ -127,12 +142,13 @@ content/                 ← TUTTI i contenuti (testi, schede, impostazioni)
   media/                 ← foto originali (opere/, riflessioni/, giardino/, pagine/)
 public/media/            ← versioni ottimizzate generate (non modificare, non in git)
 src/app/                 ← rotte Next.js: (it) italiano, (en) inglese, (cms) pannello (solo in sviluppo)
-src/pagine/              ← le pagine (Home, Opere, Opera, ChiSono, Riflessioni, Giardino, Video, Contatti, Privacy)
-src/componenti/          ← componenti (Header, Footer, Foto, GalleriaOpera, OpereGriglia, VideoEmbed, ModuloContatti…)
+src/pagine/              ← smistamento delle rotte e metadati (dispatch.tsx), funzioni comuni (utili.ts)
+src/temi/a|b|c/          ← le tre vesti grafiche: ognuna ha stile.css, fonts.ts, componenti/ e pagine/
+src/componenti/          ← componenti condivisi tra i temi (Foto, Rivela, TestoRivela, Marquee, IndiceOpere, Cursore, VideoEmbed, ModuloContatti…)
 src/lib/                 ← rotte e lingue (rotte.ts, i18n.ts), lettura contenuti (contenuti.ts), immagini, testi statici
 scripts/                 ← immagini.mjs (ottimizzazione), importa-opere.mjs (import massivo), dev.mjs
 keystatic.config.ts      ← definizione dei campi del pannello
 ```
 
-Per cambiare colori e caratteri: `src/app/globals.css` (sezione `@theme`) e `src/lib/fonts.ts`.
+Per cambiare colori e caratteri di un tema: `src/temi/<tema>/stile.css` (sezione `@theme`) e `src/temi/<tema>/fonts.ts`.
 Per aggiungere una lingua o rinominare un percorso: `src/lib/rotte.ts` e `src/lib/i18n.ts`.

@@ -18,6 +18,19 @@
   --color-ardesia-2: #2f353d;
   --color-terra: #b4562f;
 
+  /* token semantici, usati dai componenti condivisi tra i temi */
+  --color-sfondo: #f4f1ea;
+  --color-sfondo-2: #ece7db;
+  --color-testo: #1d1c19;
+  --color-testo-2: #48453f;
+  --color-testo-3: #8b857a;
+  --color-linea: #cfc8b9;
+  --color-accento: #55663f;
+  --color-accento-contrasto: #f4f1ea;
+  --color-media: #22272d;
+  --color-su-media: #f4f1ea;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
   --font-serif: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-sans: var(--font-geist), system-ui, -apple-system, "Segoe UI", sans-serif;
 

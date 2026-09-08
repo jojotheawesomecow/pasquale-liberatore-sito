@@ -54,6 +54,11 @@ const dizionario = {
     saltaAlContenuto: "Salta al contenuto",
     senzaTitolo: "Senza titolo",
     sd: "s.d.",
+    vista: { griglia: "Griglia", indice: "Indice" },
+    colonne: ["Titolo", "Anno", "Materiale o tecnica", "Categoria"] as [string, string, string, string],
+    doveTrovarmi: "Dove trovarmi",
+    scorri: "Scorri",
+    prossimaOpera: "Prossima opera",
   },
   en: {
     lingua: "English",
@@ -108,6 +113,11 @@ const dizionario = {
     saltaAlContenuto: "Skip to content",
     senzaTitolo: "Untitled",
     sd: "n.d.",
+    vista: { griglia: "Grid", indice: "Index" },
+    colonne: ["Title", "Year", "Material or technique", "Category"] as [string, string, string, string],
+    doveTrovarmi: "Where to find me",
+    scorri: "Scroll",
+    prossimaOpera: "Next work",
   },
 };
 

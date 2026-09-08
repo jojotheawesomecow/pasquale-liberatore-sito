@@ -24,7 +24,9 @@ const nextConfig: NextConfig = {
   assetPrefix: basePath || undefined,
   images: { unoptimized: true },
   reactStrictMode: true,
-  distDir: tema === "a" ? ".next" : `.next-${tema}`,
+  // in sviluppo ogni tema ha la sua cartella, così si possono tenere aperti più server insieme;
+  // in produzione si costruisce un tema alla volta e l'export finisce sempre in `out/`
+  distDir: isDev && tema !== "a" ? `.next-${tema}` : ".next",
   env: { NEXT_PUBLIC_TEMA: tema },
   turbopack: {
     root: path.resolve(process.cwd()),
