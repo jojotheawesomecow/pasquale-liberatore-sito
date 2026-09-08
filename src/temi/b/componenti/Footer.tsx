@@ -1,25 +1,19 @@
 import Link from "next/link";
-import { Marquee } from "@/componenti/Marquee";
 import type { Impostazioni } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
 import { url, type Lang } from "@/lib/rotte";
+import { testi } from "@/lib/testi";
+import { Nastro } from "./Nastro";
 import type { VoceMenu } from "./Header";
-
-const MATERIALI = ["Pietra della Majella", "Marmo bianco di Carrara", "Ardesia", "Travertino romano", "Pietra Perla d'Abruzzo", "Arenaria serena", "Resina", "Legno"];
 
 export function Footer({ lang, voci, impostazioni }: { lang: Lang; voci: VoceMenu[]; impostazioni: Impostazioni }) {
   const d = t(lang);
+  const x = testi(lang);
   const anno = new Date().getFullYear();
   const utente = (u: string | null) => (u ? "@" + u.replace(/\/+$/, "").split("/").pop() : "");
   return (
     <footer className="mt-32 border-t border-linea">
-      <Marquee className="border-b border-linea py-4" durata={50}>
-        {MATERIALI.map((m) => (
-          <span key={m} className="mono flex items-center gap-12 text-testo-2">
-            {m} <span className="h-1 w-1 rounded-full bg-accento" aria-hidden="true" />
-          </span>
-        ))}
-      </Marquee>
+      <Nastro voci={x.nastro.posti} etichetta={x.nastro.luoghi} variante="mono" className="border-b border-linea py-4 sm:py-5" durata={88} inverti />
       <div className="contenitore grid gap-12 py-16 lg:grid-cols-12 lg:py-24">
         <div className="lg:col-span-7">
           <p className="mono">{d.contattami}</p>

@@ -1,5 +1,16 @@
 # Note per Marco
 
+## Il nastro scorrevole (tema B): due versioni, tutte e due pronte
+
+La barra che scorre sotto l'immagine di apertura esiste in due vesti, entrambe già nel codice. Nell'anteprima le trovi tutte e due nella stessa pagina, così le confronti:
+
+- **Corsivo** (in home, sotto l'apertura): nomi dei materiali in corsivo serif, separati da un piccolo rombo vuoto, etichetta fissa «Materie» a sinistra. Più elegante e più vicino al tono dei testi dell'artista.
+- **Mono** (nel piè di pagina, in fondo a ogni pagina): maiuscoletto monospazio con pallino arancione, la prima versione, con etichetta «Luoghi».
+
+Miglioramenti comuni a entrambe: i bordi sfumano invece di tagliare le parole di netto, c'è l'etichetta fissa a sinistra separata da una riga sottile, il nastro si ferma al passaggio del mouse e resta immobile per chi ha attivato «riduci movimento». In home scorrono i **materiali**, nel piè di pagina i **luoghi**, così la stessa pagina non ripete due volte lo stesso elenco.
+
+Per cambiare veste basta una parola: in `src/temi/b/pagine/Home.tsx` e `src/temi/b/componenti/Footer.tsx` il componente `<Nastro …>` accetta `variante="corsivo"` (predefinita) oppure `variante="mono"`. Si possono anche togliere l'etichetta, invertire la direzione, cambiare velocità e sostituire le parole (gli elenchi di materiali e luoghi sono in `src/lib/testi.ts`, in italiano e in inglese).
+
 ## Le tre vesti grafiche a confronto (notte del 8-9 settembre)
 
 Stessi contenuti, stesso pannello, tre vesti. Passa da una all'altra con la pillola A · B · C in basso a destra.

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Foto } from "@/componenti/Foto";
-import { Marquee } from "@/componenti/Marquee";
 import { TestoRivela } from "@/componenti/TestoRivela";
 import { VideoEmbed } from "@/componenti/VideoEmbed";
 import { getGiardino, getHome, getImpostazioni, getOpere, getRiflessioni, getVideo, youtubeId } from "@/lib/contenuti";
 import { campo, t } from "@/lib/i18n";
 import { foto } from "@/lib/immagini";
 import { url, type Lang } from "@/lib/rotte";
+import { testi } from "@/lib/testi";
 import { schedaOpera } from "@/pagine/utili";
+import { Nastro } from "../componenti/Nastro";
 
 const POSIZIONI = [
   "lg:col-span-7 lg:col-start-1",
@@ -17,11 +18,11 @@ const POSIZIONI = [
   "lg:col-span-8 lg:col-start-1",
   "lg:col-span-4 lg:col-start-9 lg:mt-40",
 ];
-const MATERIALI = ["Pietra della Majella", "Marmo bianco di Carrara", "Ardesia", "Travertino romano", "Pietra Perla d'Abruzzo", "Arenaria serena del Trasimeno", "Resina", "Legno", "Piombo fuso"];
 
 export async function Home({ lang }: { lang: Lang }) {
   const [home, opere, riflessioni, giardino, video, impostazioni] = await Promise.all([getHome(), getOpere(), getRiflessioni(), getGiardino(), getVideo(), getImpostazioni()]);
   const d = t(lang);
+  const x = testi(lang);
   const hero = foto(home.immagine);
   const inEvidenza = opere.filter((o) => o.in_evidenza);
   const evidenza = (inEvidenza.length >= 3 ? inEvidenza : opere).slice(0, 6).map((o) => schedaOpera(o, lang));
@@ -55,13 +56,7 @@ export async function Home({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <Marquee className="border-y border-linea py-3" durata={55}>
-        {MATERIALI.map((m) => (
-          <span key={m} className="mono flex items-center gap-12 text-testo-2">
-            {m} <span className="h-1 w-1 rounded-full bg-accento" aria-hidden="true" />
-          </span>
-        ))}
-      </Marquee>
+      <Nastro voci={x.nastro.materiali} etichetta={x.nastro.materie} className="border-y border-linea py-4 sm:py-5" durata={72} />
 
       {/* Dichiarazione */}
       <section className="contenitore py-24 sm:py-36">
