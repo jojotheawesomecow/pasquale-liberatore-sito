@@ -11,6 +11,7 @@ export type Tema = {
   NonTrovata: ComponentType;
   Home: PaginaSemplice;
   Opere: PaginaSemplice;
+  Archivio: PaginaSemplice;
   Opera: PaginaDettaglio;
   ChiSono: PaginaSemplice;
   Riflessioni: PaginaSemplice;

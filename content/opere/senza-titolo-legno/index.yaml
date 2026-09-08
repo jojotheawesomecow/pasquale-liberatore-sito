@@ -20,3 +20,4 @@ in_evidenza: false
 ordine: 15
 stato: pubblicata
 codice: S-015
+selezionata: true

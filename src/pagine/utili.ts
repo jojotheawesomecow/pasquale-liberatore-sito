@@ -22,6 +22,39 @@ export function schedaOpera(o: Opera, lang: Lang): SchedaOpera {
   };
 }
 
+/**
+ * Raggruppa l'archivio: prima le opere documentate per decennio,
+ * poi i dipinti in blocchi di numero d'archivio. Il blocco numerico è onesto:
+ * non finge un ordine cronologico che non conosciamo.
+ */
+export function raggruppaArchivio(
+  opere: SchedaOpera[],
+  etichette: { senzaData: string; senzaTitolo: string }
+) {
+  const gruppi: { chiave: string; titolo: string; opere: SchedaOpera[] }[] = [];
+  const conAnno = opere.filter((o) => o.decade);
+  const senzaAnno = opere.filter((o) => !o.decade);
+  const documentate = senzaAnno.filter((o) => o.titolo !== etichette.senzaTitolo);
+  const daSchedare = senzaAnno.filter((o) => o.titolo === etichette.senzaTitolo);
+
+  for (const d of [...new Set(conAnno.map((o) => o.decade as string))].sort((a, b) => Number(b) - Number(a))) {
+    gruppi.push({ chiave: `d-${d}`, titolo: `${d}–${Number(d) + 9}`, opere: conAnno.filter((o) => o.decade === d) });
+  }
+  if (documentate.length) {
+    gruppi.push({ chiave: "senza-data", titolo: etichette.senzaData, opere: documentate });
+  }
+  // i dipinti ancora da schedare, a blocchi di numero d'archivio: è un ordine onesto,
+  // non finge una cronologia che non conosciamo
+  const blocco = 50;
+  for (let i = 0; i < daSchedare.length; i += blocco) {
+    const fetta = daSchedare.slice(i, i + blocco);
+    const da = fetta[0]?.codice ?? "";
+    const a = fetta[fetta.length - 1]?.codice ?? "";
+    gruppi.push({ chiave: `b-${i}`, titolo: da && a ? `${da} – ${a}` : etichette.senzaData, opere: fetta });
+  }
+  return gruppi;
+}
+
 export function categoriePresenti(opere: Opera[], lang: Lang) {
   const d = t(lang);
   return CATEGORIE_OPERE.filter((c) => opere.some((o) => o.categoria === c.value)).map((c) => ({

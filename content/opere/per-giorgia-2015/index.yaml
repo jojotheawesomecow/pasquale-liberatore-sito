@@ -19,3 +19,4 @@ in_evidenza: false
 ordine: 5
 stato: pubblicata
 codice: S-005
+selezionata: true

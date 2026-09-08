@@ -90,6 +90,8 @@ dentro `content/media/opere/`. Nei file con sfondo trasparente toglie il bordo v
 
 | Sezione | Dove si modifica | Note |
 |---|---|---|
+| Opere | selezione curata: nella scheda dell'opera, casella «Mostra nella pagina Opere» | Le altre restano nell'Archivio. |
+| Archivio | automatico: contiene tutte le opere | Righe giustificate, raggruppate per decennio e per blocco di numero d'archivio; viste Galleria/Elenco e Con i dati/Solo immagini; filtri e ricerca finiscono nell'indirizzo. |
 | Home | Pannello → **Home page** | Immagine grande, frase di apertura, presentazione, citazione. Le opere mostrate sono quelle con *In evidenza*. |
 | Chi sono | Pannello → **Chi sono** | Ritratto, biografia (testo formattabile), **Cronologia** (una voce per mostra/simposio/opera), nomi dei critici, bibliografia. |
 | Riflessioni | Pannello → **Riflessioni** | Ogni testo ha titolo, data facoltativa, frase di apertura, immagine, testo e le **foto delle pagine del quaderno**. |

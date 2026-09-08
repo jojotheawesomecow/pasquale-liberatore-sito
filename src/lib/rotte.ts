@@ -5,6 +5,7 @@ export const LINGUE: Lang[] = ["it", "en"];
 export const SEZIONI = {
   home: { it: "", en: "" },
   opere: { it: "opere", en: "works" },
+  archivio: { it: "archivio", en: "archive" },
   chiSono: { it: "chi-sono", en: "about" },
   riflessioni: { it: "riflessioni", en: "reflections" },
   giardino: { it: "il-mio-giardino", en: "the-garden" },

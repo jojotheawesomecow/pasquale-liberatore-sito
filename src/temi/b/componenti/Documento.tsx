@@ -16,7 +16,7 @@ import { Header, type VoceMenu } from "./Header";
 export async function Documento({ lang, children }: { lang: Lang; children: ReactNode }) {
   const [impostazioni, video] = await Promise.all([getImpostazioni(), getVideo()]);
   const d = t(lang);
-  const sezioni: Sezione[] = ["opere", "chiSono", "riflessioni"];
+  const sezioni: Sezione[] = ["opere", "archivio", "chiSono", "riflessioni"];
   if (impostazioni.mostra_giardino) sezioni.push("giardino");
   if (impostazioni.mostra_video && video.length > 0) sezioni.push("video");
   sezioni.push("contatti");

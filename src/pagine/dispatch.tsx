@@ -31,6 +31,8 @@ export async function renderPagina(lang: Lang, path: string[]) {
       return <tema.Home lang={lang} />;
     case "opere":
       return rotta.slug ? <tema.Opera lang={lang} slug={rotta.slug} /> : <tema.Opere lang={lang} />;
+    case "archivio":
+      return <tema.Archivio lang={lang} />;
     case "chiSono":
       return <tema.ChiSono lang={lang} />;
     case "riflessioni":
@@ -98,6 +100,10 @@ export async function metadataPagina(lang: Lang, path: string[]): Promise<Metada
       }
       break;
     }
+    case "archivio":
+      title = d.nav.archivio;
+      description = d.archivioIntro;
+      break;
     case "chiSono":
       title = d.nav.chiSono;
       break;

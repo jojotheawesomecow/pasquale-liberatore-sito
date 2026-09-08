@@ -41,6 +41,11 @@ export const TESTI = {
       ],
     },
     cronologiaNota: "Le voci senza data provengono dagli archivi dell'artista e verranno completate.",
+    notaArchivio: [
+      "L'archivio raccoglie tutte le opere schedate finora: le sculture e le opere pubbliche documentate, e i dipinti fotografati nello studio dell'artista.",
+      "Molti dipinti non hanno ancora titolo, data, tecnica né misure: sono elencati con il loro numero d'archivio, che resta anche quando i dati verranno aggiunti. La schedatura è in corso e procede insieme all'artista.",
+      "Le immagini con il fondo bianco sono state scontornate; le altre mostrano l'opera com'è stata fotografata, alla parete o su un telo.",
+    ] as string[],
     privacy: {
       titolo: "Privacy",
       intro: "Questo sito rispetta la tua riservatezza: non usa cookie, non traccia le visite e non raccoglie dati di navigazione.",
@@ -93,6 +98,11 @@ export const TESTI = {
       ],
     },
     cronologiaNota: "Undated entries come from the artist's archives and will be completed.",
+    notaArchivio: [
+      "The archive gathers every work catalogued so far: the documented sculptures and public works, and the paintings photographed in the artist's studio.",
+      "Many paintings have no title, date, technique or dimensions yet: they are listed with their archive number, which stays with them once the details are added. Cataloguing is under way, together with the artist.",
+      "Images on a plain background have been cut out; the others show the work as it was photographed, on a wall or on a cloth.",
+    ] as string[],
     privacy: {
       titolo: "Privacy",
       intro: "This website respects your privacy: it uses no cookies, does not track visits and collects no browsing data.",

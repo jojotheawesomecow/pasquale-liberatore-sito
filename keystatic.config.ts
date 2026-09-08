@@ -78,6 +78,7 @@ export default config({
         ),
         descrizione: fields.text({ label: "Descrizione (italiano)", multiline: true }),
         descrizione_en: fields.text({ label: "Descrizione (inglese)", multiline: true }),
+        selezionata: fields.checkbox({ label: "Mostra nella pagina Opere", description: "Le opere non selezionate restano visibili nell'Archivio", defaultValue: false }),
         in_evidenza: fields.checkbox({ label: "In evidenza in home page", defaultValue: false }),
         ordine: fields.integer({ label: "Ordine", description: "Numero più basso = viene prima. Se vuoto, si ordina per anno", }),
         stato: fields.select({

@@ -38,6 +38,11 @@ export async function getOpere(): Promise<Opera[]> {
     .sort(ordina);
 }
 
+/** Solo le opere scelte per la pagina Opere. Le altre restano nell'Archivio. */
+export async function getOpereSelezionate(): Promise<Opera[]> {
+  return (await getOpere()).filter((o) => o.selezionata);
+}
+
 export async function getOpera(slug: string): Promise<Opera | null> {
   const e = await reader.collections.opere.read(slug);
   if (!e || e.stato === "bozza") return null;

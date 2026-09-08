@@ -30,3 +30,4 @@ in_evidenza: true
 ordine: 10
 stato: pubblicata
 codice: S-010
+selezionata: true

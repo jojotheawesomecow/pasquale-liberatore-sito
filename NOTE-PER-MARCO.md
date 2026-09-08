@@ -1,5 +1,32 @@
 # Note per Marco
 
+## Opere e Archivio: come si guardano 224 opere
+
+Hai ragione: la griglia a schede andava bene per 16 sculture, non per 208 dipinti. Ho fatto una ricerca su una novantina fra archivi d'artista, cataloghi ragionati e collezioni museali, e ho rifatto la sezione seguendo quello che fanno loro. Il rapporto completo è in `docs/ricerca/collezioni-grandi.md`.
+
+**Cosa dice la ricerca, in breve.**
+- Il caso più vicino al nostro è il catalogo ragionato di Philip Guston: opere quasi tutte senza titolo, immagini scontornate, filtri nell'indirizzo, didascalia di due righe con numero di catalogo.
+- Chi ha molte opere separa sempre **una selezione curata** da **l'archivio completo**: due voci di menu diverse, non un filtro. Lo fanno Guston, il Guggenheim (1.900 opere scelte su 8.000) e il MoMA.
+- Quando duecento didascalie direbbero la stessa cosa, si toglie la didascalia. La Fondazione Lichtenstein ha proprio un pulsante «miniature senza titoli».
+- Nessuno usa una finestra a comparsa come navigazione principale: la scheda dell'opera resta una pagina vera.
+- Il numero di catalogo si mostra con la stessa dignità del titolo. Le convenzioni per i dati mancanti sono «s.d.», «dimensioni ignote».
+
+**Due problemi misurati sul nostro sito.** La pagina Opere pesava 315 KB e il 70% erano dati spediti due volte: tutte le 224 opere finivano nel codice della pagina anche se se ne vedevano 48. E la griglia a mosaico del tema chiaro, a ogni «mostra altre», rimescolava tutte le opere già viste. È molto probabilmente la sensazione che hai avuto.
+
+**Com'è adesso.**
+
+- **Opere** mostra le 16 opere documentate, quelle con titolo, anno, materiale e misure. È la porta d'ingresso e in fondo rimanda all'archivio.
+- **Archivio** raccoglie tutte e 224. Le immagini sono in **righe giustificate**: ogni opera tiene le sue proporzioni e non viene più ritagliata, e le righe riempiono la larghezza. È il modo in cui si guardano le fotografie.
+- Le opere sono **raggruppate**: per decennio quelle con una data, poi a blocchi di numero d'archivio i dipinti ancora da schedare. Il blocco numerico è onesto, non finge una cronologia che non conosciamo.
+- I **quadri scontornati** poggiano direttamente sul fondo, senza cornice; quelli fotografati alla parete restano dentro il loro rettangolo. È la vera distinzione visiva del corpus.
+- Tre comandi in alto: **Galleria** o **Elenco** tipografico, e **Con i dati** o **Solo immagini**, che toglie tutte le didascalie e lascia solo il muro di dipinti.
+- Filtri e ricerca finiscono **nell'indirizzo**: `?tipo=pittura&dati=0` si può salvare fra i preferiti o mandare a qualcuno.
+- Sotto c'è una **Nota all'archivio** che dice apertamente che la schedatura è in corso. È la prassi dei cataloghi seri, e toglie l'aria di incompiuto.
+
+**Come si sposta un'opera da Archivio a Opere.** Dal pannello, nella scheda dell'opera, c'è la casella «Mostra nella pagina Opere». Oggi è spuntata sulle 16 documentate. Man mano che scegliete i dipinti migliori, basta spuntarla.
+
+**Sul peso.** L'archivio è una pagina sola con tutte e 224 le opere, ma pesa 45 KB compressi: le immagini si caricano solo quando servono e non c'è nessun elenco spedito due volte.
+
 ## I 208 quadri: come sono entrati e come si gestiscono
 
 Sono dentro tutti e 208, pubblicati, nella categoria «Pittura e grafica». Insieme alle 16 sculture il sito conta **224 opere**.

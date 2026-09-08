@@ -21,3 +21,4 @@ in_evidenza: true
 ordine: 1
 stato: pubblicata
 codice: S-001
+selezionata: true

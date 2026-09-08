@@ -161,3 +161,109 @@ html:not(.js) .testo-rivela .pezzo-interno { transform: none; opacity: 1; }
 }
 .provino .scheda-b:hover .provino-codice, .provino .scheda-b:focus-visible .provino-codice { opacity: 1; }
 @media (pointer: coarse) { .provino-codice { opacity: 1; } }
+
+/* ============================================================
+   ARCHIVIO: righe giustificate, elenco, barra di controllo
+   Le righe si compongono da sole con flexbox: ogni immagine tiene le sue proporzioni,
+   la riga riempie la larghezza e i filtri possono nascondere le opere senza rompere nulla.
+   ============================================================ */
+.archivio-barra { position: sticky; top: 4rem; z-index: 25; background: color-mix(in oklab, var(--color-sfondo) 92%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-linea); }
+.archivio-barra-riga { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 0.7rem 0; }
+.archivio-barra-riga.secondaria { gap: 1.25rem; padding-top: 0; }
+.archivio-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.archivio-strumenti { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.archivio-separatore { display: none; width: 1px; height: 1rem; margin-inline: 0.5rem; background: var(--color-linea); }
+@media (width >= 40rem) { .archivio-separatore { display: inline-block; } }
+.archivio-chip {
+  border: 1px solid var(--color-linea);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-testo-2);
+  background: transparent;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.archivio-chip:hover { border-color: var(--color-testo); color: var(--color-testo); }
+.archivio-chip.attivo { background: var(--color-testo); border-color: var(--color-testo); color: var(--color-sfondo); }
+.archivio-cerca input {
+  width: 11rem;
+  border: 1px solid var(--color-linea);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-testo);
+}
+@media (width >= 48rem) { .archivio-cerca input { width: 15rem; } }
+.archivio-cerca input::placeholder { color: var(--color-testo-3); }
+.archivio-cerca input:focus { border-color: var(--color-testo); outline: none; }
+.archivio-interruttore { display: flex; border: 1px solid var(--color-linea); border-radius: 999px; padding: 2px; }
+.archivio-interruttore button {
+  border: 0; background: transparent; border-radius: 999px;
+  padding: 0.32rem 0.8rem;
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-testo-2); transition: background-color 0.3s, color 0.3s;
+}
+.archivio-interruttore button.attivo { background: var(--color-testo); color: var(--color-sfondo); }
+.archivio-azzera { background: none; border: 0; padding: 0; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-testo); text-decoration: underline; text-decoration-color: var(--color-accento); text-underline-offset: 4px; }
+
+/* intestazioni dei gruppi */
+.archivio-gruppo, .archivio-elenco section { margin-top: 3.5rem; }
+.archivio-gruppo:first-child, .archivio-elenco section:first-of-type { margin-top: 2rem; }
+.archivio-titolo {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  position: sticky; top: 7.5rem; z-index: 10;
+  margin-bottom: 1rem; padding: 0.5rem 0;
+  background: color-mix(in oklab, var(--color-sfondo) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-linea);
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-testo-2);
+}
+.archivio-quanti { color: var(--color-testo-3); }
+
+/* righe giustificate */
+.giustificata { display: flex; flex-wrap: wrap; gap: var(--giust-gap, 0.75rem); list-style: none; margin: 0; padding: 0; }
+.giustificata::after { content: ""; flex-grow: 1e9; }
+.giustificata > li {
+  flex: var(--ar) 1 calc(var(--ar) * var(--giust-h, 15rem));
+  min-width: 6rem;
+  margin: 0;
+}
+.giustificata-scatto { display: block; aspect-ratio: var(--ar); background: var(--color-sfondo-2); overflow: hidden; }
+.giustificata > li.scontornata .giustificata-scatto { background: transparent; }
+.giustificata-scatto img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s; }
+.giustificata > li.scontornata .giustificata-scatto img { object-fit: contain; }
+.giustificata-scatto:hover img { opacity: 0.82; }
+.giustificata-dati { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 0.45rem 0 0; }
+.giustificata-codice { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--color-testo-3); }
+.giustificata-titolo { font-family: var(--font-sans); font-size: 0.78rem; color: var(--color-testo-2); }
+@media (width >= 48rem) { .giustificata { --giust-h: 17rem; } }
+@media (width >= 80rem) { .giustificata { --giust-h: 14rem; --giust-gap: 1rem; } }
+
+/* interruttore "solo immagini": restano le figure, spariscono le didascalie */
+[data-archivio][data-dati="0"] .giustificata-dati { display: none; }
+[data-archivio][data-dati="0"] .giustificata { --giust-gap: 0.35rem; }
+
+/* le due viste si alternano: sono entrambe già nella pagina */
+[data-archivio] .archivio-elenco { display: none; }
+[data-archivio][data-vista="elenco"] .archivio { display: none; }
+[data-archivio][data-vista="elenco"] .archivio-elenco { display: block; }
+
+/* elenco tipografico */
+.archivio-elenco ul { list-style: none; margin: 0; padding: 0; }
+.elenco-testata, .elenco-riga { display: grid; grid-template-columns: 5rem 1.6fr 5rem 1.4fr; gap: 1.5rem; align-items: baseline; }
+.elenco-testata { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-testo-3); padding: 0.8rem 0; border-bottom: 1px solid var(--color-linea); }
+.elenco-riga { padding: 0.8rem 0; border-bottom: 1px solid var(--color-linea); text-decoration: none; color: inherit; transition: color 0.25s, padding-left 0.4s var(--ease-out-soft); }
+.archivio-elenco li:hover .elenco-riga { color: var(--color-accento); padding-left: 0.8rem; }
+.elenco-codice, .elenco-anno { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-testo-3); }
+.elenco-titolo { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: -0.01em; }
+.elenco-dettaglio { font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-testo-2); }
+@media (width < 48rem) {
+  .elenco-testata { display: none; }
+  .elenco-riga { grid-template-columns: 4.5rem 1fr auto; }
+  .elenco-dettaglio { display: none; }
+}
