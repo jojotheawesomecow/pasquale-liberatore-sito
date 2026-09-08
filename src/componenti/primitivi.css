@@ -139,3 +139,25 @@ html:not(.js) .testo-rivela .pezzo-interno { transform: none; opacity: 1; }
   .nastro-voce::after { transition: none; }
   .cursore { display: none; }
 }
+
+/* provino: griglia fitta di miniature, pensata per gli archivi con molte opere */
+.provino { display: grid; gap: 1px; background: var(--color-linea); grid-template-columns: repeat(3, 1fr); }
+@media (width >= 40rem) { .provino { grid-template-columns: repeat(5, 1fr); } }
+@media (width >= 64rem) { .provino { grid-template-columns: repeat(7, 1fr); } }
+@media (width >= 96rem) { .provino { grid-template-columns: repeat(9, 1fr); } }
+.provino > * { background: var(--color-sfondo); }
+.provino .scheda-b { aspect-ratio: 1 / 1; }
+.provino-codice {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.35rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--color-testo-2);
+  background: linear-gradient(to top, color-mix(in oklab, var(--color-sfondo) 88%, transparent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.provino .scheda-b:hover .provino-codice, .provino .scheda-b:focus-visible .provino-codice { opacity: 1; }
+@media (pointer: coarse) { .provino-codice { opacity: 1; } }

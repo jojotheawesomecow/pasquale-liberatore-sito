@@ -1,5 +1,38 @@
 # Note per Marco
 
+## I 208 quadri: come sono entrati e come si gestiscono
+
+Sono dentro tutti e 208, pubblicati, nella categoria «Pittura e grafica». Insieme alle 16 sculture il sito conta **224 opere**.
+
+**Cosa è successo ai tuoi file.** Gli originali della cartella `cartella senza nome 4` non sono stati toccati né spostati: restano dove sono, 2 GB. Il progetto ne ha ricavato una copia leggera da 2000 px, in tutto 98 MB. Nei 118 quadri già scontornati ho tolto il bordo trasparente vuoto attorno all'opera, così nella griglia si vede il dipinto e non il vuoto intorno. Il sito li mostra interi invece di ritagliarli.
+
+**Ogni opera ha un numero d'archivio**: da P-001 a P-208 per i dipinti, da S-001 a S-016 per sculture e opere pubbliche. Serve a ritrovare l'opera finché non ha un titolo, e resta anche dopo. Compare sotto la miniatura e nella scheda.
+
+**Tre modi di guardarle**, con il selettore in alto a destra della pagina Opere:
+- **Griglia**: le immagini grandi, una accanto all'altra.
+- **Indice**: elenco tipografico con l'anteprima che segue il cursore. Buono per scorrere in fretta.
+- **Provino**: miniature fitte, sette o nove per riga. È la vista giusta per 208 quadri: la pagina si abbraccia con un colpo d'occhio.
+
+Ci sono poi la **ricerca** (per titolo, numero, materiale, luogo) e i filtri per categoria e decennio. Le opere si caricano a gruppi di 48 con il pulsante «Mostra altre», così la pagina resta leggera anche su telefono.
+
+**Per aggiungere i dati con calma.** Ho preparato due strumenti che si rigenerano con `npm run schede`:
+- `provino-opere.html`, un provino stampabile con tutte le miniature e i numeri. Si può stampare e annotare a mano con Pasquale.
+- `schede-opere.csv`, un foglio da aprire con Excel o Numbers, una riga per opera. Si riempiono solo le caselle che si conoscono: titolo, anno, tecnica, misure, luogo. Le caselle lasciate vuote non cambiano nulla.
+
+Quando il foglio è compilato, anche solo in parte, si lancia `npm run schede -- --applica` e le schede si aggiornano da sole. Si può ripetere quante volte si vuole, un po' alla volta.
+
+**Pesi, per sapere dove siamo.**
+
+| Cosa | Peso |
+|---|---|
+| I tuoi originali, intatti | 2,0 GB |
+| Copie leggere dentro al progetto | 98 MB |
+| Sito pubblicato, immagini comprese | 365 MB |
+
+Le immagini sono in una sola copia condivisa dai tre temi: senza questo accorgimento sarebbero state moltiplicate per tre e avremmo sfiorato il limite di GitHub Pages.
+
+**Una cosa su cui decidere.** 208 dipinti senza titolo, tutti insieme, rischiano di sommergere le sculture. Appena scegli il tema propongo di dividere in due: una pagina «Opere» con una selezione curata e una pagina «Archivio» con tutto, dichiarata come tale. La struttura è già pronta, è questione di un pomeriggio.
+
 ## Il nastro scorrevole (tema B): due versioni, tutte e due pronte
 
 La barra che scorre sotto l'immagine di apertura esiste in due vesti, entrambe già nel codice. Nell'anteprima le trovi tutte e due nella stessa pagina, così le confronti:

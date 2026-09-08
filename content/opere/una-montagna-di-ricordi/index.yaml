@@ -1,12 +1,12 @@
 titolo: Una montagna di ricordi
 titolo_en: A mountain of memories
 categoria: pittura
-anno: ""
-luogo: ""
-materiale: ""
+anno: ''
+luogo: ''
+materiale: ''
 tecnica: Serigrafia
 dimensioni: 50×70 cm
-collezione: "Fonte: MU.SP.A.C. Museo Sperimentale d'Arte Contemporanea, L'Aquila"
+collezione: 'Fonte: MU.SP.A.C. Museo Sperimentale d''Arte Contemporanea, L''Aquila'
 foto: /media/opere/una-montagna-di-ricordi/una-montagna-di-ricordi.jpg
 galleria: []
 descrizione: >-
@@ -18,3 +18,4 @@ descrizione_en: >-
 in_evidenza: false
 ordine: 16
 stato: pubblicata
+codice: S-016

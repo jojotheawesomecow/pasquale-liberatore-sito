@@ -29,6 +29,8 @@ for (const [tema, suffisso] of Object.entries(temi)) {
       ...process.env,
       TEMA: tema,
       NEXT_PUBLIC_BASE_PATH: `${base}${suffisso}`,
+      // le immagini stanno in una sola copia alla radice, condivisa dai tre temi
+      NEXT_PUBLIC_MEDIA_BASE: base,
       NEXT_PUBLIC_SITE_URL: `${sito}${suffisso}`,
       NEXT_PUBLIC_ANTEPRIMA_TEMI: anteprima,
     },
@@ -37,7 +39,14 @@ for (const [tema, suffisso] of Object.entries(temi)) {
   const out = path.join(root, "out");
   const target = suffisso ? path.join(dest, suffisso.slice(1)) : dest;
   fs.mkdirSync(target, { recursive: true });
-  for (const voce of fs.readdirSync(out)) fs.renameSync(path.join(out, voce), path.join(target, voce));
+  for (const voce of fs.readdirSync(out)) {
+    // le immagini restano solo nella copia alla radice (tema A)
+    if (voce === "media" && suffisso) {
+      fs.rmSync(path.join(out, voce), { recursive: true, force: true });
+      continue;
+    }
+    fs.renameSync(path.join(out, voce), path.join(target, voce));
+  }
   fs.rmSync(out, { recursive: true, force: true });
 }
 console.log(`\nFatto: ${dest}`);

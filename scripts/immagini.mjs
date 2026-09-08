@@ -50,6 +50,7 @@ async function processOne(file, manifest) {
   if (prev && prev.stamp === stamp && prev.sizes.every((w) => fss.existsSync(`${base}-${w}.webp`))) return false;
 
   const meta = await sharp(file, { failOn: "none" }).metadata();
+  const alpha = !!meta.hasAlpha;
   let w = meta.width ?? 0;
   let h = meta.height ?? 0;
   if ((meta.orientation ?? 1) >= 5) [w, h] = [h, w];
@@ -66,7 +67,13 @@ async function processOne(file, manifest) {
       .webp({ quality: s >= 1600 ? 82 : 78, effort: 4 })
       .toFile(`${base}-${s}.webp`);
   }
-  const blur = await sharp(file, { failOn: "none" }).rotate().resize({ width: 24 }).blur(0.8).webp({ quality: 40 }).toBuffer();
+  const blur = await sharp(file, { failOn: "none" })
+    .rotate()
+    .resize({ width: 24 })
+    .blur(0.8)
+    .flatten(alpha ? { background: "#e8e5dd" } : false)
+    .webp({ quality: 40 })
+    .toBuffer();
   const finalW = largest;
   const finalH = Math.round((h * finalW) / w);
   manifest[key] = {
@@ -75,6 +82,7 @@ async function processOne(file, manifest) {
     sizes,
     base: relBase,
     blur: `data:image/webp;base64,${blur.toString("base64")}`,
+    ...(alpha ? { alpha: true } : {}),
     stamp,
   };
   return true;

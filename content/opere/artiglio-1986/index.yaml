@@ -1,10 +1,10 @@
 titolo: Artiglio
 titolo_en: Claw
 categoria: opera-pubblica
-anno: "1986"
+anno: '1986'
 luogo: Tuoro sul Trasimeno (PG)
 materiale: Pietra arenaria serena di Sant'Agata, lago Trasimeno
-tecnica: ""
+tecnica: ''
 dimensioni: 400×140×100 cm
 collezione: «Campo del Sole», parco di sculture sul lago Trasimeno
 foto: /media/opere/artiglio-1986/artiglio-1986.jpg
@@ -14,7 +14,7 @@ galleria:
     didascalia_en: The artist beside the column
   - foto: /media/opere/artiglio-1986/artiglio-campo-del-sole.jpg
     didascalia: «Artiglio» tra le altre colonne del Campo del Sole
-    didascalia_en: "\"Claw\" among the other columns of the Campo del Sole"
+    didascalia_en: '"Claw" among the other columns of the Campo del Sole'
   - foto: /media/opere/artiglio-1986/campo-del-sole-tuoro.jpg
     didascalia: Il Campo del Sole a Tuoro sul Trasimeno
     didascalia_en: The Campo del Sole at Tuoro sul Trasimeno
@@ -29,3 +29,4 @@ descrizione_en: >-
 in_evidenza: true
 ordine: 10
 stato: pubblicata
+codice: S-010

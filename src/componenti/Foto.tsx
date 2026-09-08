@@ -8,17 +8,20 @@ type Props = {
   priorita?: boolean;
   /** se true l'immagine riempie il contenitore (object-fit: cover); altrimenti mantiene le proporzioni */
   riempi?: boolean;
+  /** con `riempi`, mostra l'immagine per intero invece di ritagliarla (per i quadri scontornati) */
+  intera?: boolean;
   className?: string;
   imgClassName?: string;
   style?: React.CSSProperties;
 };
 
 /** Immagine responsive generata da `npm run immagini`, con anteprima sfocata mentre carica. */
-export function Foto({ foto, alt, sizes = "100vw", priorita = false, riempi = false, className = "", imgClassName = "", style }: Props) {
+export function Foto({ foto, alt, sizes = "100vw", priorita = false, riempi = false, intera = false, className = "", imgClassName = "", style }: Props) {
+  const contieni = intera || foto.alpha;
   return (
     <div
       className={`${riempi ? "foto-cornice" : "foto-naturale foto-cornice"} ${className}`}
-      style={{ backgroundImage: `url(${foto.blur})`, ...(riempi ? {} : { aspectRatio: `${foto.w} / ${foto.h}` }), ...style }}
+      style={{ ...(contieni && riempi ? {} : { backgroundImage: `url(${foto.blur})` }), ...(riempi ? {} : { aspectRatio: `${foto.w} / ${foto.h}` }), ...style }}
     >
       <img
         src={foto.url}
@@ -30,7 +33,7 @@ export function Foto({ foto, alt, sizes = "100vw", priorita = false, riempi = fa
         loading={priorita ? "eager" : "lazy"}
         decoding={priorita ? "sync" : "async"}
         fetchPriority={priorita ? "high" : "auto"}
-        className={imgClassName}
+        className={`${contieni && riempi ? "object-contain" : ""} ${imgClassName}`}
       />
     </div>
   );

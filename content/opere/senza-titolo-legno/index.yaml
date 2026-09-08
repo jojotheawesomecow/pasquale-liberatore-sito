@@ -2,11 +2,11 @@ titolo: Senza titolo (legno e combustione)
 titolo_en: Untitled (wood and burning)
 categoria: scultura
 anno: anni Ottanta
-luogo: ""
+luogo: ''
 materiale: Legno con tagli e combustioni
-tecnica: ""
-dimensioni: ""
-collezione: "Fonte: MU.SP.A.C. Museo Sperimentale d'Arte Contemporanea, L'Aquila"
+tecnica: ''
+dimensioni: ''
+collezione: 'Fonte: MU.SP.A.C. Museo Sperimentale d''Arte Contemporanea, L''Aquila'
 foto: /media/opere/senza-titolo-legno/senza-titolo-legno.jpg
 galleria: []
 descrizione: >-
@@ -19,3 +19,4 @@ descrizione_en: >-
 in_evidenza: false
 ordine: 15
 stato: pubblicata
+codice: S-015

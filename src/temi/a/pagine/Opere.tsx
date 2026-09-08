@@ -16,7 +16,7 @@ export async function Opere({ lang }: { lang: Lang }) {
       <OpereGriglia
         opere={opere.map((o) => schedaOpera(o, lang))}
         categorie={categoriePresenti(opere, lang)}
-        etichette={{ ...d.filtri, senzaTitolo: d.senzaTitolo }}
+        etichette={{ ...d.filtri, senzaTitolo: d.senzaTitolo, cerca: d.cerca, cercaSuggerimento: d.cercaSuggerimento, mostraAltri: d.mostraAltri, mostraTutte: d.mostraTutte, nessunRisultato: d.nessunRisultato }}
       />
     </>
   );

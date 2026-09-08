@@ -13,7 +13,7 @@ export async function Opere({ lang }: { lang: Lang }) {
   return (
     <>
       <Titolo etichetta="Pasquale Liberatore" titolo={d.nav.opere} intro={x.opereIntro} numero={String(opere.length).padStart(2, "0")} />
-      <GrigliaOpere opere={opere.map((o) => schedaOpera(o, lang))} categorie={categoriePresenti(opere, lang)} etichette={{ ...d.filtri, griglia: d.vista.griglia, indice: d.vista.indice, colonne: d.colonne }} />
+      <GrigliaOpere opere={opere.map((o) => schedaOpera(o, lang))} categorie={categoriePresenti(opere, lang)} etichette={{ ...d.filtri, griglia: d.vista.griglia, indice: d.vista.indice, provino: d.vista.provino, cerca: d.cerca, cercaSuggerimento: d.cercaSuggerimento, mostraAltri: d.mostraAltri, mostraTutte: d.mostraTutte, nessunRisultato: d.nessunRisultato, colonne: d.colonne }} />
     </>
   );
 }

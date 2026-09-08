@@ -66,13 +66,11 @@ export function IndiceOpere({ opere, colonne, className = "" }: Props) {
         ))}
       </ul>
       <div ref={anteprima} className={`indice-anteprima ${attiva !== null && opere[attiva]?.foto ? "visibile" : ""}`} aria-hidden="true">
-        {opere.map((o, i) =>
-          o.foto ? (
-            <div key={o.slug} className={`indice-anteprima-foto ${attiva === i ? "attiva" : ""}`}>
-              <Foto foto={o.foto} alt="" sizes="360px" riempi className="h-full w-full" />
-            </div>
-          ) : null
-        )}
+        {attiva !== null && opere[attiva]?.foto ? (
+          <div key={opere[attiva].slug} className="indice-anteprima-foto attiva">
+            <Foto foto={opere[attiva].foto!} alt="" sizes="360px" riempi className="h-full w-full" />
+          </div>
+        ) : null}
       </div>
     </div>
   );

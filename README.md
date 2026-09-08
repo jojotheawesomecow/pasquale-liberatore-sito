@@ -61,16 +61,30 @@ Per **pubblicare** le modifiche online basta farne il commit e il push su GitHub
 
 I campi in inglese si chiamano tutti `… (inglese)`; il fallback all'italiano è automatico.
 
-## 4. Caricare molte opere insieme (50-100 foto)
+## 4. Caricare molte opere insieme
 
-Vedi `import/LEGGIMI.md`. In breve:
+Gli originali **non** vengono spostati né modificati: lo script ne ricava una copia leggera (2000 px, WebP)
+dentro `content/media/opere/`. Nei file con sfondo trasparente toglie il bordo vuoto attorno all'opera.
 
-1. Copia le foto in `import/` (una foto = un'opera; una sottocartella = un'opera con più foto).
-2. Dai ai file un nome parlante, es. `Seme di fava 2020 60x40x25.jpg`: titolo, anno e misure vengono letti dal nome.
-3. Facoltativo: `import/schede.csv` con una riga per file (colonne: file, titolo, titolo_en, categoria, anno, luogo,
-   materiale, tecnica, dimensioni, collezione, descrizione, descrizione_en).
-4. `npm run importa -- --categoria pittura` (aggiungi `--bozza` per importare come bozze).
-5. Completa le schede dal pannello.
+1. Metti le foto in `import/`, oppure indica una cartella qualsiasi con `--da`.
+   Una foto = un'opera; una sottocartella = un'opera con più foto.
+2. Se i nomi dei file contengono titolo, anno o misure vengono letti da lì
+   (es. `Seme di fava 2020 60x40x25.jpg`). Altrimenti si usano titoli provvisori.
+3. Lancia l'importazione:
+
+       npm run importa -- --da "/percorso/cartella" --categoria pittura --codice P --ordine 1000
+
+   `--codice P` numera le opere P-001, P-002…, `--ordine 1000` le mette dopo le sculture,
+   `--bozza` le importa senza pubblicarle, `--prova` mostra solo cosa farebbe.
+4. `npm run immagini` per generare le versioni pubblicate (lo fa da solo anche `npm run dev`).
+
+### Aggiungere i dati in un secondo momento
+
+    npm run schede               # crea schede-opere.csv e provino-opere.html
+    npm run schede -- --applica  # rilegge il foglio compilato e aggiorna le schede
+
+`provino-opere.html` è un provino stampabile con tutte le miniature e i numeri d'archivio.
+`schede-opere.csv` si apre con Excel o Numbers: una riga per opera, si riempiono solo le caselle note.
 
 ## 5. Le altre sezioni
 

@@ -1,10 +1,10 @@
 titolo: Crescendo
 titolo_en: Crescendo
 categoria: scultura
-anno: "1983"
-luogo: ""
+anno: '1983'
+luogo: ''
 materiale: Marmo brecciato di Suvereto e piombo fuso
-tecnica: ""
+tecnica: ''
 dimensioni: 100×60×20 cm
 collezione: Collezione privata (Roma). Esposta nel 1983 a Palazzo dei Diamanti, Ferrara
 foto: /media/opere/crescendo-1983/crescendo-1983.jpg
@@ -20,3 +20,4 @@ descrizione_en: >-
 in_evidenza: false
 ordine: 11
 stato: pubblicata
+codice: S-011

@@ -1,11 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { conBase } from "./base";
+import { conBaseMedia } from "./base";
 
 import type { Foto } from "./tipi";
 export type { Foto };
 
-type Voce = { w: number; h: number; sizes: number[]; base: string; blur: string };
+type Voce = { w: number; h: number; sizes: number[]; base: string; blur: string; alpha?: boolean };
 
 let cache: Record<string, Voce> | null = null;
 let cacheMtime = 0;
@@ -35,8 +35,9 @@ export function foto(src: string | null | undefined): Foto | null {
     w: v.w,
     h: v.h,
     sizes: v.sizes,
-    url: conBase(`${v.base}-${grande}.webp`),
-    srcSet: v.sizes.map((s) => `${conBase(`${v.base}-${s}.webp`)} ${s}w`).join(", "),
+    url: conBaseMedia(`${v.base}-${grande}.webp`),
+    srcSet: v.sizes.map((s) => `${conBaseMedia(`${v.base}-${s}.webp`)} ${s}w`).join(", "),
     blur: v.blur,
+    ...(v.alpha ? { alpha: true as const } : {}),
   };
 }

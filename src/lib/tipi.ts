@@ -7,6 +7,8 @@ export type Foto = {
   url: string;
   srcSet: string;
   blur: string;
+  /** l'immagine ha sfondo trasparente (quadro scontornato): va mostrata intera, non ritagliata */
+  alpha?: boolean;
 };
 
 /** Dati minimi di un'opera per griglie ed elenchi (serializzabili, passano ai componenti client). */
@@ -14,6 +16,8 @@ export type SchedaOpera = {
   slug: string;
   href: string;
   titolo: string;
+  /** numero d'archivio, es. P-001: identifica l'opera finché non ha un titolo */
+  codice: string;
   anno: string;
   categoria: string;
   categoriaLabel: string;

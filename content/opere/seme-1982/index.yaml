@@ -1,10 +1,10 @@
 titolo: Seme
 titolo_en: Seed
 categoria: scultura
-anno: "1982"
-luogo: ""
+anno: '1982'
+luogo: ''
 materiale: Resina
-tecnica: ""
+tecnica: ''
 dimensioni: 55×30×35 cm
 collezione: Collezione privata
 foto: /media/opere/seme-1982/seme-1982.jpg
@@ -18,3 +18,4 @@ descrizione_en: >-
 in_evidenza: false
 ordine: 13
 stato: pubblicata
+codice: S-013

@@ -51,3 +51,7 @@ next-env.d.ts
 # build dei temi alternativi e anteprima comparativa
 /.next-*/
 /out-tutti/
+
+# fogli di lavoro generati (si rigenerano con `npm run schede`)
+/schede-opere.csv
+/provino-opere.html

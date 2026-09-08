@@ -11,6 +11,7 @@ export function schedaOpera(o: Opera, lang: Lang): SchedaOpera {
     slug: o.slug,
     href: url(lang, "opere", o.slug),
     titolo: campo(o, "titolo", lang) || d.senzaTitolo,
+    codice: o.codice ?? "",
     anno: o.anno ?? "",
     categoria: o.categoria,
     categoriaLabel: d.categorieBrevi[o.categoria] ?? o.categoria,

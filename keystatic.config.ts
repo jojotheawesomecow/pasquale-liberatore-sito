@@ -59,6 +59,7 @@ export default config({
           slug: { label: "Indirizzo web", description: "Generato dal titolo, si può lasciare così" },
         }),
         titolo_en: fields.text({ label: "Titolo (inglese)", description: "Facoltativo: se vuoto, si usa il titolo italiano" }),
+        codice: fields.text({ label: "Codice d'archivio", description: "Numero di inventario, es. P-001. Serve a ritrovare l'opera anche quando non ha ancora un titolo" }),
         categoria: fields.select({ label: "Categoria", options: CATEGORIE_OPERE, defaultValue: "scultura" }),
         anno: fields.text({ label: "Anno", description: "Es. 2013. Si può lasciare vuoto o scrivere 'anni Ottanta'" }),
         luogo: fields.text({ label: "Luogo", description: "Dove si trova o dove è stata realizzata/esposta" }),
@@ -87,6 +88,7 @@ export default config({
           ],
           defaultValue: "pubblicata",
         }),
+        origine: fields.text({ label: "File di partenza", description: "Nome della foto originale da cui è nata la scheda. Serve solo per ritrovarla nell'archivio" }),
       },
     }),
 

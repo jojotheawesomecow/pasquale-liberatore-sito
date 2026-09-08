@@ -14,7 +14,8 @@
     "immagini": "node scripts/immagini.mjs",
     "importa": "node scripts/importa-opere.mjs",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "schede": "node scripts/schede.mjs"
   },
   "dependencies": {
     "@keystatic/core": "^0.6.9",

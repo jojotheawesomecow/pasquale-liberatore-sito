@@ -11,7 +11,11 @@
 
        npm run importa -- --categoria pittura
 
+   Per importare da un'altra cartella senza copiare niente qui dentro:
+
+       npm run importa -- --da "/percorso/della/cartella" --categoria pittura --codice P --ordine 1000
+
    Le categorie possibili: scultura, opera-pubblica, pittura, disegno, installazione, performance.
    Aggiungi `--bozza` per importare tutto come bozza (non visibile finché non lo pubblichi dal pannello).
-5. Le foto vengono spostate in `content/media/opere/<nome-opera>/` e per ogni opera nasce una scheda
+5. Gli originali restano dove sono. Dentro `content/media/opere/<nome-opera>/` finisce una copia leggera e per ogni opera nasce una scheda
    `content/opere/<nome-opera>/index.yaml`, che puoi completare dal pannello (`npm run dev` → /keystatic).
