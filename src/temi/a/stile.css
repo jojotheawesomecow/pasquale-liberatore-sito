@@ -3,6 +3,7 @@
 @source "../../componenti";
 @source "../../pagine";
 @source "./";
+@import "../../componenti/primitivi.css";
 
 @theme {
   --color-carta: #f4f1ea;
@@ -183,3 +184,10 @@ dialog.lightbox img { max-width: 100%; max-height: 100%; width: auto; height: au
 
 /* scrollbar discreta */
 * { scrollbar-width: thin; scrollbar-color: var(--color-pietra) transparent; }
+
+/* La testata del tema A è più alta degli altri: la barra dell'archivio e le intestazioni
+   dei gruppi scendono di conseguenza. */
+@media (width >= 40rem) {
+  .archivio-barra { top: 5rem; }
+  .archivio-titolo { top: 8.6rem; }
+}
