@@ -1,50 +1,85 @@
-/* Foglio di stile del banco di lavoro. Volutamente semplice: è uno strumento, non una pagina del sito. */
+/* Pannello delle opere. Interfaccia volutamente grande e spoglia:
+   la usa chi non lavora con i computer tutto il giorno. */
 * { box-sizing: border-box; }
-body { margin: 0; background: #f4f3f0; color: #1c1c1c; font: 15px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
-.gest { max-width: 1500px; margin: 0 auto; padding: 24px 20px 80px; }
-.gest-testata { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #d8d5cd; }
-.gest-testata h1 { margin: 0; font-size: 22px; font-weight: 600; }
-.gest-nota { margin: 6px 0 0; color: #6b6a64; font-size: 13px; max-width: 60ch; }
-.gest-conti { display: flex; gap: 28px; margin: 0; }
-.gest-conti div { text-align: right; }
-.gest-conti dt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #8a887f; }
-.gest-conti dd { margin: 2px 0 0; font-size: 24px; font-variant-numeric: tabular-nums; }
+body { margin: 0; background: #f2f1ee; color: #1b1b1a; font: 17px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, input, select { font: inherit; }
+.pan { max-width: 1180px; margin: 0 auto; padding: 28px 22px 90px; }
 
-.gest-barra { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 0; background: #f4f3f0; border-bottom: 1px solid #d8d5cd; }
-.gest-barra button { border: 1px solid #cdc9c0; background: #fff; border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer; }
-.gest-barra button.attivo { background: #1c1c1c; border-color: #1c1c1c; color: #fff; }
-.gest-barra input[type="search"] { flex: 1; min-width: 200px; max-width: 340px; border: 1px solid #cdc9c0; border-radius: 999px; padding: 6px 14px; font-size: 13px; background: #fff; }
-.gest-quante { margin-left: auto; font-size: 12px; color: #8a887f; }
+/* testata */
+.pan-testa { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; }
+.pan-titolo h1 { margin: 0; font-size: 27px; font-weight: 600; letter-spacing: -0.01em; }
+.pan-titolo p { margin: 4px 0 0; color: #6f6e68; font-size: 15px; }
+.pan-modi, .pan-filtri { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pan-modi button, .pan-filtri button {
+  border: 1px solid #d2cec5; background: #fff; border-radius: 999px;
+  padding: 9px 18px; cursor: pointer; color: #45443f;
+}
+.pan-modi button.on, .pan-filtri button.on { background: #1b1b1a; border-color: #1b1b1a; color: #fff; }
+.pan-filtri { margin-top: 22px; padding-top: 18px; border-top: 1px solid #ddd9d0; }
+.pan-quante { margin-left: 6px; color: #8b8981; font-size: 15px; }
+.pan-stato { margin-left: auto; font-size: 15px; color: #8b8981; min-height: 1.5em; }
+.pan-stato.salvato { color: #41743a; }
+.pan-stato.errore { color: #b03a26; }
+.pan-vuoto { margin: 80px 0; text-align: center; color: #8b8981; }
 
-.gest-elenco { list-style: none; margin: 0; padding: 0; }
-.gest-elenco > li { display: grid; grid-template-columns: 190px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid #e3e0d9; }
-.gest-elenco > li.bozza { opacity: 0.55; }
-@media (max-width: 760px) { .gest-elenco > li { grid-template-columns: 120px 1fr; gap: 12px; } }
+/* una per volta */
+.pan-scheda { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 36px; margin-top: 26px; align-items: start; }
+@media (max-width: 900px) { .pan-scheda { grid-template-columns: 1fr; gap: 24px; } }
+.pan-foto { position: sticky; top: 20px; }
+.pan-foto img {
+  display: block; width: 100%; max-height: 62vh; object-fit: contain;
+  background: #fff center/18px 18px repeating-conic-gradient(#edebe5 0 25%, #fff 0 50%);
+  border: 1px solid #ddd9d0;
+}
+.pan-nessuna { display: grid; place-items: center; height: 240px; background: #fff; border: 1px solid #ddd9d0; color: #a9a69e; }
+.pan-ruota { display: flex; gap: 10px; margin-top: 12px; }
+.pan-ruota button { flex: 1; border: 1px solid #d2cec5; background: #fff; border-radius: 10px; padding: 12px; cursor: pointer; color: #45443f; }
+.pan-ruota button:hover { background: #1b1b1a; border-color: #1b1b1a; color: #fff; }
 
-.gest-foto { position: relative; max-height: 210px; background: #fff center/16px 16px repeating-conic-gradient(#eeece6 0 25%, #fff 0 50%); border: 1px solid #e3e0d9; }
-.gest-foto img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.gest-ruota { position: absolute; inset: auto 4px 4px auto; display: flex; gap: 4px; }
-.gest-ruota button { width: 30px; height: 30px; border: 1px solid #cdc9c0; background: rgba(255,255,255,0.92); border-radius: 6px; font-size: 15px; line-height: 1; cursor: pointer; }
-.gest-ruota button:hover { background: #1c1c1c; color: #fff; border-color: #1c1c1c; }
+.pan-campi { display: flex; flex-direction: column; gap: 16px; }
+.pan-posizione { margin: 0; color: #8b8981; font-size: 15px; }
+.pan-posizione span { font-family: ui-monospace, Menlo, monospace; letter-spacing: 0.06em; }
+.pan-campi label { display: flex; flex-direction: column; gap: 6px; }
+.pan-campi label > span { font-size: 14px; color: #6f6e68; }
+.pan-campi input, .pan-campi select { border: 1px solid #d2cec5; border-radius: 10px; padding: 12px 14px; background: #fff; width: 100%; }
+.pan-campi input:focus, .pan-campi select:focus { outline: 2px solid #1b1b1a; outline-offset: -1px; }
+.pan-campi label.grande input { font-size: 22px; padding: 14px; }
+.pan-due { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pan-spunte { display: flex; flex-direction: column; gap: 10px; padding: 14px 0 2px; border-top: 1px solid #ddd9d0; }
+.pan-spunte label { flex-direction: row; align-items: center; gap: 10px; cursor: pointer; }
+.pan-spunte label > span { font-size: 16px; color: #1b1b1a; }
+.pan-spunte input { width: 22px; height: 22px; }
 
-.gest-campi { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.gest-riga-alta { display: flex; align-items: baseline; gap: 12px; }
-.gest-codice { font: 12px/1 ui-monospace, Menlo, monospace; letter-spacing: 0.08em; color: #8a887f; }
-.gest-stato { font-size: 11px; color: #8a887f; }
-.gest-stato.fatto { color: #4a7a3f; }
-.gest-stato.errore { color: #b4402b; }
+.pan-azioni { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.pan-azioni button { border-radius: 999px; padding: 13px 22px; cursor: pointer; border: 1px solid #1b1b1a; background: #fff; color: #1b1b1a; }
+.pan-azioni button.pieno { background: #1b1b1a; color: #fff; }
+.pan-azioni button.rosso { border-color: #b03a26; color: #b03a26; }
+.pan-azioni button.rosso.pieno { background: #b03a26; border-color: #b03a26; color: #fff; }
+.pan-azioni button:disabled { opacity: 0.35; cursor: default; }
+.pan-aiuto { margin: 2px 0 0; font-size: 14px; color: #a9a69e; }
 
-.gest-campi label { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.gest-campi label > span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #8a887f; }
-.gest-campi input[type="text"], .gest-campi input:not([type]), .gest-campi select { border: 1px solid #cdc9c0; border-radius: 6px; padding: 7px 10px; font-size: 14px; background: #fff; width: 100%; font-family: inherit; }
-.gest-campi input:focus, .gest-campi select:focus { outline: 2px solid #1c1c1c; outline-offset: -1px; }
-.gest-titolo input { font-size: 17px; }
-.gest-quattro { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-@media (max-width: 900px) { .gest-quattro { grid-template-columns: repeat(2, 1fr); } }
+/* tutte insieme */
+.pan-selezione { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 22px 0 14px; }
+.pan-selezione > button { border: 1px solid #d2cec5; background: #fff; border-radius: 999px; padding: 9px 16px; cursor: pointer; }
+.pan-selezione strong { font-weight: 600; color: #6f6e68; }
+.pan-blocco { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-left: auto; padding-left: 12px; border-left: 1px solid #ddd9d0; }
+.pan-blocco button, .pan-blocco select { border: 1px solid #d2cec5; background: #fff; border-radius: 999px; padding: 9px 16px; cursor: pointer; }
+.pan-blocco button.rosso { border-color: #b03a26; color: #b03a26; }
 
-.gest-interruttori { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; }
-.gest-scelta { max-width: 220px; }
-.gest-spunta { flex-direction: row !important; align-items: center; gap: 6px !important; font-size: 13px; cursor: pointer; }
-.gest-spunta > span { text-transform: none !important; letter-spacing: 0 !important; font-size: 13px !important; color: #1c1c1c !important; }
-.gest-apri { margin-left: auto; font-size: 12px; color: #6b6a64; }
-.gest-origine { margin: 0; font: 11px/1.3 ui-monospace, Menlo, monospace; color: #a5a29a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pan-griglia { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+.pan-griglia li { position: relative; background: #fff; border: 1px solid #ddd9d0; border-radius: 10px; overflow: hidden; }
+.pan-griglia li.scelta { border-color: #1b1b1a; box-shadow: 0 0 0 2px #1b1b1a; }
+.pan-griglia label { display: block; cursor: pointer; }
+.pan-griglia input { position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; z-index: 2; }
+.pan-griglia img { display: block; width: 100%; height: 165px; object-fit: contain; background: #faf9f6; }
+.pan-eti { display: block; padding: 10px 12px 12px; }
+.pan-cod { display: block; font: 12px/1.3 ui-monospace, Menlo, monospace; letter-spacing: 0.06em; color: #8b8981; }
+.pan-nome { display: block; font-size: 15px; margin-top: 2px; }
+.pan-apri { position: absolute; right: 8px; bottom: 8px; border: 1px solid #d2cec5; background: rgba(255,255,255,0.95); border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; }
+
+/* conferma */
+.pan-velo { position: fixed; inset: 0; background: rgba(27,27,26,0.5); display: grid; place-items: center; padding: 20px; z-index: 50; }
+.pan-finestra { background: #fff; border-radius: 14px; padding: 28px; max-width: 460px; }
+.pan-finestra h2 { margin: 0 0 10px; font-size: 21px; }
+.pan-finestra p { margin: 0 0 20px; color: #6f6e68; font-size: 16px; }
+.pan-finestra code { background: #f2f1ee; padding: 1px 6px; border-radius: 4px; font-size: 15px; }

@@ -55,3 +55,6 @@ next-env.d.ts
 # fogli di lavoro generati (si rigenerano con `npm run schede`)
 /schede-opere.csv
 /provino-opere.html
+
+# opere eliminate dal pannello (recuperabili)
+/cestino/

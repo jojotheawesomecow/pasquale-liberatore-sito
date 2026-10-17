@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export type OperaGestione = {
   slug: string;
@@ -31,147 +31,385 @@ const CATEGORIE = [
 ];
 const SENZA_TITOLO = "Senza titolo";
 
+type Filtro = "tutte" | "da-nominare" | "pittura" | "in-opere";
+const FILTRI: { value: Filtro; label: string }[] = [
+  { value: "tutte", label: "Tutte" },
+  { value: "da-nominare", label: "Da nominare" },
+  { value: "pittura", label: "Solo dipinti" },
+  { value: "in-opere", label: "In vetrina" },
+];
+
 async function invia(corpo: Record<string, unknown>) {
-  const r = await fetch("/api/gestione", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+  const r = await fetch("/api/gestione", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(corpo),
+  });
   return (await r.json()) as { ok?: boolean; errore?: string; w?: number; h?: number; v?: number };
 }
 
-/** Banco di lavoro: una riga per opera, si scrive e si salva da solo. */
 export function Gestione({ opere }: { opere: OperaGestione[] }) {
   const [dati, setDati] = useState(opere);
-  const [filtro, setFiltro] = useState<"tutte" | "senza-titolo" | "pittura" | "selezionate">("tutte");
-  const [cerca, setCerca] = useState("");
-  const [statoSalvataggio, setStato] = useState<Record<string, "salvo" | "fatto" | "errore">>({});
-  const timer = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const [modo, setModo] = useState<"scheda" | "griglia">("scheda");
+  const [filtro, setFiltro] = useState<Filtro>("tutte");
+  const [posizione, setPosizione] = useState(0);
+  const [spuntate, setSpuntate] = useState<Set<string>>(new Set());
+  const [stato, setStato] = useState<"" | "salvo" | "salvato" | "errore">("");
   const [versione, setVersione] = useState<Record<string, number>>({});
+  const [conferma, setConferma] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const visibili = useMemo(() => {
-    const q = cerca.trim().toLowerCase();
-    return dati.filter((o) => {
-      if (filtro === "senza-titolo" && o.titolo !== SENZA_TITOLO) return false;
-      if (filtro === "pittura" && o.categoria !== "pittura") return false;
-      if (filtro === "selezionate" && !o.selezionata) return false;
-      if (q && !(`${o.codice} ${o.titolo} ${o.anno} ${o.tecnica} ${o.materiale} ${o.origine}`.toLowerCase().includes(q))) return false;
-      return true;
-    });
-  }, [dati, filtro, cerca]);
+  const elenco = useMemo(
+    () =>
+      dati.filter((o) => {
+        if (filtro === "da-nominare") return o.titolo === SENZA_TITOLO || !o.titolo;
+        if (filtro === "pittura") return o.categoria === "pittura";
+        if (filtro === "in-opere") return o.selezionata;
+        return true;
+      }),
+    [dati, filtro]
+  );
 
+  const indice = Math.min(posizione, Math.max(0, elenco.length - 1));
+  const corrente = elenco[indice];
   const conTitolo = dati.filter((o) => o.titolo && o.titolo !== SENZA_TITOLO).length;
-  const selezionate = dati.filter((o) => o.selezionata).length;
 
-  const salva = (slug: string, campi: Record<string, string | boolean>, subito = false) => {
-    clearTimeout(timer.current[slug]);
-    const esegui = async () => {
-      setStato((s) => ({ ...s, [slug]: "salvo" }));
-      const r = await invia({ azione: "salva", slug, campi });
-      setStato((s) => ({ ...s, [slug]: r.ok ? "fatto" : "errore" }));
-    };
-    if (subito) void esegui();
-    else timer.current[slug] = setTimeout(esegui, 700);
+  const mostraEsito = (ok: boolean) => {
+    setStato(ok ? "salvato" : "errore");
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setStato(""), 1600);
   };
 
-  const cambia = (slug: string, chiave: keyof OperaGestione, valore: string | boolean, subito = false) => {
+  const scrivi = useCallback(
+    async (slug: string, campi: Record<string, string | boolean>) => {
+      setStato("salvo");
+      const r = await invia({ azione: "salva", slug, campi });
+      mostraEsito(Boolean(r.ok));
+    },
+    []
+  );
+
+  /** Aggiorna subito quello che si vede e salva sul file. */
+  const cambia = (slug: string, chiave: keyof OperaGestione, valore: string | boolean) => {
     setDati((d) => d.map((o) => (o.slug === slug ? { ...o, [chiave]: valore } : o)));
+  };
+  const salvaCampo = (slug: string, chiave: keyof OperaGestione, valore: string | boolean) => {
     const campo = chiave === "bozza" ? "stato" : chiave;
     const v = chiave === "bozza" ? (valore ? "bozza" : "pubblicata") : valore;
-    salva(slug, { [campo]: v }, subito);
+    void scrivi(slug, { [campo]: v });
   };
 
-  const ruota = async (slug: string, gradi: number) => {
-    setStato((s) => ({ ...s, [slug]: "salvo" }));
-    const r = await invia({ azione: "ruota", slug, gradi });
+  const salvaTutto = useCallback(
+    async (o: OperaGestione) => {
+      setStato("salvo");
+      const r = await invia({
+        azione: "salva",
+        slug: o.slug,
+        campi: {
+          titolo: o.titolo || SENZA_TITOLO,
+          anno: o.anno,
+          tecnica: o.tecnica,
+          materiale: o.materiale,
+          dimensioni: o.dimensioni,
+          luogo: o.luogo,
+          categoria: o.categoria,
+          selezionata: o.selezionata,
+          stato: o.bozza ? "bozza" : "pubblicata",
+        },
+      });
+      mostraEsito(Boolean(r.ok));
+    },
+    []
+  );
+
+  const ruota = async (o: OperaGestione, gradi: number) => {
+    setStato("salvo");
+    const r = await invia({ azione: "ruota", slug: o.slug, gradi });
     if (r.ok && r.w && r.h) {
-      setDati((d) => d.map((o) => (o.slug === slug ? { ...o, w: r.w!, h: r.h! } : o)));
-      setVersione((v) => ({ ...v, [slug]: r.v ?? Date.now() }));
-      setStato((s) => ({ ...s, [slug]: "fatto" }));
-    } else {
-      setStato((s) => ({ ...s, [slug]: "errore" }));
-    }
+      setDati((d) => d.map((x) => (x.slug === o.slug ? { ...x, w: r.w!, h: r.h! } : x)));
+      setVersione((v) => ({ ...v, [o.slug]: r.v ?? Date.now() }));
+      mostraEsito(true);
+    } else mostraEsito(false);
   };
+
+  const vai = useCallback(
+    (delta: number) => {
+      setPosizione((p) => Math.max(0, Math.min(elenco.length - 1, p + delta)));
+    },
+    [elenco.length]
+  );
+
+  // frecce della tastiera per scorrere le opere
+  useEffect(() => {
+    if (modo !== "scheda") return;
+    const onKey = (e: KeyboardEvent) => {
+      const dentroUnCampo = ["INPUT", "SELECT", "TEXTAREA"].includes((e.target as HTMLElement)?.tagName);
+      if (dentroUnCampo) return;
+      if (e.key === "ArrowRight") vai(1);
+      if (e.key === "ArrowLeft") vai(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modo, vai]);
+
+  const spunta = (slug: string) =>
+    setSpuntate((s) => {
+      const n = new Set(s);
+      if (n.has(slug)) n.delete(slug);
+      else n.add(slug);
+      return n;
+    });
+
+  const inBlocco = async (campi: Record<string, string | boolean>) => {
+    const slugs = [...spuntate];
+    if (!slugs.length) return;
+    setStato("salvo");
+    const r = await invia({ azione: "blocco", slugs, campi });
+    if (r.ok) {
+      setDati((d) =>
+        d.map((o) => {
+          if (!spuntate.has(o.slug)) return o;
+          const agg = { ...o };
+          if ("selezionata" in campi) agg.selezionata = Boolean(campi.selezionata);
+          if ("stato" in campi) agg.bozza = campi.stato === "bozza";
+          if ("categoria" in campi) agg.categoria = String(campi.categoria);
+          return agg;
+        })
+      );
+      setSpuntate(new Set());
+    }
+    mostraEsito(Boolean(r.ok));
+  };
+
+  const elimina = async () => {
+    const slugs = [...spuntate];
+    if (!slugs.length) return;
+    setStato("salvo");
+    const r = await invia({ azione: "elimina", slugs });
+    if (r.ok) {
+      setDati((d) => d.filter((o) => !spuntate.has(o.slug)));
+      setSpuntate(new Set());
+      setConferma(false);
+    }
+    mostraEsito(Boolean(r.ok));
+  };
+
+  const srcCon = (o: OperaGestione) => (versione[o.slug] ? `${o.anteprima}?v=${versione[o.slug]}` : o.anteprima);
 
   return (
-    <main className="gest">
-      <header className="gest-testata">
-        <div>
-          <h1>Gestione delle opere</h1>
-          <p className="gest-nota">
-            Le modifiche si salvano da sole. Il sito si aggiorna subito: tienilo aperto in un&apos;altra scheda.
+    <main className="pan">
+      <header className="pan-testa">
+        <div className="pan-titolo">
+          <h1>Le opere di Pasquale</h1>
+          <p>
+            {conTitolo} opere hanno già un nome, su {dati.length}.
           </p>
         </div>
-        <dl className="gest-conti">
-          <div><dt>opere</dt><dd>{dati.length}</dd></div>
-          <div><dt>con titolo</dt><dd>{conTitolo}</dd></div>
-          <div><dt>in Opere</dt><dd>{selezionate}</dd></div>
-        </dl>
+        <div className="pan-modi">
+          <button type="button" className={modo === "scheda" ? "on" : ""} onClick={() => setModo("scheda")}>Una per volta</button>
+          <button type="button" className={modo === "griglia" ? "on" : ""} onClick={() => setModo("griglia")}>Tutte insieme</button>
+        </div>
       </header>
 
-      <div className="gest-barra">
-        {([["tutte", "Tutte"], ["senza-titolo", "Senza titolo"], ["pittura", "Solo pittura"], ["selezionate", "In Opere"]] as const).map(([v, l]) => (
-          <button key={v} type="button" className={filtro === v ? "attivo" : ""} onClick={() => setFiltro(v)}>{l}</button>
+      <div className="pan-filtri">
+        {FILTRI.map((f) => (
+          <button
+            key={f.value}
+            type="button"
+            className={filtro === f.value ? "on" : ""}
+            onClick={() => {
+              setFiltro(f.value);
+              setPosizione(0);
+              setSpuntate(new Set());
+            }}
+          >
+            {f.label}
+          </button>
         ))}
-        <input type="search" value={cerca} onChange={(e) => setCerca(e.target.value)} placeholder="Cerca numero, titolo, file…" />
-        <span className="gest-quante">{visibili.length} mostrate</span>
+        <span className="pan-quante">{elenco.length} opere</span>
+        <span className={`pan-stato ${stato}`}>{stato === "salvo" ? "sto salvando…" : stato === "salvato" ? "salvato" : stato === "errore" ? "non salvato" : ""}</span>
       </div>
 
-      <ul className="gest-elenco">
-        {visibili.map((o) => (
-          <li key={o.slug} className={o.bozza ? "bozza" : ""}>
-            <div className="gest-foto" style={{ aspectRatio: `${o.w} / ${o.h}` }}>
-              {o.anteprima ? (
-                <img src={versione[o.slug] ? `${o.anteprima}?v=${versione[o.slug]}` : o.anteprima} alt={o.codice} loading="lazy" />
-              ) : null}
-              <div className="gest-ruota">
-                <button type="button" onClick={() => ruota(o.slug, -90)} title="Ruota a sinistra">⟲</button>
-                <button type="button" onClick={() => ruota(o.slug, 90)} title="Ruota a destra">⟳</button>
-              </div>
+      {elenco.length === 0 ? (
+        <p className="pan-vuoto">Non c&apos;è nessuna opera in questo gruppo.</p>
+      ) : modo === "scheda" && corrente ? (
+        <section className="pan-scheda">
+          <div className="pan-foto">
+            {corrente.anteprima ? <img src={srcCon(corrente)} alt={corrente.codice} /> : <div className="pan-nessuna">nessuna foto</div>}
+            <div className="pan-ruota">
+              <button type="button" onClick={() => ruota(corrente, -90)}>⟲ Ruota a sinistra</button>
+              <button type="button" onClick={() => ruota(corrente, 90)}>Ruota a destra ⟳</button>
             </div>
+          </div>
 
-            <div className="gest-campi">
-              <div className="gest-riga-alta">
-                <span className="gest-codice">{o.codice || o.slug}</span>
-                <span className={`gest-stato ${statoSalvataggio[o.slug] ?? ""}`}>
-                  {statoSalvataggio[o.slug] === "salvo" ? "salvo…" : statoSalvataggio[o.slug] === "fatto" ? "salvato" : statoSalvataggio[o.slug] === "errore" ? "errore" : ""}
-                </span>
-              </div>
+          <form
+            className="pan-campi"
+            onSubmit={(e) => {
+              e.preventDefault();
+              void salvaTutto(corrente);
+            }}
+          >
+            <p className="pan-posizione">
+              Opera {indice + 1} di {elenco.length} · <span>{corrente.codice}</span>
+            </p>
 
-              <label className="gest-titolo">
-                <span>Titolo</span>
-                <input
-                  value={o.titolo === SENZA_TITOLO ? "" : o.titolo}
-                  placeholder={SENZA_TITOLO}
-                  onChange={(e) => cambia(o.slug, "titolo", e.target.value || SENZA_TITOLO)}
-                />
+            <label className="grande">
+              <span>Nome dell&apos;opera</span>
+              <input
+                value={corrente.titolo === SENZA_TITOLO ? "" : corrente.titolo}
+                placeholder="Senza titolo"
+                onChange={(e) => cambia(corrente.slug, "titolo", e.target.value)}
+                autoComplete="off"
+              />
+            </label>
+
+            <div className="pan-due">
+              <label>
+                <span>Anno</span>
+                <input value={corrente.anno} placeholder="es. 1998" onChange={(e) => cambia(corrente.slug, "anno", e.target.value)} autoComplete="off" />
               </label>
-
-              <div className="gest-quattro">
-                <label><span>Anno</span><input value={o.anno} onChange={(e) => cambia(o.slug, "anno", e.target.value)} /></label>
-                <label><span>Tecnica</span><input value={o.tecnica} onChange={(e) => cambia(o.slug, "tecnica", e.target.value)} /></label>
-                <label><span>Misure</span><input value={o.dimensioni} onChange={(e) => cambia(o.slug, "dimensioni", e.target.value)} /></label>
-                <label><span>Luogo</span><input value={o.luogo} onChange={(e) => cambia(o.slug, "luogo", e.target.value)} /></label>
-              </div>
-
-              <div className="gest-interruttori">
-                <label className="gest-scelta">
-                  <span>Categoria</span>
-                  <select value={o.categoria} onChange={(e) => cambia(o.slug, "categoria", e.target.value, true)}>
-                    {CATEGORIE.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-                  </select>
-                </label>
-                <label className="gest-spunta">
-                  <input type="checkbox" checked={o.selezionata} onChange={(e) => cambia(o.slug, "selezionata", e.target.checked, true)} />
-                  <span>Mostra in Opere</span>
-                </label>
-                <label className="gest-spunta">
-                  <input type="checkbox" checked={o.bozza} onChange={(e) => cambia(o.slug, "bozza", e.target.checked, true)} />
-                  <span>Nascondi dal sito</span>
-                </label>
-                <a className="gest-apri" href={`/opere/${o.slug}`} target="_blank" rel="noreferrer">apri ↗</a>
-              </div>
-              {o.origine ? <p className="gest-origine">{o.origine}</p> : null}
+              <label>
+                <span>Misure</span>
+                <input value={corrente.dimensioni} placeholder="es. 70×50 cm" onChange={(e) => cambia(corrente.slug, "dimensioni", e.target.value)} autoComplete="off" />
+              </label>
             </div>
-          </li>
-        ))}
-      </ul>
+
+            <div className="pan-due">
+              <label>
+                <span>Tecnica</span>
+                <input value={corrente.tecnica} placeholder="es. olio su tela" onChange={(e) => cambia(corrente.slug, "tecnica", e.target.value)} autoComplete="off" />
+              </label>
+              <label>
+                <span>Luogo</span>
+                <input value={corrente.luogo} placeholder="dove si trova" onChange={(e) => cambia(corrente.slug, "luogo", e.target.value)} autoComplete="off" />
+              </label>
+            </div>
+
+            <label>
+              <span>Tipo di opera</span>
+              <select
+                value={corrente.categoria}
+                onChange={(e) => {
+                  cambia(corrente.slug, "categoria", e.target.value);
+                  salvaCampo(corrente.slug, "categoria", e.target.value);
+                }}
+              >
+                {CATEGORIE.map((c) => (
+                  <option key={c.value} value={c.value}>{c.label}</option>
+                ))}
+              </select>
+            </label>
+
+            <div className="pan-spunte">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={corrente.selezionata}
+                  onChange={(e) => {
+                    cambia(corrente.slug, "selezionata", e.target.checked);
+                    salvaCampo(corrente.slug, "selezionata", e.target.checked);
+                  }}
+                />
+                <span>Metti in vetrina, nella pagina Opere</span>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={corrente.bozza}
+                  onChange={(e) => {
+                    cambia(corrente.slug, "bozza", e.target.checked);
+                    salvaCampo(corrente.slug, "bozza", e.target.checked);
+                  }}
+                />
+                <span>Nascondi dal sito</span>
+              </label>
+            </div>
+
+            <div className="pan-azioni">
+              <button type="button" className="chiaro" onClick={() => { void salvaTutto(corrente); vai(-1); }} disabled={indice === 0}>
+                ← Indietro
+              </button>
+              <button type="submit" className="chiaro">Salva</button>
+              <button
+                type="button"
+                className="pieno"
+                onClick={() => { void salvaTutto(corrente); vai(1); }}
+                disabled={indice >= elenco.length - 1}
+              >
+                Salva e vai avanti →
+              </button>
+            </div>
+            <p className="pan-aiuto">Puoi usare anche le frecce ← → della tastiera per cambiare opera.</p>
+          </form>
+        </section>
+      ) : (
+        <section className="pan-griglia-sezione">
+          <div className="pan-selezione">
+            <button type="button" onClick={() => setSpuntate(new Set(elenco.map((o) => o.slug)))}>Scegli tutte</button>
+            <button type="button" onClick={() => setSpuntate(new Set())}>Togli la scelta</button>
+            <strong>{spuntate.size} scelte</strong>
+            {spuntate.size > 0 ? (
+              <div className="pan-blocco">
+                <button type="button" onClick={() => inBlocco({ selezionata: true })}>Metti in vetrina</button>
+                <button type="button" onClick={() => inBlocco({ selezionata: false })}>Togli dalla vetrina</button>
+                <button type="button" onClick={() => inBlocco({ stato: "bozza" })}>Nascondi dal sito</button>
+                <button type="button" onClick={() => inBlocco({ stato: "pubblicata" })}>Mostra sul sito</button>
+                <select
+                  defaultValue=""
+                  onChange={(e) => {
+                    if (e.target.value) void inBlocco({ categoria: e.target.value });
+                    e.target.value = "";
+                  }}
+                >
+                  <option value="">Cambia tipo…</option>
+                  {CATEGORIE.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                </select>
+                <button type="button" className="rosso" onClick={() => setConferma(true)}>Elimina</button>
+              </div>
+            ) : null}
+          </div>
+
+          <ul className="pan-griglia">
+            {elenco.map((o) => (
+              <li key={o.slug} className={spuntate.has(o.slug) ? "scelta" : ""}>
+                <label>
+                  <input type="checkbox" checked={spuntate.has(o.slug)} onChange={() => spunta(o.slug)} />
+                  {o.anteprima ? <img src={srcCon(o)} alt={o.codice} loading="lazy" /> : <span className="pan-nessuna">—</span>}
+                  <span className="pan-eti">
+                    <span className="pan-cod">{o.codice}</span>
+                    {o.titolo !== SENZA_TITOLO ? <span className="pan-nome">{o.titolo}</span> : null}
+                  </span>
+                </label>
+                <button
+                  type="button"
+                  className="pan-apri"
+                  onClick={() => {
+                    setModo("scheda");
+                    setPosizione(elenco.findIndex((x) => x.slug === o.slug));
+                  }}
+                >
+                  apri
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {conferma ? (
+        <div className="pan-velo" role="dialog" aria-modal="true">
+          <div className="pan-finestra">
+            <h2>Eliminare {spuntate.size} {spuntate.size === 1 ? "opera" : "opere"}?</h2>
+            <p>
+              Non vengono cancellate per sempre: finiscono nella cartella <code>cestino</code> del progetto e si possono recuperare.
+            </p>
+            <div className="pan-azioni">
+              <button type="button" className="chiaro" onClick={() => setConferma(false)}>Annulla</button>
+              <button type="button" className="rosso pieno" onClick={elimina}>Sì, elimina</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

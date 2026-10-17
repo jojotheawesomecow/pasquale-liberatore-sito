@@ -20,7 +20,21 @@ Dimmi dove le vuoi e le metto: la prima starebbe bene in apertura di Chi sono, l
 
 **C'è dell'altro in quella cartella.** Ci sono le diciotto foto originali delle sculture con i nomi parlanti, tipo `opera scelta trasimeno`, `seme di lettomanoppello - laboratorio`. Sono le stesse che ho ricavato dal vecchio sito, ma senza le scritte sopra e in qualità migliore. Se vuoi le sostituisco.
 
-## Lo strumento per schedare: la pagina Gestione
+## Il pannello per schedare: com'è adesso
+
+Rifatto pensando a chi non lavora con i computer. Si apre con `npm run dev` e poi <http://localhost:3000/gestione>.
+
+**Una per volta.** È la modalità di partenza ed è il flusso da seguire: si vede la foto grande, si decide se raddrizzarla con i due pulsanti sotto, si scrive il nome e quello che si sa (anno, misure, tecnica, luogo), si sceglie il tipo di opera e si preme **Salva e vai avanti**. In alto una riga dice a che punto si è: «Opera 12 di 226». Funzionano anche le frecce della tastiera. Le caselle lasciate vuote restano vuote, non succede niente di male.
+
+**Tutte insieme.** Griglia di miniature, ognuna con una spunta. Si scelgono quelle che servono, anche tutte in un colpo, e poi si applica un'azione sola a tutto il gruppo: metti in vetrina, togli dalla vetrina, nascondi dal sito, mostra sul sito, cambia tipo di opera, **elimina**.
+
+**L'eliminazione non cancella davvero.** Le opere scelte finiscono in una cartella `cestino` dentro il progetto, divise per data, con dentro sia la scheda sia la foto. Si recuperano spostandole indietro. Prima di procedere compare una conferma che lo dice.
+
+**Quattro filtri** in alto: Tutte, Da nominare, Solo dipinti, In vetrina. «Da nominare» è quello che userà tua suocera: mostra solo le opere che aspettano un nome e il contatore scende man mano.
+
+Tutto si salva sui file del sito, gli stessi che usa il pannello Keystatic. Niente database, nessuna password.
+
+## Come era prima: la vecchia pagina Gestione
 
 Con 226 opere il pannello a schede singole non basta. Ho costruito un **banco di lavoro** che fa tre cose in una sola pagina, una riga per opera:
 
