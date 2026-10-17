@@ -1,7 +1,7 @@
 # Pubblica il sito statico su GitHub Pages a ogni push sul ramo main.
-# Anteprima comparativa delle tre vesti grafiche:
-#   A  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/
-#   B  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/b/
+# Il tema B è quello scelto e sta alla radice; A e C restano per il confronto:
+#   B  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/
+#   A  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/a/
 #   C  https://jojotheawesomecow.github.io/pasquale-liberatore-sito/c/
 name: Pubblica su GitHub Pages
 

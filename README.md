@@ -12,12 +12,12 @@ Contenuti, pannello, rotte e lingue sono unici; la veste grafica è intercambiab
 
 | Tema | Carattere | Avvio in locale | Anteprima |
 |---|---|---|---|
-| **A · Carta e pietra** | editoriale, chiaro, serif Newsreader, griglia a mosaico | `npm run dev` → :3000 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/> |
-| **B · Ardesia** | scuro, grotesk Instrument Sans + serif corsivo, immagini a tutta larghezza, scorrimento fluido, cursore, indice con anteprima | `npm run dev:b` → :3001 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/b/> |
+| **B · Ardesia** (scelta) | scuro, grotesk Instrument Sans + serif corsivo, immagini a tutta larghezza, scorrimento fluido, cursore, indice con anteprima | `npm run dev` → :3000 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/> |
+| **A · Carta e pietra** | editoriale, chiaro, serif Newsreader, griglia a mosaico | `npm run dev:a` → :3001 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/a/> |
 | **C · Calce** | chiaro, serif Newsreader per titoli e testi, struttura a tutta larghezza di B, movimento misurato | `npm run dev:c` → :3002 | <https://jojotheawesomecow.github.io/pasquale-liberatore-sito/c/> |
 
 In basso a destra, nell'anteprima, una pillola **A · B · C** permette di passare da una versione all'altra sulla stessa pagina.
-Per scegliere il tema definitivo basta cambiare il valore predefinito di `tema` in `next.config.ts` (oggi `"a"`) e, nel workflow, tornare a `npm run build` al posto di `npm run build:tutti`.
+Il tema predefinito è `"b"` in `next.config.ts` e, nel workflow, tornare a `npm run build` al posto di `npm run build:tutti`.
 
 ---
 
@@ -146,8 +146,8 @@ Variabili d'ambiente usate dalla build:
 | Comando | Cosa fa |
 |---|---|
 | `npm run dev` | sito (tema A) + pannello in locale, con ottimizzazione immagini in ascolto |
-| `npm run dev:b` / `npm run dev:c` | lo stesso con il tema B (porta 3001) o C (porta 3002); si possono tenere aperti insieme |
-| `npm run build:tutti` | i tre temi in `out-tutti/` (A alla radice, B in `/b/`, C in `/c/`), usato dall'anteprima su GitHub Pages |
+| `npm run dev:a` / `npm run dev:c` | lo stesso con il tema A (porta 3001) o C (porta 3002); si possono tenere aperti insieme |
+| `npm run build:tutti` | i tre temi in `out-tutti/` (B alla radice, A in `/a/`, C in `/c/`), usato dall'anteprima su GitHub Pages |
 | `npm run build` | sito statico in `out/` |
 | `npm run anteprima` | serve la cartella `out/` su <http://localhost:3000> per controllare la build |
 | `npm run immagini` | rigenera le immagini ottimizzate (`public/media/`) e il manifesto (`src/generated/immagini.json`) |
