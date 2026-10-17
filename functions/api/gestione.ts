@@ -19,7 +19,9 @@ type Ambiente = {
   GITHUB_TOKEN_SITO_PASQUALE?: string;
   GITHUB_REPO?: string;
   GITHUB_RAMO?: string;
+  /** Parola d'accesso del pannello. Accettiamo più nomi per non dipendere da come è stata chiamata. */
   PANNELLO_PAROLA?: string;
+  PANNELLO_PW_ANNAMARIA?: string;
 };
 
 const API = "https://api.github.com";
@@ -52,7 +54,7 @@ const sicuro = (s: string) => /^[a-z0-9-]+$/.test(s);
 
 export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) => {
   const token = env.GITHUB_TOKEN ?? env.GITHUB_TOKEN_SITO_PASQUALE;
-  const parola = env.PANNELLO_PAROLA;
+  const parola = env.PANNELLO_PAROLA ?? env.PANNELLO_PW_ANNAMARIA;
   const repo = env.GITHUB_REPO ?? "jojotheawesomecow/pasquale-liberatore-sito";
   const ramo = env.GITHUB_RAMO ?? "main";
 
