@@ -27,7 +27,7 @@
         "./src/*"
       ],
       "@tema": [
-        "./src/temi/a"
+        "./src/temi/veste"
       ]
     }
   },

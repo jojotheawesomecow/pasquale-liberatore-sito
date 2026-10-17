@@ -1,3 +1,10 @@
+## La scelta è fatta: resta «Ardesia»
+
+Il sito ha una sola veste, quella scura che stavi guardando. «Carta e pietra» e «Calce» sono state tolte dal sito
+e dal progetto: non spariscono per sempre, restano nella storia del progetto e si recuperano se mai cambiassi idea.
+
+Il sito pubblicato è passato da 379 a 271 MB, perché non ci sono più tre copie delle pagine.
+
 # Note per Marco
 
 ## Trovato il curriculum di Pasquale

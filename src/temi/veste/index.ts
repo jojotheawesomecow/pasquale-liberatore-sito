@@ -13,5 +13,5 @@ import { Riflessione } from "./pagine/Riflessione";
 import { Riflessioni } from "./pagine/Riflessioni";
 import { Video } from "./pagine/Video";
 
-/** Tema B: "Ardesia", scuro, grotesk, a tutta larghezza, movimento deciso. */
-export const tema: Tema = { nome: "B", Documento, NonTrovata, Home, Opere, Archivio, Opera, ChiSono, Riflessioni, Riflessione, Giardino, Video, Contatti, Privacy };
+/** La veste del sito: "Ardesia", scura, a tutta larghezza, movimento misurato. */
+export const tema: Tema = { nome: "Ardesia", Documento, NonTrovata, Home, Opere, Archivio, Opera, ChiSono, Riflessioni, Riflessione, Giardino, Video, Contatti, Privacy };

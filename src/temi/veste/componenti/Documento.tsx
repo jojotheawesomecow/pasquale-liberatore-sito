@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
+import { Cursore } from "@/componenti/Cursore";
 import { RivelaOsservatore } from "@/componenti/Rivela";
-import { SelettoreTemi } from "@/componenti/SelettoreTemi";
+import { ScorrimentoFluido } from "@/componenti/ScorrimentoFluido";
 import { Transizione } from "@/componenti/Transizione";
 import { getImpostazioni, getVideo } from "@/lib/contenuti";
 import { t } from "@/lib/i18n";
@@ -19,16 +20,24 @@ export async function Documento({ lang, children }: { lang: Lang; children: Reac
   if (impostazioni.mostra_video && video.length > 0) sezioni.push("video");
   sezioni.push("contatti");
   const voci: VoceMenu[] = sezioni.map((s) => ({ href: url(lang, s), label: d.nav[s] }));
+
   return (
     <html lang={lang} className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
       <body className="flex min-h-screen flex-col">
+        <div className="progresso" aria-hidden="true" />
         <RivelaOsservatore />
-        <Header lang={lang} nome={impostazioni.nome} voci={voci} etichette={{ menu: d.menu, chiudi: d.chiudi, cambiaLingua: d.cambiaLingua, cambiaLinguaLabel: d.cambiaLinguaLabel, salta: d.saltaAlContenuto, ruolo: d.ruolo }} />
-        <main id="contenuto" className="flex-1">
+        <ScorrimentoFluido />
+        <Cursore />
+        <Header
+          lang={lang}
+          nome={impostazioni.nome}
+          voci={voci}
+          etichette={{ menu: d.menu, chiudi: d.chiudi, cambiaLingua: d.cambiaLingua, cambiaLinguaLabel: d.cambiaLinguaLabel, salta: d.saltaAlContenuto, ruolo: d.ruolo }}
+        />
+        <main id="contenuto" className="flex-1 pt-16">
           <Transizione>{children}</Transizione>
         </main>
         <Footer lang={lang} voci={voci} impostazioni={impostazioni} />
-        <SelettoreTemi />
       </body>
     </html>
   );

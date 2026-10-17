@@ -4,18 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "dev:c": "TEMA=c node scripts/dev.mjs -p 3002",
     "build": "node scripts/immagini.mjs && next build",
-    "build:c": "TEMA=c npm run build",
-    "build:tutti": "node scripts/immagini.mjs && node scripts/build-tutti.mjs",
     "anteprima": "npx --yes serve out -l 3000",
     "immagini": "node scripts/immagini.mjs",
     "importa": "node scripts/importa-opere.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "schede": "node scripts/schede.mjs",
-    "dev:a": "TEMA=a node scripts/dev.mjs -p 3001",
-    "build:a": "TEMA=a npm run build"
+    "schede": "node scripts/schede.mjs"
   },
   "dependencies": {
     "@keystatic/core": "^0.6.9",
