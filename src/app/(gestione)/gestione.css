@@ -104,3 +104,33 @@ button, input, select { font: inherit; }
   .pan-barra input[type="password"] { margin-left: 0; flex: 1; }
   .pan-barra button { flex: 1; }
 }
+
+/* schermata d'ingresso: finché non si entra, di là non si vede nulla */
+.acc {
+  min-height: 100dvh; display: grid; place-items: center; padding: 28px 20px;
+  background: #f2f1ee;
+}
+.acc-attesa { min-height: 60dvh; display: grid; place-items: center; color: #8b8981; }
+.acc-riquadro {
+  width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 16px;
+  background: #fff; border: 1px solid #e2ded4; border-radius: 16px; padding: 32px 28px 28px;
+}
+.acc-riquadro h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.acc-sotto { margin: -8px 0 0; color: #6f6e68; font-size: 15px; }
+.acc-riquadro label { display: flex; flex-direction: column; gap: 6px; }
+.acc-riquadro label span { font-size: 14px; color: #6f6e68; }
+.acc-riquadro input {
+  border: 1px solid #d2cec5; border-radius: 10px; padding: 12px 13px; background: #fff; color: inherit;
+}
+.acc-riquadro input:focus-visible { outline: 2px solid #1b1b1a; outline-offset: 1px; border-color: #1b1b1a; }
+.acc-riquadro button[type="submit"] {
+  margin-top: 4px; border: 0; border-radius: 999px; padding: 13px 20px;
+  background: #1b1b1a; color: #fff; cursor: pointer;
+}
+.acc-riquadro button[type="submit"]:disabled { background: #8b8981; cursor: default; }
+.acc-link {
+  align-self: center; border: 0; background: none; padding: 2px; cursor: pointer;
+  color: #6f6e68; font-size: 15px; text-decoration: underline; text-underline-offset: 3px;
+}
+.acc-errore { margin: 0; color: #b03a26; font-size: 15px; }
+.acc-avviso { margin: 0; color: #41743a; font-size: 15px; }

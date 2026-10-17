@@ -1,6 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { Accesso } from "./Accesso";
+import {
+  dimenticaSessione,
+  leggiSessione,
+  nessunaSessione,
+  salvaSessione,
+  sottoscriviSessione,
+  type Sessione,
+} from "@/lib/sessione";
 
 export type OperaGestione = {
   slug: string;
@@ -33,7 +42,6 @@ const CATEGORIE = [
   { value: "performance", label: "Performance" },
 ];
 const SENZA_TITOLO = "Senza titolo";
-const CHIAVE = "pannello-pasquale";
 
 type Filtro = "tutte" | "da-nominare" | "pittura" | "in-vetrina";
 const FILTRI: { value: Filtro; label: string }[] = [
@@ -64,7 +72,41 @@ async function ruotaImmagine(url: string, gradi: number): Promise<{ base64: stri
   return { base64: btoa(binario), w: tela.width, h: tela.height, anteprima: URL.createObjectURL(nuovo) };
 }
 
-export function Gestione({ opere }: { opere: OperaGestione[] }) {
+/** Prima si entra, poi si lavora. Senza sessione valida non arriva nessun dato. */
+export function Gestione() {
+  const sessione = useSyncExternalStore(sottoscriviSessione, leggiSessione, nessunaSessione);
+  if (!sessione) return <Accesso entrato={salvaSessione} />;
+  // la chiave ricarica tutto quando entra una persona diversa
+  return <Caricatore key={sessione.gettone} sessione={sessione} />;
+}
+
+/** Chiede le opere al sito mostrando il gettone: se non vale più, si torna all'ingresso. */
+function Caricatore({ sessione }: { sessione: Sessione }) {
+  const [opere, setOpere] = useState<OperaGestione[] | null>(null);
+  const [errore, setErrore] = useState("");
+
+  useEffect(() => {
+    let vivo = true;
+    fetch("/api/opere", { headers: { "x-pannello-sessione": sessione.gettone } })
+      .then((r) => r.json() as Promise<{ ok?: boolean; opere?: OperaGestione[]; errore?: string }>)
+      .then((r) => {
+        if (!vivo) return;
+        if (r.ok && r.opere) setOpere(r.opere);
+        else dimenticaSessione();
+      })
+      .catch(() => {
+        if (vivo) setErrore("Non riesco a caricare le opere. Controlla la connessione.");
+      });
+    return () => {
+      vivo = false;
+    };
+  }, [sessione.gettone]);
+
+  if (!opere) return <div className="acc-attesa">{errore || "Carico le opere…"}</div>;
+  return <Pannello opere={opere} sessione={sessione} esci={dimenticaSessione} />;
+}
+
+function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione: Sessione; esci: () => void }) {
   const [dati, setDati] = useState(opere);
   const [modo, setModo] = useState<"scheda" | "griglia">("scheda");
   const [filtro, setFiltro] = useState<Filtro>("tutte");
@@ -72,7 +114,6 @@ export function Gestione({ opere }: { opere: OperaGestione[] }) {
   const [spuntate, setSpuntate] = useState<Set<string>>(new Set());
   const [conferma, setConferma] = useState(false);
   // la parola d'accesso resta solo in questa scheda del browser
-  const [parola, setParola] = useState(() => (typeof window === "undefined" ? "" : sessionStorage.getItem(CHIAVE) ?? ""));
   const [esito, setEsito] = useState("");
   const [inCorso, setInCorso] = useState(false);
 
@@ -80,10 +121,6 @@ export function Gestione({ opere }: { opere: OperaGestione[] }) {
   const [toccate, setToccate] = useState<Set<string>>(new Set());
   const [fotoNuove, setFotoNuove] = useState<Record<string, { base64: string }>>({});
   const [daEliminare, setDaEliminare] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    if (parola) sessionStorage.setItem(CHIAVE, parola);
-  }, [parola]);
 
   const elenco = useMemo(
     () =>
@@ -193,7 +230,7 @@ export function Gestione({ opere }: { opere: OperaGestione[] }) {
     try {
       const r = await fetch("/api/gestione", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-pannello-parola": parola },
+        headers: { "Content-Type": "application/json", "x-pannello-sessione": sessione.gettone },
         body: JSON.stringify(corpo),
       });
       const risposta = (await r.json()) as { ok?: boolean; errore?: string; locale?: boolean };
@@ -226,9 +263,14 @@ export function Gestione({ opere }: { opere: OperaGestione[] }) {
           <h1>Le opere di Pasquale</h1>
           <p>{conTitolo} opere hanno già un nome, su {dati.length}.</p>
         </div>
-        <div className="pan-modi">
-          <button type="button" className={modo === "scheda" ? "on" : ""} onClick={() => setModo("scheda")}>Una per volta</button>
-          <button type="button" className={modo === "griglia" ? "on" : ""} onClick={() => setModo("griglia")}>Tutte insieme</button>
+        <div className="pan-destra">
+          <div className="pan-modi">
+            <button type="button" className={modo === "scheda" ? "on" : ""} onClick={() => setModo("scheda")}>Una per volta</button>
+            <button type="button" className={modo === "griglia" ? "on" : ""} onClick={() => setModo("griglia")}>Tutte insieme</button>
+          </div>
+          <p className="pan-chi">
+            Ciao, <strong>{sessione.nome}</strong> · <button type="button" onClick={esci}>esci</button>
+          </p>
         </div>
       </header>
 
@@ -340,8 +382,7 @@ export function Gestione({ opere }: { opere: OperaGestione[] }) {
         <span className="pan-sospeso">
           {inSospeso === 0 ? "Nessuna modifica da pubblicare" : `${inSospeso} ${inSospeso === 1 ? "modifica" : "modifiche"} da pubblicare`}
         </span>
-        <input type="password" value={parola} onChange={(e) => setParola(e.target.value)} placeholder="Parola d'accesso" autoComplete="current-password" suppressHydrationWarning />
-        <button type="button" className="pieno" onClick={pubblica} disabled={!inSospeso || inCorso || !parola}>
+        <button type="button" className="pieno" onClick={pubblica} disabled={!inSospeso || inCorso}>
           {inCorso ? "Invio in corso…" : "Pubblica le modifiche"}
         </button>
         {esito ? <span className="pan-esito">{esito}</span> : null}

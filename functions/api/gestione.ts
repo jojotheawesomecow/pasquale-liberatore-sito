@@ -1,4 +1,5 @@
 import * as yaml from "js-yaml";
+import { sessioneDi } from "../comuni/accessi";
 
 /**
  * Servizio del pannello quando il sito è pubblicato su Cloudflare.
@@ -42,14 +43,6 @@ async function gh<T = Record<string, unknown>>(token: string, percorso: string, 
   return (await r.json()) as T;
 }
 
-/** Confronto che non rivela la lunghezza della parola tramite i tempi di risposta. */
-function pariUguali(a: string, b: string) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
-
 const sicuro = (s: string) => /^[a-z0-9-]+$/.test(s);
 
 export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) => {
@@ -59,10 +52,10 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
   const ramo = env.GITHUB_RAMO ?? "main";
 
   if (!token) return Response.json({ errore: "Manca la chiave di scrittura." }, { status: 503 });
-  if (!parola) return Response.json({ errore: "Il pannello non è ancora stato attivato: manca la parola d'accesso." }, { status: 503 });
+  if (!parola) return Response.json({ errore: "Il pannello non è ancora stato attivato." }, { status: 503 });
 
-  const data = request.headers.get("x-pannello-parola") ?? "";
-  if (!pariUguali(data, parola)) return Response.json({ errore: "Parola d'accesso errata." }, { status: 401 });
+  const sessione = await sessioneDi(request, parola);
+  if (!sessione) return Response.json({ errore: "Devi entrare nel pannello." }, { status: 401 });
 
   let corpo: Corpo;
   try {
@@ -116,7 +109,7 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
     const nuovo = await gh<{ sha: string }>(token, `/repos/${repo}/git/commits`, {
       method: "POST",
       body: JSON.stringify({
-        message: corpo.messaggio || `Modifiche dal pannello: ${quante} ${quante === 1 ? "voce" : "voci"}`,
+        message: corpo.messaggio || `Modifiche dal pannello di ${sessione.nome}: ${quante} ${quante === 1 ? "voce" : "voci"}`,
         tree: albero.sha,
         parents: [commitBase],
       }),

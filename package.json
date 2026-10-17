@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "build": "node scripts/immagini.mjs && next build",
+    "build": "node scripts/immagini.mjs && node scripts/dati-pannello.mjs && next build",
     "anteprima": "npx --yes serve out -l 3000",
     "immagini": "node scripts/immagini.mjs",
     "importa": "node scripts/importa-opere.mjs",

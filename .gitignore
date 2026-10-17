@@ -58,3 +58,6 @@ next-env.d.ts
 
 # opere eliminate dal pannello (recuperabili)
 /cestino/
+
+# dati del pannello, generati a ogni costruzione
+/dati/
