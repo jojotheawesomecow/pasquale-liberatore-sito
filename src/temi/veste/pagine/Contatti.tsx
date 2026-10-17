@@ -12,7 +12,7 @@ export async function Contatti({ lang }: { lang: Lang }) {
   const utente = (u: string | null) => (u ? "@" + u.replace(/\/+$/, "").split("/").pop() : "");
   const canali: { nome: string; valore: string; href: string }[] = [];
   if (imp.instagram) canali.push({ nome: "Instagram", valore: utente(imp.instagram), href: imp.instagram });
-  if (imp.instagram_secondario) canali.push({ nome: "Instagram", valore: utente(imp.instagram_secondario), href: imp.instagram_secondario });
+  if (imp.facebook) canali.push({ nome: "Facebook", valore: imp.nome, href: imp.facebook });
   if (imp.youtube) canali.push({ nome: "YouTube", valore: "↗", href: imp.youtube });
   if (imp.email) canali.push({ nome: "Email", valore: imp.email, href: `mailto:${imp.email}` });
   if (imp.telefono) canali.push({ nome: "Tel.", valore: imp.telefono, href: `tel:${imp.telefono.replace(/\s+/g, "")}` });

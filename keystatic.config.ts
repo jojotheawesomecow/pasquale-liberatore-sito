@@ -155,7 +155,7 @@ export default config({
         descrizione_seo: fields.text({ label: "Descrizione per i motori di ricerca (italiano)", multiline: true }),
         descrizione_seo_en: fields.text({ label: "Descrizione per i motori di ricerca (inglese)", multiline: true }),
         instagram: fields.url({ label: "Instagram (indirizzo completo)" }),
-        instagram_secondario: fields.url({ label: "Secondo Instagram (facoltativo)" }),
+        facebook: fields.url({ label: "Facebook (facoltativo)" }),
         youtube: fields.url({ label: "Canale YouTube (facoltativo)" }),
         email: fields.text({ label: "Email pubblica (facoltativa)" }),
         telefono: fields.text({ label: "Telefono pubblico (facoltativo)" }),

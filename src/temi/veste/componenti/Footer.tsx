@@ -29,7 +29,7 @@ export function Footer({ lang, voci, impostazioni }: { lang: Lang; voci: VoceMen
         </nav>
         <div className="flex flex-col gap-3 lg:col-span-2">
           {impostazioni.instagram ? <a href={impostazioni.instagram} target="_blank" rel="noopener noreferrer" className="mono text-testo-2 transition-colors hover:text-testo">Instagram ↗<br /><span className="normal-case tracking-normal">{utente(impostazioni.instagram)}</span></a> : null}
-          {impostazioni.instagram_secondario ? <a href={impostazioni.instagram_secondario} target="_blank" rel="noopener noreferrer" className="mono text-testo-2 transition-colors hover:text-testo">Instagram ↗<br /><span className="normal-case tracking-normal">{utente(impostazioni.instagram_secondario)}</span></a> : null}
+          {impostazioni.facebook ? <a href={impostazioni.facebook} target="_blank" rel="noopener noreferrer" className="mono text-testo-2 transition-colors hover:text-testo">Facebook ↗</a> : null}
           {impostazioni.email ? <a href={`mailto:${impostazioni.email}`} className="mono text-testo-2 hover:text-testo">{impostazioni.email}</a> : null}
         </div>
       </div>
