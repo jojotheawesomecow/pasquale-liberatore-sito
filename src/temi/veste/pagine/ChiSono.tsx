@@ -22,6 +22,19 @@ export async function ChiSono({ lang }: { lang: Lang }) {
   return (
     <>
       <Titolo etichetta={x.artista} titolo={d.nav.chiSono} intro={campo(bio, "intro", lang)} />
+
+      {campo(bio, "dichiarazione", lang) ? (
+        <section className="contenitore mb-20 grid gap-8 lg:grid-cols-12">
+          <p className="mono lg:col-span-2" data-rivela>{d.paroleSue}</p>
+          <blockquote className="lg:col-span-9">
+            <p className="voce text-[clamp(1.5rem,2.8vw,2.9rem)] leading-[1.15]" data-rivela data-ritardo="1">
+              «{campo(bio, "dichiarazione", lang)}»
+            </p>
+            <footer className="mono mt-6">Pasquale Liberatore</footer>
+          </blockquote>
+        </section>
+      ) : null}
+
       <section className="contenitore grid gap-12 lg:grid-cols-12">
         {ritratto ? (
           <figure className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
@@ -31,7 +44,15 @@ export async function ChiSono({ lang }: { lang: Lang }) {
             {bio.ritratto_didascalia ? <figcaption className="mono mt-3 normal-case tracking-normal">{bio.ritratto_didascalia}</figcaption> : null}
           </figure>
         ) : null}
-        <div className="prosa lg:col-span-6 lg:col-start-7" data-rivela data-ritardo="1">{renderMarkdoc(testo)}</div>
+        <div className="lg:col-span-6 lg:col-start-7">
+          <div className="prosa" data-rivela data-ritardo="1">{renderMarkdoc(testo)}</div>
+          {campo(bio, "congedo", lang) ? (
+            <blockquote className="riga mt-12 pt-8" data-rivela>
+              <p className="voce text-[clamp(1.3rem,2vw,1.9rem)] leading-[1.2] text-testo">«{campo(bio, "congedo", lang)}»</p>
+              <footer className="mono mt-4">Pasquale Liberatore</footer>
+            </blockquote>
+          ) : null}
+        </div>
       </section>
 
       {bio.cronologia.length ? (

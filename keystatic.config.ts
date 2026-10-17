@@ -197,6 +197,10 @@ export default config({
         ritratto_didascalia: fields.text({ label: "Didascalia del ritratto" }),
         intro: fields.text({ label: "Frase di apertura (italiano)", multiline: true }),
         intro_en: fields.text({ label: "Frase di apertura (inglese)", multiline: true }),
+        dichiarazione: fields.text({ label: "Dichiarazione dell'artista, in apertura (italiano)", multiline: true }),
+        dichiarazione_en: fields.text({ label: "Dichiarazione dell'artista, in apertura (inglese)", multiline: true }),
+        congedo: fields.text({ label: "Dichiarazione in chiusura (italiano)", multiline: true }),
+        congedo_en: fields.text({ label: "Dichiarazione in chiusura (inglese)", multiline: true }),
         testo: fields.markdoc({ label: "Biografia (italiano)" }),
         testo_en: fields.markdoc({ label: "Biografia (inglese)" }),
         cronologia: fields.array(
