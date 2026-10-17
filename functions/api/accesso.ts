@@ -28,13 +28,13 @@ async function leggiUtente(env: Ambiente, email: string): Promise<Utente | null>
   return env.UTENTI.get<Utente>(chiaveUtente(email), "json");
 }
 
-async function elencoUtenti(env: Ambiente) {
+async function elencoUtenti(env: Ambiente, io?: string) {
   if (!env.UTENTI) return [];
   const { keys } = await env.UTENTI.list({ prefix: "utente:" });
-  const fuori: { email: string; nome: string }[] = [];
+  const fuori: { email: string; nome: string; tu: boolean }[] = [];
   for (const k of keys) {
     const u = await env.UTENTI.get<Utente>(k.name, "json");
-    if (u) fuori.push({ email: u.email, nome: u.nome });
+    if (u) fuori.push({ email: u.email, nome: u.nome, tu: u.email === io });
   }
   return fuori;
 }
@@ -147,7 +147,7 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
   if (!sessione) return Response.json({ errore: "Devi entrare nel pannello." }, { status: 401 });
 
   if (azione === "elenco-persone") {
-    return Response.json({ ok: true, persone: await elencoUtenti(env), recuperoAttivo: Boolean(env.RESEND_API_KEY) });
+    return Response.json({ ok: true, persone: await elencoUtenti(env, sessione.email), recuperoAttivo: Boolean(env.RESEND_API_KEY) });
   }
 
   if (azione === "aggiungi-persona") {
@@ -156,14 +156,14 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
     }
     const utente = await creaUtente(corpo.email, corpo.nome || corpo.email, corpo.password);
     await env.UTENTI.put(chiaveUtente(utente.email), JSON.stringify(utente));
-    return Response.json({ ok: true, persone: await elencoUtenti(env) });
+    return Response.json({ ok: true, persone: await elencoUtenti(env, sessione.email) });
   }
 
   if (azione === "togli-persona") {
     const email = normalizzaEmail(corpo.email ?? "");
     if (email === sessione.email) return Response.json({ errore: "Non puoi togliere te stesso." }, { status: 400 });
     await env.UTENTI.delete(chiaveUtente(email));
-    return Response.json({ ok: true, persone: await elencoUtenti(env) });
+    return Response.json({ ok: true, persone: await elencoUtenti(env, sessione.email) });
   }
 
   if (azione === "cambia-password") {

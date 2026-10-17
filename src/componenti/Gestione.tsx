@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Accesso } from "./Accesso";
+import { Persone } from "./Persone";
 import {
   dimenticaSessione,
   leggiSessione,
@@ -116,6 +117,7 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
   // la parola d'accesso resta solo in questa scheda del browser
   const [esito, setEsito] = useState("");
   const [inCorso, setInCorso] = useState(false);
+  const [persone, setPersone] = useState(false);
 
   // modifiche in attesa di essere pubblicate
   const [toccate, setToccate] = useState<Set<string>>(new Set());
@@ -258,6 +260,7 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
 
   return (
     <main className="pan">
+      {persone ? <Persone sessione={sessione} chiudi={() => setPersone(false)} /> : null}
       <header className="pan-testa">
         <div className="pan-titolo">
           <h1>Le opere di Pasquale</h1>
@@ -269,7 +272,8 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
             <button type="button" className={modo === "griglia" ? "on" : ""} onClick={() => setModo("griglia")}>Tutte insieme</button>
           </div>
           <p className="pan-chi">
-            Ciao, <strong>{sessione.nome}</strong> · <button type="button" onClick={esci}>esci</button>
+            Ciao, <strong>{sessione.nome}</strong> · <button type="button" onClick={() => setPersone(true)}>persone</button> ·{" "}
+            <button type="button" onClick={esci}>esci</button>
           </p>
         </div>
       </header>
