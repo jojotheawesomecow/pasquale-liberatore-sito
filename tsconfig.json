@@ -29,7 +29,10 @@
       "@tema": [
         "./src/temi/veste"
       ]
-    }
+    },
+    "types": [
+      "@cloudflare/workers-types"
+    ]
   },
   "include": [
     "next-env.d.ts",
