@@ -83,3 +83,24 @@ button, input, select { font: inherit; }
 .pan-finestra h2 { margin: 0 0 10px; font-size: 21px; }
 .pan-finestra p { margin: 0 0 20px; color: #6f6e68; font-size: 16px; }
 .pan-finestra code { background: #f2f1ee; padding: 1px 6px; border-radius: 4px; font-size: 15px; }
+
+/* barra di pubblicazione, sempre visibile in fondo */
+.pan { padding-bottom: 130px; }
+.pan-barra {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  padding: 14px 22px;
+  background: #fff; border-top: 1px solid #ddd9d0;
+  box-shadow: 0 -6px 24px rgba(0,0,0,0.06);
+}
+.pan-barra.viva { border-top-color: #1b1b1a; }
+.pan-sospeso { font-size: 15px; color: #6f6e68; }
+.pan-barra.viva .pan-sospeso { color: #1b1b1a; font-weight: 600; }
+.pan-barra input[type="password"] { margin-left: auto; width: 190px; border: 1px solid #d2cec5; border-radius: 10px; padding: 11px 14px; }
+.pan-barra button { border-radius: 999px; padding: 12px 24px; cursor: pointer; border: 1px solid #1b1b1a; background: #1b1b1a; color: #fff; }
+.pan-barra button:disabled { opacity: 0.35; cursor: default; }
+.pan-esito { flex-basis: 100%; font-size: 15px; color: #41743a; }
+@media (max-width: 700px) {
+  .pan-barra input[type="password"] { margin-left: 0; flex: 1; }
+  .pan-barra button { flex: 1; }
+}
