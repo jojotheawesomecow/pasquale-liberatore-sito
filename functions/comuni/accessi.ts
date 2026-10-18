@@ -7,7 +7,8 @@
 export type Utente = { email: string; nome: string; impronta: string; sale: string; giri: number };
 export type Sessione = { email: string; nome: string; scade: number };
 
-const GIRI = 150_000;
+/** Cloudflare rifiuta PBKDF2 oltre i centomila giri: è anche il nostro massimo. */
+const GIRI = 100_000;
 const cod = new TextEncoder();
 
 const aBase64url = (b: ArrayBuffer | Uint8Array) => {
