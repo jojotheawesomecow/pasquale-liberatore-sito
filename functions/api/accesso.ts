@@ -54,7 +54,16 @@ async function mandaEmail(env: Ambiente, a: string, nome: string, collegamento: 
   return r.ok;
 }
 
-export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) => {
+export const onRequestPost: PagesFunction<Ambiente> = async (contesto) => {
+  // se qualcosa si rompe davvero, la schermata deve poterlo dire invece di mostrare un 500 muto
+  try {
+    return await rispondi(contesto);
+  } catch (e) {
+    return Response.json({ errore: `Errore interno: ${e instanceof Error ? e.message : String(e)}` }, { status: 500 });
+  }
+};
+
+const rispondi: PagesFunction<Ambiente> = async ({ env, request }) => {
   const segreto = segretoDi(env);
   if (!segreto) return Response.json({ errore: "Il pannello non è ancora stato attivato." }, { status: 503 });
   if (!env.UTENTI) return Response.json({ errore: "Manca l'archivio delle persone ammesse." }, { status: 503 });
