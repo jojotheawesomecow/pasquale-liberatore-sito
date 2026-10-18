@@ -90,8 +90,12 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.03em; }
 
 /* una per volta */
 .pan-scheda { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; margin-top: 28px; align-items: start; }
-@media (max-width: 900px) { .pan-scheda { grid-template-columns: 1fr; gap: 24px; } }
 .pan-foto { position: sticky; top: 20px; }
+@media (max-width: 900px) {
+  .pan-scheda { grid-template-columns: 1fr; gap: 24px; }
+  /* in colonna unica la foto non deve restare appiccicata sopra ai campi */
+  .pan-foto { position: static; }
+}
 .pan-foto img {
   display: block; width: 100%; max-height: 62vh; object-fit: contain;
   background: var(--sfondo-2); border: 1px solid var(--linea);
@@ -249,3 +253,40 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.03em; }
 .per-nota { margin: 0; color: var(--testo-3); font-size: 14px; }
 .per-errore { margin: 0; color: var(--allarme); }
 .per-avviso { margin: 0; color: var(--buono); }
+
+/* ritaglio */
+.pan-ritaglia {
+  display: block; width: 100%; margin-top: 10px; padding: 12px;
+  border: 1px solid var(--linea); border-radius: 10px; background: transparent; color: var(--testo-2);
+}
+.pan-ritaglia:hover { border-color: var(--accento); color: var(--accento); }
+.pan-ritaglia:disabled { opacity: 0.4; cursor: default; }
+
+.rit-velo {
+  position: fixed; inset: 0; z-index: 70; display: grid; place-items: center;
+  background: rgba(12, 13, 15, 0.86); padding: 20px;
+}
+.rit {
+  width: 100%; max-width: 900px; max-height: 94dvh; display: flex; flex-direction: column; gap: 16px;
+  background: var(--sfondo-2); border: 1px solid var(--linea); border-radius: 16px; padding: 24px;
+}
+.rit-testa h2 { margin: 0; font-size: 21px; }
+.rit-testa p { margin: 6px 0 0; color: var(--testo-2); font-size: 15px; }
+.rit-tela { display: grid; place-items: center; min-height: 0; flex: 1; touch-action: none; padding: 13px; }
+/* il buio del ritaglio resta dentro la foto, non invade la finestra */
+.rit-cornice { position: relative; display: inline-block; max-width: 100%; overflow: hidden; }
+.rit-cornice img { display: block; max-width: 100%; max-height: 62dvh; width: auto; user-select: none; }
+/* il buio sta fuori dal riquadro: lo disegniamo con un'ombra grande quanto tutto */
+.rit-buio { position: absolute; box-shadow: 0 0 0 100vmax rgba(12, 13, 15, 0.72); pointer-events: none; }
+.rit-scelta { position: absolute; border: 1px solid var(--accento); cursor: move; }
+.rit-angolo {
+  position: absolute; width: 26px; height: 26px; background: var(--accento);
+  border: 2px solid var(--sfondo); border-radius: 50%; margin: -13px; cursor: pointer; touch-action: none;
+}
+.rit-fondo { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.rit-misura { margin-right: auto; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--testo-3); }
+.rit-fondo button { border-radius: 999px; padding: 12px 22px; border: 1px solid var(--testo); background: var(--testo); color: var(--sfondo); }
+.rit-fondo button.chiaro { background: transparent; border-color: var(--linea); color: var(--testo-2); }
+.rit-fondo button.chiaro:hover { border-color: var(--linea-forte); color: var(--testo); }
+.rit-fondo button.pieno { border-color: var(--accento); background: var(--accento); color: var(--su-accento); }
+.rit-fondo button:disabled { opacity: 0.4; cursor: default; }

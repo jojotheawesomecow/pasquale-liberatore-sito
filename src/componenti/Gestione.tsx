@@ -1,8 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { daFile, ritagliaImmagine, ruotaImmagine, type Riquadro } from "@/lib/foto";
 import { Accesso } from "./Accesso";
 import { Persone } from "./Persone";
+import { Ritaglio } from "./Ritaglio";
 import {
   dimenticaSessione,
   leggiSessione,
@@ -61,49 +63,8 @@ const ORDINI: { value: Ordine; label: string }[] = [
   { value: "titolo", label: "Per nome" },
 ];
 
-/** Quanto largo può essere il lato di una foto salvata: come le altre del sito. */
-const LATO_MAX = 2000;
 /** Quante voci per invio: Cloudflare conta le chiamate che il servizio fa a GitHub. */
 const PER_VOLTA = 12;
-
-type FotoPronta = { base64: string; w: number; h: number; anteprima: string };
-
-/** Converte la tela in una foto leggera, pronta da salvare e da mostrare subito. */
-async function daTela(tela: HTMLCanvasElement): Promise<FotoPronta> {
-  const nuovo: Blob = await new Promise((ok) => tela.toBlob((b) => ok(b!), "image/webp", 0.82));
-  const buffer = await nuovo.arrayBuffer();
-  let binario = "";
-  const byte = new Uint8Array(buffer);
-  for (let i = 0; i < byte.length; i += 8192) binario += String.fromCharCode(...byte.subarray(i, i + 8192));
-  return { base64: btoa(binario), w: tela.width, h: tela.height, anteprima: URL.createObjectURL(nuovo) };
-}
-
-/** Prende una foto scelta sul computer e la rimpicciolisce quanto serve al sito. */
-async function daFile(file: File): Promise<FotoPronta> {
-  const bitmap = await createImageBitmap(file);
-  const scala = Math.min(1, LATO_MAX / Math.max(bitmap.width, bitmap.height));
-  const tela = document.createElement("canvas");
-  tela.width = Math.round(bitmap.width * scala);
-  tela.height = Math.round(bitmap.height * scala);
-  tela.getContext("2d")!.drawImage(bitmap, 0, 0, tela.width, tela.height);
-  return daTela(tela);
-}
-
-/** Ruota la foto nel browser e restituisce la nuova immagine, pronta da salvare. */
-async function ruotaImmagine(url: string, gradi: number): Promise<FotoPronta> {
-  const risposta = await fetch(url, { cache: "no-store" });
-  const blob = await risposta.blob();
-  const bitmap = await createImageBitmap(blob);
-  const orizzontale = Math.abs(gradi) === 90;
-  const tela = document.createElement("canvas");
-  tela.width = orizzontale ? bitmap.height : bitmap.width;
-  tela.height = orizzontale ? bitmap.width : bitmap.height;
-  const ctx = tela.getContext("2d")!;
-  ctx.translate(tela.width / 2, tela.height / 2);
-  ctx.rotate((gradi * Math.PI) / 180);
-  ctx.drawImage(bitmap, -bitmap.width / 2, -bitmap.height / 2);
-  return daTela(tela);
-}
 
 /** Prima si entra, poi si lavora. Senza sessione valida non arriva nessun dato. */
 export function Gestione() {
@@ -152,6 +113,7 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
   const [persone, setPersone] = useState(false);
   const [ordine, setOrdine] = useState<Ordine>("sito");
   const [categoria, setCategoria] = useState("");
+  const [ritaglio, setRitaglio] = useState(false);
 
   // modifiche in attesa di essere pubblicate
   const [toccate, setToccate] = useState<Set<string>>(new Set());
@@ -197,11 +159,43 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
     setInCorso(true);
     setEsito("");
     try {
-      const r = await ruotaImmagine(fotoNuove[o.percorsoFoto] ? o.anteprima : o.grande || o.anteprima, gradi);
+      const sorgente = fotoNuove[o.percorsoFoto] ? o.anteprima : o.grande || o.anteprima;
+      const r = await ruotaImmagine(sorgente, gradi);
       setDati((d) => d.map((x) => (x.slug === o.slug ? { ...x, w: r.w, h: r.h, anteprima: r.anteprima, grande: r.anteprima } : x)));
       setFotoNuove((f) => ({ ...f, [o.percorsoFoto]: { base64: r.base64 } }));
+      setToccate((p) => new Set(p).add(o.slug));
     } catch {
       setEsito("Non sono riuscito a ruotare la foto.");
+    }
+    setInCorso(false);
+  };
+
+  /** Registra la foto lavorata: la mostra subito e la mette in coda per la pubblicazione. */
+  const tieniFoto = (o: OperaGestione, r: { base64: string; w: number; h: number; anteprima: string }) => {
+    // se la foto di prima era già un .webp si tiene il suo posto, così il progetto non si riempie di doppioni
+    const percorso = o.percorsoFoto.endsWith(".webp") ? o.percorsoFoto : `content/media/opere/${o.slug}/${o.slug}.webp`;
+    setDati((d) =>
+      d.map((x) =>
+        x.slug === o.slug
+          ? { ...x, w: r.w, h: r.h, anteprima: r.anteprima, grande: r.anteprima, percorsoFoto: percorso, scheda: { ...x.scheda, foto: percorso.replace(/^content\/media\//, "/media/") } }
+          : x
+      )
+    );
+    setFotoNuove((f) => ({ ...f, [percorso]: { base64: r.base64 } }));
+    // la vecchia esce dal progetto, se si chiamava diversamente
+    if (o.percorsoFoto && o.percorsoFoto !== percorso) setFotoTolte((p) => new Set(p).add(o.percorsoFoto));
+    setToccate((p) => new Set(p).add(o.slug));
+  };
+
+  /** Tiene solo la parte di foto scelta nel riquadro. */
+  const ritaglia = async (o: OperaGestione, r: Riquadro) => {
+    setInCorso(true);
+    setEsito("");
+    try {
+      tieniFoto(o, await ritagliaImmagine(o.grande || o.anteprima, r));
+      setRitaglio(false);
+    } catch {
+      setEsito("Non sono riuscito a ritagliare questa foto.");
     }
     setInCorso(false);
   };
@@ -211,19 +205,7 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
     setInCorso(true);
     setEsito("");
     try {
-      const r = await daFile(file);
-      const percorso = `content/media/opere/${o.slug}/${o.slug}.webp`;
-      setDati((d) =>
-        d.map((x) =>
-          x.slug === o.slug
-            ? { ...x, w: r.w, h: r.h, anteprima: r.anteprima, grande: r.anteprima, percorsoFoto: percorso, scheda: { ...x.scheda, foto: `/media/opere/${o.slug}/${o.slug}.webp` } }
-            : x
-        )
-      );
-      setFotoNuove((f) => ({ ...f, [percorso]: { base64: r.base64 } }));
-      // la vecchia esce dal progetto, se si chiamava diversamente
-      if (o.percorsoFoto && o.percorsoFoto !== percorso) setFotoTolte((p) => new Set(p).add(o.percorsoFoto));
-      setToccate((p) => new Set(p).add(o.slug));
+      tieniFoto(o, await daFile(file));
     } catch {
       setEsito("Non sono riuscito a leggere questa foto.");
     }
@@ -467,6 +449,14 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
   return (
     <main className="pan">
       {persone ? <Persone sessione={sessione} chiudi={() => setPersone(false)} /> : null}
+      {ritaglio && corrente ? (
+        <Ritaglio
+          url={corrente.grande || corrente.anteprima}
+          inCorso={inCorso}
+          annulla={() => setRitaglio(false)}
+          conferma={(r) => void ritaglia(corrente, r)}
+        />
+      ) : null}
       <header className="pan-testa">
         <div className="pan-titolo">
           <h1>Le opere di Pasquale</h1>
@@ -525,6 +515,9 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
               <button type="button" disabled={inCorso} onClick={() => ruota(corrente, -90)}>⟲ Ruota a sinistra</button>
               <button type="button" disabled={inCorso} onClick={() => ruota(corrente, 90)}>Ruota a destra ⟳</button>
             </div>
+            <button type="button" className="pan-ritaglia" disabled={inCorso} onClick={() => setRitaglio(true)}>
+              Ritaglia la foto
+            </button>
             <label className="pan-carica larga">
               Sostituisci questa foto
               <input
