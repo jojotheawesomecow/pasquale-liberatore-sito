@@ -9,10 +9,21 @@ async function chiedi(corpo: Record<string, string>, gettone?: string) {
     headers: { "Content-Type": "application/json", ...(gettone ? { "x-pannello-sessione": gettone } : {}) },
     body: JSON.stringify(corpo),
   });
-  return (await r.json()) as { ok?: boolean; errore?: string; nome?: string; sessione?: string; quanti?: number; messaggio?: string; recuperoAttivo?: boolean };
+  return leggiRisposta(r) as Promise<{ ok?: boolean; errore?: string; nome?: string; sessione?: string; quanti?: number; messaggio?: string; recuperoAttivo?: boolean }>;
 }
 
 type Schermata = "entra" | "dimenticata" | "reimposta" | "primo";
+
+/** Se il sito risponde con qualcosa che non è una risposta nostra, lo diciamo invece di tacere. */
+async function leggiRisposta(r: Response) {
+  const testo = await r.text();
+  try {
+    return JSON.parse(testo) as Record<string, unknown>;
+  } catch {
+    return { errore: `Il sito ha risposto in modo inatteso (${r.status}). Controlla di essere sull'indirizzo giusto.` };
+  }
+}
+
 
 /** Schermata d'ingresso: finché non si entra, del pannello non si vede nulla. */
 export function Accesso({ entrato }: { entrato: (s: Sessione) => void }) {

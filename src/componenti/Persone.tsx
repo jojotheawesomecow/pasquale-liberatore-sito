@@ -6,13 +6,24 @@ import type { Sessione } from "@/lib/sessione";
 type Persona = { email: string; nome: string; tu?: boolean };
 type Risposta = { ok?: boolean; errore?: string; persone?: Persona[]; recuperoAttivo?: boolean };
 
+/** Se il sito risponde con qualcosa che non è una risposta nostra, lo diciamo invece di tacere. */
+async function leggiRisposta(r: Response) {
+  const testo = await r.text();
+  try {
+    return JSON.parse(testo) as Record<string, unknown>;
+  } catch {
+    return { errore: `Il sito ha risposto in modo inatteso (${r.status}). Controlla di essere sull'indirizzo giusto.` };
+  }
+}
+
+
 async function chiedi(corpo: Record<string, string>, gettone: string): Promise<Risposta> {
   const r = await fetch("/api/accesso", {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-pannello-sessione": gettone },
     body: JSON.stringify(corpo),
   });
-  return (await r.json()) as Risposta;
+  return leggiRisposta(r) as Promise<Risposta>;
 }
 
 /** Chi può entrare nel pannello: si aggiunge, si toglie, si cambia la propria password. */
