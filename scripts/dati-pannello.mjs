@@ -41,6 +41,7 @@ const opere = fs
       w: img?.w ?? 1,
       h: img?.h ?? 1,
       origine: scheda.origine ?? "",
+      aggiunta: scheda.aggiunta ?? "",
       scheda,
     };
   })

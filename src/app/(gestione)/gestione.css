@@ -62,6 +62,25 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.03em; }
 }
 .pan-modi button:hover, .pan-filtri button:hover { border-color: var(--linea-forte); color: var(--testo); }
 .pan-modi button.on, .pan-filtri button.on { background: var(--testo); border-color: var(--testo); color: var(--sfondo); }
+.pan-scelte { display: flex; gap: 8px; margin-left: auto; }
+.pan-scelte select {
+  border: 1px solid var(--linea); background: transparent; border-radius: 999px;
+  padding: 9px 14px; color: var(--testo-2);
+}
+.pan-scelte select:hover { border-color: var(--linea-forte); color: var(--testo); }
+.pan-scelte option { background: var(--sfondo-2); color: var(--testo); }
+
+/* scegliere una foto dal computer: la casella vera resta nascosta */
+.pan-carica {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px dashed var(--linea-forte); border-radius: 999px; padding: 9px 18px;
+  color: var(--testo-2); cursor: pointer; transition: border-color 0.2s, color 0.2s;
+}
+.pan-carica:hover { border-color: var(--accento); color: var(--accento); }
+.pan-carica input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.pan-carica.larga { display: flex; margin-top: 10px; border-radius: 10px; padding: 12px; }
+.pan-carica:has(input:disabled) { opacity: 0.4; cursor: default; }
+
 .pan-filtri { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linea); }
 .pan-quante { margin-left: 6px; color: var(--testo-3); font-size: 15px; }
 .pan-stato { margin-left: auto; font-size: 15px; color: var(--testo-3); min-height: 1.5em; }

@@ -14,7 +14,7 @@ const OPZIONI_YAML = { lineWidth: 100, quotingType: '"' } as yaml.DumpOptions;
 
 type Opera = { slug: string; dati: Record<string, unknown> };
 type Foto = { percorso: string; base64: string };
-type Corpo = { opere?: Opera[]; foto?: Foto[]; eliminate?: string[] };
+type Corpo = { opere?: Opera[]; foto?: Foto[]; fotoTolte?: string[]; eliminate?: string[] };
 
 const sicuro = (s: string) => /^[a-z0-9-]+$/.test(s);
 
@@ -36,6 +36,7 @@ export async function POST(richiesta: Request) {
 
   const opere = (corpo.opere ?? []).filter((o) => o && sicuro(o.slug) && o.dati);
   const foto = (corpo.foto ?? []).filter((f) => f && typeof f.percorso === "string" && f.percorso.startsWith("content/media/opere/"));
+  const fotoTolte = (corpo.fotoTolte ?? []).filter((p) => typeof p === "string" && p.startsWith("content/media/opere/"));
   const eliminate = (corpo.eliminate ?? []).filter(sicuro);
 
   try {
@@ -48,6 +49,9 @@ export async function POST(richiesta: Request) {
       const dest = path.join(ROOT, f.percorso);
       await fs.mkdir(path.dirname(dest), { recursive: true });
       await fs.writeFile(dest, Buffer.from(f.base64, "base64"));
+    }
+    for (const percorso of fotoTolte) {
+      await fs.rm(path.join(ROOT, percorso), { force: true });
     }
     for (const slug of eliminate) {
       const quando = new Date().toISOString().slice(0, 10);
@@ -64,8 +68,8 @@ export async function POST(richiesta: Request) {
         }
       }
     }
-    if (foto.length || eliminate.length) await rigeneraImmagini();
-    return Response.json({ ok: true, quante: opere.length + foto.length + eliminate.length, locale: true });
+    if (foto.length || fotoTolte.length || eliminate.length) await rigeneraImmagini();
+    return Response.json({ ok: true, quante: opere.length + foto.length + fotoTolte.length + eliminate.length, locale: true });
   } catch (e) {
     return Response.json({ errore: e instanceof Error ? e.message : "errore" }, { status: 500 });
   }

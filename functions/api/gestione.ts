@@ -13,7 +13,7 @@ import { sessioneDi } from "../comuni/accessi";
 
 type Opera = { slug: string; dati: Record<string, unknown> };
 type Foto = { percorso: string; base64: string };
-type Corpo = { opere?: Opera[]; foto?: Foto[]; eliminate?: string[]; messaggio?: string };
+type Corpo = { opere?: Opera[]; foto?: Foto[]; fotoTolte?: string[]; eliminate?: string[]; messaggio?: string };
 
 type Ambiente = {
   GITHUB_TOKEN?: string;
@@ -65,8 +65,9 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
 
   const opere = (corpo.opere ?? []).filter((o) => o && sicuro(o.slug) && o.dati);
   const foto = (corpo.foto ?? []).filter((f) => f && typeof f.percorso === "string" && f.percorso.startsWith("content/media/opere/"));
+  const fotoTolte = (corpo.fotoTolte ?? []).filter((p) => typeof p === "string" && p.startsWith("content/media/opere/"));
   const eliminate = (corpo.eliminate ?? []).filter(sicuro);
-  if (!opere.length && !foto.length && !eliminate.length) {
+  if (!opere.length && !foto.length && !fotoTolte.length && !eliminate.length) {
     return Response.json({ errore: "nessuna modifica da salvare" }, { status: 400 });
   }
 
@@ -94,6 +95,11 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
       voci.push({ path: f.percorso, mode: "100644", type: "blob", sha: blob.sha });
     }
 
+    // la foto vecchia sparisce quando ne arriva una al suo posto
+    for (const percorso of fotoTolte) {
+      voci.push({ path: percorso, mode: "100644", type: "blob", sha: null });
+    }
+
     // le opere eliminate escono dal sito: si tolgono scheda e foto
     for (const slug of eliminate) {
       voci.push({ path: `content/opere/${slug}/index.yaml`, mode: "100644", type: "blob", sha: null });
@@ -104,7 +110,7 @@ export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) =
       body: JSON.stringify({ base_tree: commit.tree.sha, tree: voci }),
     });
 
-    const quante = opere.length + foto.length + eliminate.length;
+    const quante = opere.length + foto.length + fotoTolte.length + eliminate.length;
     const nuovo = await gh<{ sha: string }>(token, `/repos/${repo}/git/commits`, {
       method: "POST",
       body: JSON.stringify({

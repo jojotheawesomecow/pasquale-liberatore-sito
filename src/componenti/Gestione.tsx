@@ -30,6 +30,8 @@ export type OperaGestione = {
   w: number;
   h: number;
   origine: string;
+  /** quando la foto è stata caricata dal pannello, se è arrivata da lì */
+  aggiunta: string;
   /** la scheda completa, così si può risalvare senza perdere nulla */
   scheda: Record<string, unknown>;
 };
@@ -44,16 +46,51 @@ const CATEGORIE = [
 ];
 const SENZA_TITOLO = "Senza titolo";
 
-type Filtro = "tutte" | "da-nominare" | "pittura" | "in-vetrina";
+type Filtro = "tutte" | "da-nominare" | "da-completare" | "in-vetrina";
 const FILTRI: { value: Filtro; label: string }[] = [
   { value: "tutte", label: "Tutte" },
-  { value: "da-nominare", label: "Da nominare" },
-  { value: "pittura", label: "Solo dipinti" },
+  { value: "da-nominare", label: "Senza nome" },
+  { value: "da-completare", label: "Senza dati" },
   { value: "in-vetrina", label: "In vetrina" },
 ];
 
+type Ordine = "sito" | "recenti" | "titolo";
+const ORDINI: { value: Ordine; label: string }[] = [
+  { value: "sito", label: "Ordine del sito" },
+  { value: "recenti", label: "Arrivate per ultime" },
+  { value: "titolo", label: "Per nome" },
+];
+
+/** Quanto largo può essere il lato di una foto salvata: come le altre del sito. */
+const LATO_MAX = 2000;
+/** Quante voci per invio: Cloudflare conta le chiamate che il servizio fa a GitHub. */
+const PER_VOLTA = 12;
+
+type FotoPronta = { base64: string; w: number; h: number; anteprima: string };
+
+/** Converte la tela in una foto leggera, pronta da salvare e da mostrare subito. */
+async function daTela(tela: HTMLCanvasElement): Promise<FotoPronta> {
+  const nuovo: Blob = await new Promise((ok) => tela.toBlob((b) => ok(b!), "image/webp", 0.82));
+  const buffer = await nuovo.arrayBuffer();
+  let binario = "";
+  const byte = new Uint8Array(buffer);
+  for (let i = 0; i < byte.length; i += 8192) binario += String.fromCharCode(...byte.subarray(i, i + 8192));
+  return { base64: btoa(binario), w: tela.width, h: tela.height, anteprima: URL.createObjectURL(nuovo) };
+}
+
+/** Prende una foto scelta sul computer e la rimpicciolisce quanto serve al sito. */
+async function daFile(file: File): Promise<FotoPronta> {
+  const bitmap = await createImageBitmap(file);
+  const scala = Math.min(1, LATO_MAX / Math.max(bitmap.width, bitmap.height));
+  const tela = document.createElement("canvas");
+  tela.width = Math.round(bitmap.width * scala);
+  tela.height = Math.round(bitmap.height * scala);
+  tela.getContext("2d")!.drawImage(bitmap, 0, 0, tela.width, tela.height);
+  return daTela(tela);
+}
+
 /** Ruota la foto nel browser e restituisce la nuova immagine, pronta da salvare. */
-async function ruotaImmagine(url: string, gradi: number): Promise<{ base64: string; w: number; h: number; anteprima: string }> {
+async function ruotaImmagine(url: string, gradi: number): Promise<FotoPronta> {
   const risposta = await fetch(url, { cache: "no-store" });
   const blob = await risposta.blob();
   const bitmap = await createImageBitmap(blob);
@@ -65,12 +102,7 @@ async function ruotaImmagine(url: string, gradi: number): Promise<{ base64: stri
   ctx.translate(tela.width / 2, tela.height / 2);
   ctx.rotate((gradi * Math.PI) / 180);
   ctx.drawImage(bitmap, -bitmap.width / 2, -bitmap.height / 2);
-  const nuovo: Blob = await new Promise((ok) => tela.toBlob((b) => ok(b!), "image/webp", 0.82));
-  const buffer = await nuovo.arrayBuffer();
-  let binario = "";
-  const byte = new Uint8Array(buffer);
-  for (let i = 0; i < byte.length; i += 8192) binario += String.fromCharCode(...byte.subarray(i, i + 8192));
-  return { base64: btoa(binario), w: tela.width, h: tela.height, anteprima: URL.createObjectURL(nuovo) };
+  return daTela(tela);
 }
 
 /** Prima si entra, poi si lavora. Senza sessione valida non arriva nessun dato. */
@@ -118,28 +150,43 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
   const [esito, setEsito] = useState("");
   const [inCorso, setInCorso] = useState(false);
   const [persone, setPersone] = useState(false);
+  const [ordine, setOrdine] = useState<Ordine>("sito");
+  const [categoria, setCategoria] = useState("");
 
   // modifiche in attesa di essere pubblicate
   const [toccate, setToccate] = useState<Set<string>>(new Set());
   const [fotoNuove, setFotoNuove] = useState<Record<string, { base64: string }>>({});
   const [daEliminare, setDaEliminare] = useState<Set<string>>(new Set());
+  const [fotoTolte, setFotoTolte] = useState<Set<string>>(new Set());
 
-  const elenco = useMemo(
-    () =>
-      dati.filter((o) => {
-        if (daEliminare.has(o.slug)) return false;
-        if (filtro === "da-nominare") return !o.titolo || o.titolo === SENZA_TITOLO;
-        if (filtro === "pittura") return o.categoria === "pittura";
-        if (filtro === "in-vetrina") return o.selezionata;
-        return true;
-      }),
-    [dati, filtro, daEliminare]
-  );
+  const elenco = useMemo(() => {
+    const senzaNome = (o: OperaGestione) => !o.titolo || o.titolo === SENZA_TITOLO;
+    const scelte = dati.filter((o) => {
+      if (daEliminare.has(o.slug)) return false;
+      if (categoria && o.categoria !== categoria) return false;
+      if (filtro === "da-nominare") return senzaNome(o);
+      // «senza dati»: manca il nome, oppure l'anno, oppure sia tecnica sia materiale
+      if (filtro === "da-completare") return senzaNome(o) || !o.anno || (!o.tecnica && !o.materiale);
+      if (filtro === "in-vetrina") return o.selezionata;
+      return true;
+    });
+    if (ordine === "recenti") {
+      // le arrivate dal pannello hanno una data; le altre vengono dopo, nell'ordine del sito
+      return [...scelte].sort((a, b) => (b.aggiunta || "").localeCompare(a.aggiunta || ""));
+    }
+    if (ordine === "titolo") {
+      return [...scelte].sort((a, b) => {
+        if (senzaNome(a) !== senzaNome(b)) return senzaNome(a) ? 1 : -1;
+        return a.titolo.localeCompare(b.titolo, "it");
+      });
+    }
+    return scelte;
+  }, [dati, filtro, categoria, ordine, daEliminare]);
 
   const indice = Math.min(posizione, Math.max(0, elenco.length - 1));
   const corrente = elenco[indice];
   const conTitolo = dati.filter((o) => o.titolo && o.titolo !== SENZA_TITOLO).length;
-  const inSospeso = toccate.size + Object.keys(fotoNuove).length + daEliminare.size;
+  const inSospeso = toccate.size + Object.keys(fotoNuove).length + fotoTolte.size + daEliminare.size;
 
   const cambia = (slug: string, chiave: keyof OperaGestione, valore: string | boolean) => {
     setDati((d) => d.map((o) => (o.slug === slug ? { ...o, [chiave]: valore } : o)));
@@ -156,6 +203,126 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
     } catch {
       setEsito("Non sono riuscito a ruotare la foto.");
     }
+    setInCorso(false);
+  };
+
+  /** Mette una foto nuova al posto di quella che c'è, lasciando i dati dov'erano. */
+  const sostituisci = async (o: OperaGestione, file: File) => {
+    setInCorso(true);
+    setEsito("");
+    try {
+      const r = await daFile(file);
+      const percorso = `content/media/opere/${o.slug}/${o.slug}.webp`;
+      setDati((d) =>
+        d.map((x) =>
+          x.slug === o.slug
+            ? { ...x, w: r.w, h: r.h, anteprima: r.anteprima, grande: r.anteprima, percorsoFoto: percorso, scheda: { ...x.scheda, foto: `/media/opere/${o.slug}/${o.slug}.webp` } }
+            : x
+        )
+      );
+      setFotoNuove((f) => ({ ...f, [percorso]: { base64: r.base64 } }));
+      // la vecchia esce dal progetto, se si chiamava diversamente
+      if (o.percorsoFoto && o.percorsoFoto !== percorso) setFotoTolte((p) => new Set(p).add(o.percorsoFoto));
+      setToccate((p) => new Set(p).add(o.slug));
+    } catch {
+      setEsito("Non sono riuscito a leggere questa foto.");
+    }
+    setInCorso(false);
+  };
+
+  /** Il numero d'archivio libero più basso, per le foto che arrivano adesso. */
+  const prossimoNumero = () => {
+    let massimo = 0;
+    for (const o of dati) {
+      const n = /^p-(\d+)$/.exec(o.slug);
+      if (n) massimo = Math.max(massimo, Number(n[1]));
+    }
+    return massimo + 1;
+  };
+
+  /** Carica foto nuove, anche molte insieme: ognuna diventa un'opera da completare. */
+  const aggiungi = async (files: FileList) => {
+    setInCorso(true);
+    setEsito("");
+    const quando = new Date().toISOString().slice(0, 10);
+    const nuove: OperaGestione[] = [];
+    const foto: Record<string, { base64: string }> = {};
+    let numero = prossimoNumero();
+    let scartate = 0;
+
+    for (const file of Array.from(files)) {
+      setEsito(`Preparo le foto… ${nuove.length + 1} di ${files.length}`);
+      try {
+        const r = await daFile(file);
+        const slug = `p-${String(numero).padStart(3, "0")}`;
+        const percorso = `content/media/opere/${slug}/${slug}.webp`;
+        const scheda: Record<string, unknown> = {
+          titolo: SENZA_TITOLO,
+          titolo_en: "",
+          codice: `P-${String(numero).padStart(3, "0")}`,
+          categoria: "pittura",
+          anno: "",
+          luogo: "",
+          materiale: "",
+          tecnica: "",
+          dimensioni: "",
+          collezione: "",
+          foto: `/media/opere/${slug}/${slug}.webp`,
+          galleria: [],
+          descrizione: "",
+          descrizione_en: "",
+          in_evidenza: false,
+          ordine: 2000 + numero,
+          stato: "pubblicata",
+          aggiunta: quando,
+          origine: file.name,
+          selezionata: false,
+        };
+        nuove.push({
+          slug,
+          codice: scheda.codice as string,
+          titolo: "",
+          anno: "",
+          tecnica: "",
+          materiale: "",
+          dimensioni: "",
+          luogo: "",
+          categoria: "pittura",
+          selezionata: false,
+          bozza: false,
+          anteprima: r.anteprima,
+          grande: r.anteprima,
+          percorsoFoto: percorso,
+          w: r.w,
+          h: r.h,
+          origine: file.name,
+          aggiunta: quando,
+          scheda,
+        });
+        foto[percorso] = { base64: r.base64 };
+        numero += 1;
+      } catch {
+        scartate += 1;
+      }
+    }
+
+    if (nuove.length) {
+      setDati((d) => [...d, ...nuove]);
+      setFotoNuove((f) => ({ ...f, ...foto }));
+      setToccate((p) => {
+        const n = new Set(p);
+        nuove.forEach((o) => n.add(o.slug));
+        return n;
+      });
+      setOrdine("recenti");
+      setFiltro("da-nominare");
+      setPosizione(0);
+    }
+    setEsito(
+      nuove.length
+        ? `${nuove.length} foto pronte${scartate ? `, ${scartate} saltate` : ""}. Ora pubblicale.`
+        : "Non sono riuscito a leggere queste foto."
+    );
     setInCorso(false);
   };
 
@@ -200,17 +367,25 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
     setConferma(false);
   };
 
-  /** Manda tutte le modifiche in attesa e fa ripartire il sito. */
+  /** Manda le modifiche in attesa, a piccoli gruppi, e fa ripartire il sito. */
   const pubblica = async () => {
     if (!inSospeso || inCorso) return;
     setInCorso(true);
     setEsito("");
-    const corpo = {
-      opere: [...toccate]
+
+    type Voce =
+      | { tipo: "opera"; slug: string; dati: Record<string, unknown> }
+      | { tipo: "foto"; percorso: string; base64: string }
+      | { tipo: "fotoTolta"; percorso: string }
+      | { tipo: "eliminata"; slug: string };
+
+    const voci: Voce[] = [
+      ...[...toccate]
         .filter((s) => !daEliminare.has(s))
-        .map((slug) => {
+        .map((slug): Voce => {
           const o = dati.find((x) => x.slug === slug)!;
           return {
+            tipo: "opera",
             slug,
             dati: {
               ...o.scheda,
@@ -226,27 +401,58 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
             },
           };
         }),
-      foto: Object.entries(fotoNuove).map(([percorso, v]) => ({ percorso, base64: v.base64 })),
-      eliminate: [...daEliminare],
-    };
-    try {
-      const r = await fetch("/api/gestione", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-pannello-sessione": sessione.gettone },
-        body: JSON.stringify(corpo),
-      });
-      const risposta = (await r.json()) as { ok?: boolean; errore?: string; locale?: boolean };
-      if (risposta.ok) {
-        setToccate(new Set());
-        setFotoNuove({});
-        setDaEliminare(new Set());
-        setEsito(risposta.locale ? "Salvato sul computer." : "Inviato. Il sito si aggiorna fra due o tre minuti.");
-      } else {
-        setEsito(risposta.errore ?? "Qualcosa non ha funzionato.");
+      ...Object.entries(fotoNuove).map(([percorso, v]): Voce => ({ tipo: "foto", percorso, base64: v.base64 })),
+      ...[...fotoTolte].map((percorso): Voce => ({ tipo: "fotoTolta", percorso })),
+      ...[...daEliminare].map((slug): Voce => ({ tipo: "eliminata", slug })),
+    ];
+
+    const fatte = new Set<Voce>();
+    let errore = "";
+
+    for (let i = 0; i < voci.length; i += PER_VOLTA) {
+      const lotto = voci.slice(i, i + PER_VOLTA);
+      const corpo = {
+        opere: lotto.filter((v) => v.tipo === "opera").map((v) => ({ slug: v.slug, dati: v.dati })),
+        foto: lotto.filter((v) => v.tipo === "foto").map((v) => ({ percorso: v.percorso, base64: v.base64 })),
+        fotoTolte: lotto.filter((v) => v.tipo === "fotoTolta").map((v) => v.percorso),
+        eliminate: lotto.filter((v) => v.tipo === "eliminata").map((v) => v.slug),
+      };
+      if (voci.length > PER_VOLTA) setEsito(`Pubblico… ${Math.min(i + PER_VOLTA, voci.length)} di ${voci.length}`);
+      try {
+        const r = await fetch("/api/gestione", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-pannello-sessione": sessione.gettone },
+          body: JSON.stringify(corpo),
+        });
+        const risposta = (await r.json()) as { ok?: boolean; errore?: string; locale?: boolean };
+        if (!risposta.ok) {
+          errore = risposta.errore ?? "Qualcosa non ha funzionato.";
+          break;
+        }
+        lotto.forEach((v) => fatte.add(v));
+      } catch {
+        errore = "Non sono riuscito a contattare il sito. Controlla la connessione.";
+        break;
       }
-    } catch {
-      setEsito("Non sono riuscito a contattare il sito. Controlla la connessione.");
     }
+
+    // resta in attesa soltanto ciò che non è passato
+    const slugFatti = new Set([...fatte].filter((v) => v.tipo === "opera").map((v) => v.slug));
+    const fotoFatte = new Set([...fatte].filter((v) => v.tipo === "foto").map((v) => v.percorso));
+    const tolteFatte = new Set([...fatte].filter((v) => v.tipo === "fotoTolta").map((v) => v.percorso));
+    const eliminateFatte = new Set([...fatte].filter((v) => v.tipo === "eliminata").map((v) => v.slug));
+    setToccate((p) => new Set([...p].filter((s) => !slugFatti.has(s))));
+    setFotoNuove((p) => Object.fromEntries(Object.entries(p).filter(([percorso]) => !fotoFatte.has(percorso))));
+    setFotoTolte((p) => new Set([...p].filter((percorso) => !tolteFatte.has(percorso))));
+    setDaEliminare((p) => new Set([...p].filter((s) => !eliminateFatte.has(s))));
+
+    setEsito(
+      errore
+        ? fatte.size
+          ? `${errore} (${fatte.size} di ${voci.length} erano già passate: riprova a pubblicare il resto.)`
+          : errore
+        : "Inviato. Il sito si aggiorna fra due o tre minuti."
+    );
     setInCorso(false);
   };
 
@@ -270,6 +476,19 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
           <div className="pan-modi">
             <button type="button" className={modo === "scheda" ? "on" : ""} onClick={() => setModo("scheda")}>Una per volta</button>
             <button type="button" className={modo === "griglia" ? "on" : ""} onClick={() => setModo("griglia")}>Tutte insieme</button>
+            <label className="pan-carica">
+              Aggiungi foto
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                disabled={inCorso}
+                onChange={(e) => {
+                  if (e.target.files?.length) void aggiungi(e.target.files);
+                  e.target.value = "";
+                }}
+              />
+            </label>
           </div>
           <p className="pan-chi">
             Ciao, <strong>{sessione.nome}</strong> · <button type="button" onClick={() => setPersone(true)}>persone</button> ·{" "}
@@ -285,6 +504,15 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
           </button>
         ))}
         <span className="pan-quante">{elenco.length} opere</span>
+        <div className="pan-scelte">
+          <select value={categoria} onChange={(e) => { setCategoria(e.target.value); setPosizione(0); }} aria-label="Tipo di opera">
+            <option value="">Tutti i tipi</option>
+            {CATEGORIE.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+          </select>
+          <select value={ordine} onChange={(e) => { setOrdine(e.target.value as Ordine); setPosizione(0); }} aria-label="Ordine">
+            {ORDINI.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
       </div>
 
       {elenco.length === 0 ? (
@@ -297,6 +525,19 @@ function Pannello({ opere, sessione, esci }: { opere: OperaGestione[]; sessione:
               <button type="button" disabled={inCorso} onClick={() => ruota(corrente, -90)}>⟲ Ruota a sinistra</button>
               <button type="button" disabled={inCorso} onClick={() => ruota(corrente, 90)}>Ruota a destra ⟳</button>
             </div>
+            <label className="pan-carica larga">
+              Sostituisci questa foto
+              <input
+                type="file"
+                accept="image/*"
+                disabled={inCorso}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void sostituisci(corrente, file);
+                  e.target.value = "";
+                }}
+              />
+            </label>
           </div>
 
           <form className="pan-campi" onSubmit={(e) => { e.preventDefault(); vai(1); }}>

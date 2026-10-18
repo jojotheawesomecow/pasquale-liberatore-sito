@@ -89,6 +89,7 @@ export default config({
           ],
           defaultValue: "pubblicata",
         }),
+        aggiunta: fields.text({ label: "Arrivata il", description: "Data in cui la foto è stata caricata dal pannello. Serve solo a ritrovare le ultime arrivate" }),
         origine: fields.text({ label: "File di partenza", description: "Nome della foto originale da cui è nata la scheda. Serve solo per ritrovarla nell'archivio" }),
       },
     }),
