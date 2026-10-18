@@ -7,8 +7,8 @@ import { sessioneDi } from "../comuni/accessi";
  * tutte insieme in un unico salvataggio. Da lì il sito si ricostruisce da solo.
  *
  * Richiede due variabili:
- *   GITHUB_TOKEN     chiave con permesso di scrittura sul repository
- *   PANNELLO_PAROLA  parola d'accesso del pannello (senza, il servizio rifiuta tutto)
+ *   GITHUB_TOKEN      chiave con permesso di scrittura sul repository
+ *   GESTIONE_ACCESSI  segreto che firma le sessioni (senza, il servizio rifiuta tutto)
  */
 
 type Opera = { slug: string; dati: Record<string, unknown> };
@@ -20,9 +20,8 @@ type Ambiente = {
   GITHUB_TOKEN_SITO_PASQUALE?: string;
   GITHUB_REPO?: string;
   GITHUB_RAMO?: string;
-  /** Parola d'accesso del pannello. Accettiamo più nomi per non dipendere da come è stata chiamata. */
-  PANNELLO_PAROLA?: string;
-  PANNELLO_PW_ANNAMARIA?: string;
+  /** Segreto con cui sono firmate le sessioni del pannello. */
+  GESTIONE_ACCESSI?: string;
 };
 
 const API = "https://api.github.com";
@@ -47,7 +46,7 @@ const sicuro = (s: string) => /^[a-z0-9-]+$/.test(s);
 
 export const onRequestPost: PagesFunction<Ambiente> = async ({ env, request }) => {
   const token = env.GITHUB_TOKEN ?? env.GITHUB_TOKEN_SITO_PASQUALE;
-  const parola = env.PANNELLO_PAROLA ?? env.PANNELLO_PW_ANNAMARIA;
+  const parola = env.GESTIONE_ACCESSI;
   const repo = env.GITHUB_REPO ?? "jojotheawesomecow/pasquale-liberatore-sito";
   const ramo = env.GITHUB_RAMO ?? "main";
 

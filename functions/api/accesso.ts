@@ -7,8 +7,7 @@ import { creaUtente, firma, normalizzaEmail, passwordGiusta, sessioneDi, verific
 
 type Ambiente = {
   UTENTI?: KVNamespace;
-  PANNELLO_PAROLA?: string;
-  PANNELLO_PW_ANNAMARIA?: string;
+  GESTIONE_ACCESSI?: string;
   RESEND_API_KEY?: string;
   MITTENTE_EMAIL?: string;
   SITO_URL?: string;
@@ -17,7 +16,7 @@ type Ambiente = {
 const GIORNI_30 = 30 * 24 * 60 * 60 * 1000;
 const ORA = 60 * 60 * 1000;
 
-const segretoDi = (env: Ambiente) => env.PANNELLO_PAROLA ?? env.PANNELLO_PW_ANNAMARIA ?? "";
+const segretoDi = (env: Ambiente) => env.GESTIONE_ACCESSI ?? "";
 const chiaveUtente = (email: string) => `utente:${normalizzaEmail(email)}`;
 const chiaveTentativi = (email: string) => `tentativi:${normalizzaEmail(email)}`;
 const TENTATIVI_MAX = 10;
