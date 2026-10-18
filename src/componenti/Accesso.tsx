@@ -79,8 +79,9 @@ export function Accesso({ entrato }: { entrato: (s: Sessione) => void }) {
       } else {
         setErrore(r.errore ?? "Qualcosa non ha funzionato.");
       }
-    } catch {
-      setErrore("Non riesco a contattare il sito. Controlla la connessione.");
+    } catch (e) {
+      // il motivo preciso serve a capire se è la rete, il browser o un'estensione
+      setErrore(`Non riesco a contattare il sito: ${e instanceof Error ? e.message : "errore sconosciuto"}`);
     }
     setInCorso(false);
   };
